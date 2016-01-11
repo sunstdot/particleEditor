@@ -5,21 +5,33 @@ var timerId,isContinue = false;
 
 var ps = new ParticleSystem();
 var dt = 0.01;
+//设置粒子运动区域
+ps.effectors.push(new ChamberBox(0,0,400,400));
 
 var myCanvas = document.getElementById("particle");
 var ctx = myCanvas.getContext("2d");
 
-function sampleDirection(){
-    var theta = Math.random()*2*Math.PI;
-    return new vector2(Math.cos(theta), Math.sin(theta));
+//固定方向
+function sampleDirection(angle1,angle2){
+    var t = Math.random();
+    var theta = angle1*t+angle2*(1-t);
+    return new vector2(Math.cos(theta),Math.sin(theta));
+}
+
+
+//随机一个颜色
+function sampleColor(color1,color2){
+    var t = Math.random();
+    return color1.multiply(t).add(color2.multiply(1-t));
 }
 
 //每个特效都有一个controller进行控制
-function particleControler(){
-    ps.emit(new Particle(new vector2(200,200), sampleDirection().multiply(100),1,Color.red,5));
+function collisionControler() {
+    ps.emit(new Particle(new vector2(200, 200), sampleDirection(Math.PI * 1.75, Math.PI * 2).multiply(250), 3, sampleColor(Color.blue, Color.purple), 5));
     ps.simulate(dt);
-    clearCanvas();
-    ps.render(ctx);
+//    clearCanvas();
+    ctx.fillStyle = "rgb(0,0,0,0.1)";
+    ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
 }
 
 function clearCanvas() {
@@ -28,7 +40,8 @@ function clearCanvas() {
 }
 
 var loop = function(){
-    particleControler();
+    collisionControler();
+
     if(isContinue){
         timerId = setTimeout(loop,10);
     }
