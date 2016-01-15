@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="css/particleEditor.css" type="text/css" rel="stylesheet">
+    <title></title>
+</head>
+<body class="editor">
+    <div class="pheader">
+        <img class="leftIcon imgIcon" src="assets/img/flower.png">
+        <div class="titleText">粒子编辑器</div>
+    </div>
+    <div class="base">
+        <div class="pleft">
+            <ul id="myTab" class="nav nav-tabs">
+                <li id="physicalArg" class="active"><a href="#pysical" >物理参数</a></li>
+                <li class="appearanceArg"><a href="#appear" >外观参数</a></li>
+                <li class="trackArg"><a href="#track" >轨迹参数</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <p class="tip-iqy" style="margin:10px 0 0 202px">提示:xxxxxxxxxxxxx!</p>
+                <!-- 物理参数设置 -->
+                <div class="tabClass tab-pane in active" id="physicalSet">
+                    <div class="argSet">
+                        <fieldset>
+                            <span class="text">重力控制：</span><input id="gravity" class="rangeInput" type="range" />
+                            <span class="text">力度控制：</span><input id="dynamics" class="rangeInput" type="range" />
+                        </fieldset>
+                    </div>
+                    <div class="velocityCvs">
+                        <span class="text">速度记录仪</span>
+                        <canvas id="velocityRecord" width="180px" height="90px" style="border: 1px solid"></canvas>
+                    </div>
+
+                </div>
+                <!-- 外观参数设置-->
+                <div class="tab-pane " id="appearanceSet">
+                </div>
+                <!-- 轨迹参数设置 -->
+                <div class="tab-pane " id="trackSet">
+                </div>
+            </div>
+        </div>
+        <div class="pmiddle">
+            <canvas></canvas>
+        </div>
+        <div class="pright">
+
+        </div>
+    </div>
+
+
+</body>
+</html>

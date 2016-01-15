@@ -27,11 +27,14 @@ function sampleColor(color1,color2){
 
 //每个特效都有一个controller进行控制
 function collisionControler() {
-    ps.emit(new Particle(new vector2(200, 200), sampleDirection(Math.PI * 1.75, Math.PI * 2).multiply(250), 3, sampleColor(Color.blue, Color.purple), 5));
+    ps.emit(new Particle(new vector2(200, 200), sampleDirection(Math.PI*1.75, Math.PI * 2).multiply(250), 2, sampleColor(Color.blue, Color.purple), 5));
     ps.simulate(dt);
-//    clearCanvas();
-    ctx.fillStyle = "rgb(0,0,0,0.1)";
-    ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
+
+    ctx.save();
+    ctx.fillStyle="rgba(0, 0, 0, 0.1)";
+    ctx.fillRect(0,0,myCanvas.width,myCanvas.height);
+    ctx.restore();
+    ps.render(ctx);
 }
 
 function clearCanvas() {

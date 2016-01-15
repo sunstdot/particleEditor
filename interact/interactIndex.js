@@ -44,8 +44,11 @@ function interactController(){
 
     ps.simulate(dt);
 //    clearCanvas();
-//    ctx.fillStyle="rgba(0, 0, 0, 0.1)";
-//    ctx.fillRect(0,0,myCanvas.width,myCanvas.height);
+    ctx.save();
+    ctx.fillStyle="rgba(0, 0, 0, 0.1)";
+    ctx.fillRect(0,0,myCanvas.width,myCanvas.height);
+    ctx.restore();
+
     ps.render(ctx);
 }
 
