@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link href="css/particleEditor.css" type="text/css" rel="stylesheet">
+    <link href="css/range.css" type="text/css" rel="stylesheet">
+    <script src="plugin/argControl/physicalControl.js" type="application/javascript"></script>
     <title></title>
 </head>
 <body class="editor">
@@ -24,13 +26,18 @@
                 <div class="tabClass tab-pane in active" id="physicalSet">
                     <div class="argSet">
                         <fieldset>
-                            <span class="text">重力控制：</span><input id="gravity" class="rangeInput" type="range" />
-                            <span class="text">力度控制：</span><input id="dynamics" class="rangeInput" type="range" />
+                            <span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>
+                            <input id="gravity" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateGravityInput(this.value);" onchange="updateGravityInput(this.value);"/>
+
+                            <span class="text">力度控制：</span> <span id="dynamicsValue" class="valueShow">50</span>
+                            <input id="dynamics" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateDynamicsInput(this.value);" onchange="updateDynamicsInput(this.value);"/>
                         </fieldset>
                     </div>
                     <div class="velocityCvs">
                         <span class="text">速度记录仪</span>
-                        <canvas id="velocityRecord" width="180px" height="90px" style="border: 1px solid"></canvas>
+                        <div class="recorder">
+                            <canvas id="velocityRecord" width="180px" height="90px" style="border: 1px solid"></canvas>
+                        </div>
                     </div>
 
                 </div>
@@ -43,13 +50,15 @@
             </div>
         </div>
         <div class="pmiddle">
-            <canvas></canvas>
+            <canvas id="mainPainter" width="792px" height="803px" style="border: 1px solid">
+
+            </canvas>
         </div>
         <div class="pright">
 
         </div>
     </div>
-
+    <script src="plugin/kinematics.js" type="application/javascript"></script>
 
 </body>
 </html>

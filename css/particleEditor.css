@@ -104,3 +104,17 @@
     padding-left: 25px;
     color: #2F4F4F;
 }
+.valueShow{
+    font-weight: 700;
+    font-size: 14px;
+    opacity: 0.8;
+    padding-left: 25px;
+    color: #2F4F4F;
+}
+.recorder{
+    position: absolute;
+    top: 50px;
+    left: 28px;
+    width: auto;
+    height: auto;
+}
