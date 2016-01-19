@@ -5,7 +5,9 @@
     <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link href="css/particleEditor.css" type="text/css" rel="stylesheet">
     <link href="css/range.css" type="text/css" rel="stylesheet">
-    <script src="plugin/argControl/physicalControl.js" type="application/javascript"></script>
+    <script src="lib/jquery-2.2.0.min.js" type="application/javascript"></script>
+    <script src="lib/bootstrap.min.js" type="application/javascript"></script>
+
     <title></title>
 </head>
 <body class="editor">
@@ -23,6 +25,10 @@
             <div id="myTabContent" class="tab-content">
                 <p class="tip-iqy" style="margin:10px 0 0 202px">提示:xxxxxxxxxxxxx!</p>
                 <!-- 物理参数设置 -->
+
+
+
+
                 <div class="tabClass tab-pane in active" id="physicalSet">
                     <div class="argSet">
                         <fieldset>
@@ -55,10 +61,32 @@
             </canvas>
         </div>
         <div class="pright">
-
+            <div class="selectTexture text">纹理选择器</div>
+            <!-- Split button -->
+            <div class="textCont">
+                <div class="btn-group" >
+                    <button id="showTexture" type="button" class="btn btn-danger">圆圈</button>
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul id="textureValue" class="dropdown-menu" >
+                        <li><a href="#">圆圈</a></li>
+                        <li><a href="#">雪花</a></li>
+                        <li><a href="#">雨滴</a></li>
+                        <li><a href="#">星星</a></li>
+                        <li><a href="#">烟雾</a></li>
+                        <li><a href="#">正六边形</a></li>
+                        <!--<li role="separator" class="divider"></li>-->
+                        <li><a href="#">五角星</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
     <script src="plugin/kinematics.js" type="application/javascript"></script>
+    <script src="plugin/argControl/physicalControl.js" type="application/javascript"></script>
+    <script src="plugin/textureSelect.js" type="application/javascript"></script>
 
 </body>
 </html>

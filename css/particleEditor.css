@@ -118,3 +118,16 @@
     width: auto;
     height: auto;
 }
+.selectTexture{
+    position: absolute;
+    top: 50px;
+    height: auto;
+    margin-left: 125px;
+}
+.textCont{
+    position: absolute;
+    top: 100px;
+    height: auto;
+    width: auto;
+    margin-left: 150px;
+}
