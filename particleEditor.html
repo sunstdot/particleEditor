@@ -5,9 +5,10 @@
     <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link href="css/particleEditor.css" type="text/css" rel="stylesheet">
     <link href="css/range.css" type="text/css" rel="stylesheet">
+    <script type="application/javascript" src="./lib/sea-debug.js"></script>
     <script src="lib/jquery-2.2.0.min.js" type="application/javascript"></script>
     <script src="lib/bootstrap.min.js" type="application/javascript"></script>
-
+    <script src="lib/echarts-all.js"></script>
     <title></title>
 </head>
 <body class="editor">
@@ -31,18 +32,21 @@
 
                 <div class="tabClass tab-pane in active" id="physicalSet">
                     <div class="argSet">
-                        <fieldset>
-                            <span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>
-                            <input id="gravity" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateGravityInput(this.value);" onchange="updateGravityInput(this.value);"/>
+                        <span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>
+                        <div id="gravityControl" class="gravityControl">
+                            <!--<canvas  width="360px" height="200px" style="border:1px solid"></canvas>-->
+                        </div>
+                        <!--<fieldset>-->
+                            <!--<span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>    -->
+                            <!--<input id="gravity" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateGravityInput(this.value);" onchange="updateGravityInput(this.value);"/>-->
 
-                            <span class="text">力度控制：</span> <span id="dynamicsValue" class="valueShow">50</span>
-                            <input id="dynamics" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateDynamicsInput(this.value);" onchange="updateDynamicsInput(this.value);"/>
-                        </fieldset>
+                            <!--<span class="text">力度控制：</span> <span id="dynamicsValue" class="valueShow">50</span>-->
+                            <!--<input id="dynamics" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateDynamicsInput(this.value);" onchange="updateDynamicsInput(this.value);"/>-->
+                        <!--</fieldset>-->
                     </div>
                     <div class="velocityCvs">
                         <span class="text">速度记录仪</span>
-                        <div class="recorder">
-                            <canvas id="velocityRecord" width="180px" height="90px" style="border: 1px solid"></canvas>
+                        <div class="recorder" id="velocityRecorder">
                         </div>
                     </div>
 
@@ -84,9 +88,18 @@
             </div>
         </div>
     </div>
-    <script src="plugin/kinematics.js" type="application/javascript"></script>
-    <script src="plugin/argControl/physicalControl.js" type="application/javascript"></script>
-    <script src="plugin/textureSelect.js" type="application/javascript"></script>
+    <script>
 
+        // seajs 的简单配置
+        seajs.config({
+            base: "./",
+            alias: {
+//                "jquery": "jquery-2.2.0.min.js"
+            }
+        });
+
+        // 加载入口模块
+        seajs.use("./plugin/particleEditor")
+    </script>
 </body>
 </html>
