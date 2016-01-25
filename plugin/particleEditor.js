@@ -1,4 +1,5 @@
 /**
+ * 代码编写采用单例模式
  * Created by sunshitao on 2016/1/20.
  */
 define(function(require, exports, module){
@@ -6,7 +7,7 @@ define(function(require, exports, module){
     var jobList = [
         require("plugin/kinematics"),
         require("plugin/textureSelect"),
-        require("plugin/argControl")
+        require("plugin/particleControl")
     ];
 
     execJob.exec(jobList);
