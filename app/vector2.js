@@ -17,4 +17,10 @@ vector2.prototype = {
     divide:function(f){var invf = 1/f;return new vector2(this.x*invf,this.y*invf)},
     dot:function(v){return new vector2(this.x* v.x,this.y* v.y)}
 };
+
+vector2.prototype.mod = function(){
+    return Math.sqrt(Math.pow(this.x,2)+Math.pow(this.y,2));
+}
+
+
 vector2.zero = new vector2(0,0);

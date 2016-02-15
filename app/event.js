@@ -73,7 +73,7 @@ define(function(require, exports, module){
          * 创建事件处理器表
          * @return {list} 事件列表
          */
-        var listener = function(){
+        var listener = (function(){
             var tableMod = {},table = {};
             /**
              * 获取事件长度
@@ -197,7 +197,7 @@ define(function(require, exports, module){
                 return r;
             };
             return tableMod;
-        };
+        }());
 
         return {
             /**

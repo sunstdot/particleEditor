@@ -18,6 +18,8 @@ define(function(require,exports,module){
     //线
     var LineShape = require('../lib/zrender/shape/Line');
     var color = require('../lib/zrender/tool/color');
+
+    var vector = require('../app/vector1');
     var colorIdx = 0;
 
 
@@ -71,8 +73,9 @@ define(function(require,exports,module){
                 angle = calculateAngle(startPos,endPos);
 
                 //算出重力值，向下和向右的重力默认为正
-                downValue = Math.ceil(Math.sqrt(Math.pow(endPos.x-startPos.x,2)+Math.pow(endPos.y-startPos.y,2)));//效率会很低
-                rightValue = Math.ceil(Math.sqrt(Math.pow(endPos.x-startPos.x,2)+Math.pow(endPos.y-startPos.y,2)));
+                rightValue = endPos.x-startPos.x;
+                downValue = endPos.y - startPos.y;
+
                 //通过事件抛给 kinematics来修改主屏幕中的粒子特效
 
                 event.notify("modifyGravity",{downGravity:downValue,rightGravity:rightValue}); //效率会很低
