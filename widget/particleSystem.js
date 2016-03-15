@@ -3,10 +3,17 @@
  * Created by sunshitao on 2016/2/15.
  */
 define(function (require, exports, module) {
-    module.exports = (function() {
+
+    var vector2 = require("../app/vector2");
+
+    module.exports = function() {
         //private field
         var that = this;
         var particles = new Array();
+
+        //设置鼠标位置
+        var oldMousePosition = vector2.zero,newMousePosition = vector2.zero;
+
 
         //public field
         //对属性进行初始化
@@ -15,10 +22,13 @@ define(function (require, exports, module) {
 
         this.effectors = new Array();
 
+
+
+
         //private methods
 
         //检测粒子超过范围就反方向相应速度,增加粒子碰撞
-        function ChamberBox(x1,y1,x2,y2){
+        var ChamberBox = function(x1,y1,x2,y2){
             this.apply=function(particle){
                 if((particle.position.x - particle.size)< x1 || (particle.position.x + particle.size > x2)){
                     particle.velocity.x = -particle.velocity.x;
@@ -27,7 +37,7 @@ define(function (require, exports, module) {
                     particle.velocity.y = -particle.velocity.y;
                 }
             }
-        }
+        };
 
         function aging(dt) {
             for (var i = 0; i < particles.length; i++) {
@@ -52,7 +62,7 @@ define(function (require, exports, module) {
 
         function applyGravity() {
             for (var i in particles) {
-                particles[i].acceleration = this.gravity;
+                particles[i].acceleration = that.gravity;
             }
         }
 
@@ -75,6 +85,10 @@ define(function (require, exports, module) {
             }
         }
 
+        this.obstacle = function(x,y){
+            that.effectors.push(new ChamberBox(0,0,x,y));
+        };
+
 
         //修改属性
         this.modifyProperty = function (key, value) {
@@ -85,6 +99,11 @@ define(function (require, exports, module) {
         this.emit = function (particle) {
             particles.push(particle);
         };
+
+        this.clear = function(){
+            particles = [];
+        };
+
         //模拟粒子发射
         this.simulate = function (dt) {
             aging(dt);
@@ -110,7 +129,7 @@ define(function (require, exports, module) {
                 ctx.fill();
             }
         };
-    }());
+    };
 });
 
 

@@ -6,15 +6,30 @@
 define(function (require, exports, module) {
     var component = {};
 
-    var ParticleSystem = require("../widget/particleSystem");
+    var Particle = require("../app/particle");  //引入粒子
+    var Color = require("../app/Color");  //引入颜色设置
+    var vector2 = require("../app/vector2");  //引入向量
+
     var event = require("../app/event");
+    var ParticleSystem = require("../widget/particleSystem");
+
 
     var myCanvas = document.getElementById("mainPainter");
-    var ctx = myCanvas.getContext("2d");
+    if(myCanvas){
+        var ctx = myCanvas.getContext("2d");
+    }
 
     var ps = new ParticleSystem();
 
     var acceleration = 0;  //初始加速度设置为0
+
+    var dt = 0.01;
+
+    var playtimer;
+    //设置鼠标交互
+    var oldMousePosition = vector2.zero,newMousePosition = vector2.zero;
+
+
     var option = {
         //随机方向
         sampleDirection:function(){
@@ -25,20 +40,36 @@ define(function (require, exports, module) {
         sampleColor:function(color1,color2){
             var t = Math.random();
             return color1.multiply(t).add(color2.multiply(1-t));
+        },
+        sampleNumber:function(num1,num2){
+            var t = Math.random();
+            return num1*t+num2*(1-t);
+        },
+        clearCanvas:function(){
+            if(ctx != null){
+                ctx.save();
+                ctx.fillStyle="rgba(0, 0, 0, 0.1)";
+                ctx.fillRect(0,0,myCanvas.width,myCanvas.height);
+                ctx.restore();
+            }
         }
     };
     //todo 还是得引入类的思想，将速度，位置等的改变封装起来，做速度类，提供速度的add，multi，minus等方法？还是提供一个粒子类
     var core = {
-        //粒子描述
-        render: function () {
-
-        },
-
         //循环积分展示粒子运动轨迹
         loop: function () {
+            var velocity = newMousePosition.substract(oldMousePosition).multiply(10);
+            velocity = velocity.add(option.sampleDirection(0,Math.PI*2)).multiply(10);
+            var color = option.sampleColor(Color.red,Color.yellow);
+            var life = option.sampleNumber(1,2);
+            var size = option.sampleNumber(2,4);
 
-
-            setTimeout(this.loop, 100);
+            ps.emit(new Particle(newMousePosition, velocity,life,color,size));
+            oldMousePosition = newMousePosition;
+            ps.simulate(dt);
+            option.clearCanvas();
+            //todo 根据选择的特效类型进行绘制
+            ps.render(ctx);
         }
     };
 
@@ -46,6 +77,9 @@ define(function (require, exports, module) {
     //选择一个特效纹理
     function selectTexture(param) {
         var type = param.type;
+
+        //todo 拿到了一种特效类型,下次start时候需要绘制出来
+
         console.log("------------" + type);
     }
 
@@ -58,18 +92,54 @@ define(function (require, exports, module) {
 
 
     function painterInit() {
+        ctx.clearRect(0,0,myCanvas.width, myCanvas.height);
         ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
         ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
     }
 
-
     function bindEvent() {
         event.register("selectTexture", selectTexture.bind(this));
         event.register("modifyGravity", modifyGravity.bind(this));
+
+        //绑定开始按钮
+        var playBtn = document.getElementById("playBtn");
+        if(playBtn){
+            playBtn.addEventListener("click",function(e){
+                //循环播放
+                if(!playtimer){
+                    playtimer = setInterval(function(){
+                        core.loop();
+                    },10);
+                }
+            });
+        }
+        //绑定结束按钮
+        var stopBtn = document.getElementById("stopBtn");
+        if(stopBtn){
+            stopBtn.addEventListener("click",function(){
+                if(playtimer){
+                    clearInterval(playtimer);
+                    playtimer = undefined;
+                    ps.clear();
+                    painterInit();
+                }
+            });
+        }
+
+        myCanvas.addEventListener("mousemove",function(e){
+            if(e.layerX || e.layerX ==0){  //firefox
+                e.target.style.position = 'relative';
+                newMousePosition = new vector2(e.layerX, e.layerY);
+            }else{
+                newMousePosition = new vector2(e.offsetX, e.offsetY);
+            }
+        });
     }
 
-
     component.exec = function () {
+        if(!myCanvas){
+            return;
+        }
         bindEvent();
         painterInit();
     };

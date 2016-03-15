@@ -2,6 +2,8 @@
  * Created by sunst on 2016/1/6.
  */
 function ParticleSystem(){
+
+
     //private fields
     var that = this;
     var particles = new Array();
@@ -48,6 +50,14 @@ function ParticleSystem(){
             p.velocity = p.velocity.add(p.acceleration.multiply(dt));
         }
     }
+
+    //不同的绘制粒子效果
+    var obj = {
+        "common":function(){
+
+        }
+    };
+
 
     // Public methods 粒子系统行为
     this.emit = function(particle) {

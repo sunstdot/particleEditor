@@ -11,35 +11,41 @@
     <script src="lib/echarts-all.js" type="application/javascript"></script>
     <script src="lib/zrender.js" type="application/javascript"></script>
     <script src="lib/underscore.js" type="application/javascript"></script>
+    <script src="lib/three.js" type="application/javascript"></script>
+    <script src="lib/vue.js" type="application/javascript"></script>
+
     <title></title>
 </head>
-<body class="editor">
-    <div class="pheader">
+<body class="editor-wrapper">
+    <div class="editor-header">
         <img class="leftIcon imgIcon" src="assets/img/flower.png">
         <div class="titleText">粒子编辑器</div>
     </div>
-    <div class="base">
-        <div class="pleft">
-            <ul id="myTab" class="nav nav-tabs">
-                <li id="physicalArg" class="active"><a href="#pysical" >物理参数</a></li>
-                <li class="appearanceArg"><a href="#appear" >外观参数</a></li>
-                <li class="trackArg"><a href="#track" >轨迹参数</a></li>
-            </ul>
+    <!--登陆框承载-->
+    <div style="position: absolute;top: 50%;left: 50%;margin-top: 0px;margin-left: -250px;height: 400px;width: 500px; display: block;" id="loginPanel">
+    </div>
+    <div class="editor-body">
+        <nav class="editor-nav">
+            <div id="myTab" class="nav">
+                <div class="btn-group" ele-value="physicalSet"><button class="btn1 btn-physics">物理参数</button></div>
+                <div class="btn-group" ele-value="appearanceSet"><button class="btn1 btn-appear">外观参数</button></div>
+                <div class="btn-group" ele-value="trackSet"><button class="btn1 btn-track">轨迹参数</button></div>
+            </div>
             <div id="myTabContent" class="tab-content">
-                <p class="tip-iqy" style="margin:10px 0 0 202px">提示:xxxxxxxxxxxxx!</p>
+                <!--<p class="tip-iqy" style="color: red;margin-left:25px">tip:welcome to my world!</p>-->
                 <!-- 物理参数设置 -->
-                <div class="tabClass tab-pane in active" id="physicalSet">
+                <div id="physicalSet" class="tabClass tabBg1 flip in">
                     <div class="argSet">
                         <span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>
                         <div id="gravityControl" class="gravityControl">
                             <!--<canvas  width="360px" height="200px" style="border:1px solid"></canvas>-->
                         </div>
                         <!--<fieldset>-->
-                            <!--<span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>    -->
-                            <!--<input id="gravity" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateGravityInput(this.value);" onchange="updateGravityInput(this.value);"/>-->
+                        <!--<span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>    -->
+                        <!--<input id="gravity" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateGravityInput(this.value);" onchange="updateGravityInput(this.value);"/>-->
 
-                            <!--<span class="text">力度控制：</span> <span id="dynamicsValue" class="valueShow">50</span>-->
-                            <!--<input id="dynamics" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateDynamicsInput(this.value);" onchange="updateDynamicsInput(this.value);"/>-->
+                        <!--<span class="text">力度控制：</span> <span id="dynamicsValudata-mediumfocuspicture-eleme" class="valueShow">50</span>-->
+                        <!--<input id="dynamics" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateDynamicsInput(this.value);" onchange="updateDynamicsInput(this.value);"/>-->
                         <!--</fieldset>-->
                     </div>
                     <div class="velocityCvs">
@@ -48,44 +54,67 @@
                         </div>
                     </div>
 
+                    <button id="playBtn" class="startBtn start">开始</button>
+                    <button id="stopBtn" class="stopBtn end">结束</button>
+                    <div style="width: 100%;height: 140px">
+
+                    </div>
                 </div>
                 <!-- 外观参数设置-->
-                <div class="tab-pane " id="appearanceSet">
+                <div class="tabClass tabBg2 flip" id="appearanceSet" style="display: none">
+                    <div style="width:100%;height: 740px;border: 1px solid ">
+                        我是外观参数设置
+                    </div>
                 </div>
                 <!-- 轨迹参数设置 -->
-                <div class="tab-pane " id="trackSet">
+                <div class="tabClass tabBg3 flip" id="trackSet" style="display:none">
+                    <div style="width:100%;height: 740px;border: 1px solid ">
+                        我是轨迹参数设置
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="pmiddle">
-            <canvas id="mainPainter" width="792px" height="803px" style="border: 1px solid">
-
-            </canvas>
-        </div>
-        <div class="pright">
-            <div class="selectTexture text">纹理选择器</div>
+        </nav>
+        <main id="editorContent" class="editor-content">
+            <!--<canvas id="mainPainter" width="792px" height="803px">-->
+            <!--</canvas>-->
+        </main>
+        <aside class="editor-ads"><div class="selectTexture">纹理选择器</div>
             <!-- Split button -->
             <div class="textCont">
-                <div class="btn-group" >
-                    <button id="showTexture" type="button" class="btn btn-danger">圆圈</button>
+                <div class="btn-group selectBtn">
+                    <button id="showTexture" type="button" class="btn btn-danger" style="width: 135px">圆圈</button>
                     <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="caret"></span>
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul id="textureValue" class="dropdown-menu" >
-                        <li><a href="#">圆圈</a></li>
-                        <li><a href="#">雪花</a></li>
-                        <li><a href="#">雨滴</a></li>
-                        <li><a href="#">星星</a></li>
-                        <li><a href="#">烟雾</a></li>
-                        <li><a href="#">正六边形</a></li>
+                        <li><a href="#" type="circle">圆圈</a></li>
+                        <li><a href="#" type="snow">雪花</a></li>
+                        <li><a href="#" type="rain">雨滴</a></li>
+                        <li><a href="#" type="star">星星</a></li>
+                        <li><a href="#" type="smoke">烟雾</a></li>
+                        <li><a href="#" type="">正六边形</a></li>
                         <!--<li role="separator" class="divider"></li>-->
-                        <li><a href="#">五角星</a></li>
+                        <li><a href="#" type="hexagon">五角星</a></li>
                     </ul>
                 </div>
             </div>
-        </div>
+        </aside>
+        <script>
+//            var contentDom = document.getElementById("editorContent");
+//            var myCanvas = document.getElementById("mainPainter");
+//            myCanvas.width = contentDom.offsetWidth;
+//            myCanvas.height = contentDom.offsetHeight;
+        </script>
+
+        <!--<div class="pmiddle">-->
+
+        <!--</div>-->
+        <!--<div class="pright">-->
+
+        <!--</div>-->
     </div>
+    <footer></footer>
     <script>
 
         // seajs 的简单配置

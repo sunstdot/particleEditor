@@ -1,36 +1,61 @@
 *{
-    font-family: 'Arial Normal', 'Arial';
+    /*font-family: 'KaiTiGB2312','Arial Normal', 'Arial';*/
+    font-family: "Microsoft yahei","微软雅黑",Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;
+
 }
-.editor{
-    width: 100%;
-    height: 100%;
-    position: absolute;
+.editor-wrapper {
     display: flex;
     flex-direction: column;
 }
-.pheader{
-    display: flex;
-    -webkit-flex:initial;
-    flex: initial;
-    height: 150px;
-    min-height: 100px;
-    background-color: #FF9999;
+
+body{
+    background:url('../assets/img/book-bg.jpg') top left;
+    background-size: 100% 100%;
 }
-.base{
-    position: relative;
-    left: 10%;
-    width: 80%;
-    display: flex;
+header,
+footer {
     flex: 1;
+}
+@media (max-width: 768px) {
+    .editor-body {
+        flex-direction: column;
+        flex: 1;
+    }
+    .editor-nav,
+    .editor-ads,
+    .editor-content {
+        flex: auto;
+    }
 }
 
-.pleft,.pright{
-    /* 两个边栏的宽度设为12em */
-    flex: 0 0 26em;
-    background-color: #99CCCC;
-}
-.pmiddle{
+.editor-body {
+    display: flex;
     flex: 1;
+}
+.editor-header{
+    height: 150px;
+    /*background-color: #99CCCC;*/
+}
+.editor-content {
+    flex: 1;
+    background-color:#000044;
+    background:url('../assets/img/editor-bg.jpg') repeat;
+    margin:0px;
+    overflow:hidden;
+}
+.editor-nav, .editor-ads {
+    /* 两个边栏的宽度设为26em */
+    flex: 0 0 26em;
+    /*margin: 20px auto;*/
+    border: 10px solid peachpuff;
+    /*border-color: peachpuff chartreuse thistle firebrick;*/
+    /*border-style: solid dashed dotted double;*/
+    /*border-width: 10px 10px 10px 10px;*/
+}
+
+.editor-nav {
+    /* 导航放到最左边 */
+    order: -1;
 }
 
 .imgIcon{
@@ -62,39 +87,39 @@
     line-height: normal;
 }
 #myTab{
-    width: 248px;
-    left: 7px;
-    top: 45px;
+    width: 300px;
+    left: 30px;
     font-size: 12px;
-    position: absolute;
     height: 45px;
-    border: 1px solid #000000;
+    position: relative;
+}
+#myTab:after{
+    background: #b95951;
+    content: '';
+    display: block;
+    height: 0.0625rem;
+    position: relative;
+    top: -0.5rem;
+    width: 100%;
 }
 
 .tabClass{
-    top: 60px;
     width: 100%;
     height: auto;
-    position: relative;
-    float: left;
 }
 .rangeInput{
     height: 50px;
     margin: 10px 0 10px 0;
 }
 .argSet{
-    top: 40px;
     width: 100%;
     height: auto;
-    float: left;
-    position: relative;
+    margin:0px 0px 20px 0px;
 }
 .velocityCvs{
-    position: relative;
     width: 100%;
     height: auto;
-    float: left;
-    top: 50px;
+    margin:20px 0px 20px 0px;
 }
 .text{
     font-weight: 700;
@@ -111,29 +136,328 @@
     color: #2F4F4F;
 }
 .recorder{
-    position: absolute;
-    top: 50px;
-    left: 0;
     width: 360px;
     height: 280px;
 }
 .selectTexture{
-    position: absolute;
-    top: 50px;
-    height: auto;
-    margin-left: 125px;
+    position: relative;
+    width: 100%;
+    /*border-color: peachpuff chartreuse thistle firebrick;*/
+    color: 	#00008B;
+    font-weight:700;
+    font-size: 24px;
+    height: 30px;
+    line-height: 30px;
+    margin-top:20px;
+    text-align: center;
 }
 .textCont{
-    position: absolute;
-    top: 100px;
     height: auto;
-    width: auto;
-    margin-left: 150px;
+    width: 100%;
+    text-align: center;
 }
 .gravityControl{
-    position: relative;
-    top: 0;
-    left:0;
     height: 200px;
     width: 360px;
+    margin: 20px 0px 20px 0px;
+}
+.startBtn{
+    width: 64px;
+    height: 32px;
+    left: 75px;
+    color:#fff;
+    font-weight: 700;
+    font-size: 14px;
+    position: relative;
+    /*background: url("../assets/img/pointRight.png") no-repeat center top;*/
+}
+
+.startBtn:hover{
+    /*background: url("../assets/img/Fist.png") no-repeat center top;*/
+    color:#ff0;
+    background-color: #5bb75b;
+}
+.startBtn:active{
+    color:#ff0;
+    background-color: #5bb75b;
+    /*background: url("../assets/img/pointRight.png") no-repeat center top;*/
+}
+
+.start,.end{
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    background-color: #49afcd;
+    background-image: -moz-linear-gradient(top,#5bc0de,#2f96b4);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#5bc0de),to(#2f96b4));
+    background-image: -webkit-linear-gradient(top,#5bc0de,#2f96b4);
+    background-image: -o-linear-gradient(top,#5bc0de,#2f96b4);
+    background-image: linear-gradient(to bottom,#5bc0de,#2f96b4);
+    background-repeat: repeat-x;
+    border-color: #2f96b4 #2f96b4 #1f6377;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de',endColorstr='#ff2f96b4',GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.stopBtn{
+    width: 64px;
+    height: 32px;
+    left: 155px;
+    color:#fff;
+    font-weight: 700;
+    font-size: 14px;
+    position: relative;
+    /*background: url("../assets/img/Fist.png") no-repeat center top;*/
+}
+.stopBtn:hover{
+    /*background: url("../assets/img/pointRight.png") no-repeat center top;*/
+    color:#ff0;
+    background-color: #5bb75b;
+}
+
+.stopBtn:active{
+    color:#ff0;
+    background-color: #5bb75b;
+    /*background: url("../assets/img/Fist.png") no-repeat center top;*/
+}
+
+.tab-content{
+    position: relative;
+    float: left;
+    width: 100%;
+    height: auto;
+    top: 5px;
+
+}
+.tabWrap{
+    position: relative;
+    float: left;
+    width: 100%;
+    height:45px;
+    left: 7px;
+    top: 45px;
+    font-size: 12px;
+}
+
+.tabPanel{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.in {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-duration: 350ms;
+    animation-timing-function: ease-out;
+    animation-duration: 350ms;
+}
+.out {
+    -webkit-animation-timing-function: ease-in;
+    -webkit-animation-duration: 225ms;
+    animation-timing-function: ease-in;
+    animation-duration: 225ms;
+}
+
+.flip {
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateX(0); /* Needed to work around an iOS 3.1 bug that causes listview thumbs to disappear when -webkit-visibility:hidden is used. */
+    backface-visibility: hidden;
+    transform: translateX(0);
+}
+.flip.out {
+    -webkit-transform: rotateY(-90deg) scale(.9);
+    -webkit-animation-name: flipouttoleft;
+    -webkit-animation-duration: 175ms;
+    transform: rotateY(-90deg) scale(.9);
+    animation-name: flipouttoleft;
+    animation-duration: 175ms;
+}
+.flip.in {
+    -webkit-animation-name: flipintoright;
+    -webkit-animation-duration: 225ms;
+    animation-name: flipintoright;
+    animation-duration: 225ms;
+}
+.flip.out.reverse {
+    -webkit-transform: rotateY(90deg) scale(.9);
+    -webkit-animation-name: flipouttoright;
+    transform: rotateY(90deg) scale(.9);
+    animation-name: flipouttoright;
+}
+.flip.in.reverse {
+    -webkit-animation-name: flipintoleft;
+    animation-name: flipintoleft;
+}
+@-webkit-keyframes flipouttoleft {
+    from { -webkit-transform: rotateY(0); }
+    to { -webkit-transform: rotateY(-90deg) scale(.9); }
+}
+@keyframes flipouttoleft {
+    from { transform: rotateY(0); }
+    to { transform: rotateY(-90deg) scale(.9); }
+}
+@-webkit-keyframes flipouttoright {
+    from { -webkit-transform: rotateY(0) ; }
+    to { -webkit-transform: rotateY(90deg) scale(.9); }
+}
+@keyframes flipouttoright {
+    from { transform: rotateY(0); }
+    to { transform: rotateY(90deg) scale(.9); }
+}
+@-webkit-keyframes flipintoleft {
+    from { -webkit-transform: rotateY(-90deg) scale(.9); }
+    to { -webkit-transform: rotateY(0); }
+}
+@keyframes flipintoleft {
+    from { transform: rotateY(-90deg) scale(.9); }
+    to { transform: rotateY(0); }
+}
+@-webkit-keyframes flipintoright {
+    from { -webkit-transform: rotateY(90deg) scale(.9); }
+    to { -webkit-transform: rotateY(0); }
+}
+@keyframes flipintoright {
+    from { transform: rotateY(90deg) scale(.9); }
+    to { transform: rotateY(0); }
+}
+
+/*背景颜色*/
+.tabBg1{
+    background-color: #faa732;
+    background-image: -moz-linear-gradient(top,#fbb450,#f89406);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#fbb450),to(#f89406));
+    background-image: -webkit-linear-gradient(top,#fbb450,#f89406);
+    background-image: -o-linear-gradient(top,#fbb450,#f89406);
+    background-image: linear-gradient(to bottom,#fbb450,#f89406);
+    background-repeat: repeat-x;
+    border-color: #f89406 #f89406 #ad6704;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450',endColorstr='#fff89406',GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.tabBg2{
+    background-color: #006dcc;
+    background-image: -moz-linear-gradient(top,#08c,#04c);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#08c),to(#04c));
+    background-image: -webkit-linear-gradient(top,#08c,#04c);
+    background-image: -o-linear-gradient(top,#08c,#04c);
+    background-image: linear-gradient(to bottom,#08c,#04c);
+    background-repeat: repeat-x;
+    border-color: #04c #04c #002a80;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc',endColorstr='#ff0044cc',GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.tabBg3{
+    background-color: #363636;
+    background-image: -moz-linear-gradient(top,#444,#222);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#444),to(#222));
+    background-image: -webkit-linear-gradient(top,#444,#222);
+    background-image: -o-linear-gradient(top,#444,#222);
+    background-image: linear-gradient(to bottom,#444,#222);
+    background-repeat: repeat-x;
+    border-color: #222 #222 #000;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444',endColorstr='#ff222222',GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+/*button 效果  */
+
+.btn-group{
+    position: relative;
+    display: inline-block;
+    font-size: 0;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: #fff;
+    margin: 10px 5px 10px 5px;
+}
+
+.btn1{
+    display: inline-block;
+    padding: 4px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 20px;
+    /*color: #333;*/
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+    vertical-align: middle;
+    cursor: pointer;
+}
+.btn-group>.btn {
+    position: relative;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    font-size: 14px;
+}
+
+.btn-physics{
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    background-color: #faa732;
+    background-image: -moz-linear-gradient(top,#fbb450,#f89406);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#fbb450),to(#f89406));
+    background-image: -webkit-linear-gradient(top,#fbb450,#f89406);
+    background-image: -o-linear-gradient(top,#fbb450,#f89406);
+    background-image: linear-gradient(to bottom,#fbb450,#f89406);
+    background-repeat: repeat-x;
+    border-color: #f89406 #f89406 #ad6704;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450',endColorstr='#fff89406',GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.btn-physics:hover,.btn-physics:active{
+    color: #fff;
+    background-color: #04c;
+}
+
+.btn-appear{
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    background-color: #006dcc;
+    background-image: -moz-linear-gradient(top,#08c,#04c);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#08c),to(#04c));
+    background-image: -webkit-linear-gradient(top,#08c,#04c);
+    background-image: -o-linear-gradient(top,#08c,#04c);
+    background-image: linear-gradient(to bottom,#08c,#04c);
+    background-repeat: repeat-x;
+    border-color: #04c #04c #002a80;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc',endColorstr='#ff0044cc',GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-appear:hover,.btn-appear:active{
+    color: #fff;
+    background-color: #222;
+}
+
+.btn-track{
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    background-color: #363636;
+    background-image: -moz-linear-gradient(top,#444,#222);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#444),to(#222));
+    background-image: -webkit-linear-gradient(top,#444,#222);
+    background-image: -o-linear-gradient(top,#444,#222);
+    background-image: linear-gradient(to bottom,#444,#222);
+    background-repeat: repeat-x;
+    border-color: #222 #222 #000;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444',endColorstr='#ff222222',GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-track:hover,.btn-track:active{
+    color: #fff;
+    background-color: #faa732;
+}
+
+.selectBtn{
+    margin-left: auto;
+    margin-right: auto;
 }

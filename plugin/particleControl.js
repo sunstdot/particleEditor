@@ -1,3 +1,4 @@
+/*global $*/
 /**
  * 用于页面参数控制
  * Created by sunshitao on 2016/1/20.
@@ -19,7 +20,7 @@ define(function(require,exports,module){
     var LineShape = require('../lib/zrender/shape/Line');
     var color = require('../lib/zrender/tool/color');
 
-    var vector = require('../app/vector1');
+    //var vector = require('../app/vector2');
     var colorIdx = 0;
 
 
@@ -194,17 +195,57 @@ define(function(require,exports,module){
                 option.series[0].data[0].value = param.value || (Math.random()*100).toFixed(2) - 0;
                 myEcharts.setOption(option,true);
             };
+        },
+        turnCard:function(){
+            var tabDom = $("#myTab");
+            var eleFront,eleBack,
+                eleList = $(".tabClass");
+
+            var tabBackOrFront = function(){
+                eleList.each(function(){
+                    if($(this).hasClass("in")){
+                        eleFront = $(this);
+                    }
+                });
+            };
+
+
+            tabDom.click(function(e){
+                var target = e.target || e.srcElement;
+                while(target.tagName !== "DIV"){
+                    target = target.parentNode;
+                }
+                target = $(target);
+                var eleValue = target.attr("ele-value");
+                eleFront.addClass("out").removeClass("in");
+
+                eleBack = $("#"+eleValue);
+
+                setTimeout(function(){
+                    eleFront.css("display","none");
+                    eleBack.addClass("in").removeClass("out");
+                    eleBack.css("display","block");
+                    tabBackOrFront();
+                },225);
+                return false;
+            });
+
+            tabBackOrFront();
+
         }
     };
 
     var bindEvent = function(){
         event.register("notifyVelocity",obj.velocityRecorder.bind(this));
+        //实现翻牌效果
+        obj.turnCard();
     };
 
     //模块执行函数
     component.exec = function(){
         bindEvent();
         gravityControl();
+        obj.velocityRecorder()({value:90});
     };
 
     module.exports = component;
