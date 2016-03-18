@@ -8,30 +8,94 @@ define(function (require, exports, module) {
 //        if(options.dataType === "jsonp"){
 //            return
 //        }
+        var data = options.data,
+            async = (options.async !== false),
+            username = options.username || "",
+            password = options.password || "",
+            method = (options.method || "GET").toUpperCase(),
+            headers = options.headers || {},
+            timeout = options.timeout || 0;
+
         var xhr;
-        function getXHR(){
-            if(window.XMLHttpRequest){
+        var key;
+        var withCredentials = options.withCredentials || false;
+        //组装查询字符串参数,同时需要使用encodeURIComponent编码
+        function _jsonToQuery(json) {
+            var result = [], key;
+            for (key in json) {
+                if (json.hasOwnProperty(key)) {
+                    result.push(encodeURIComponent(key) + '=' + encodeURIComponent(json[key]));
+                }
+            }
+            return result.join("&");
+        }
+
+        function getXHR() {
+            if (window.XMLHttpRequest) {
                 return new XMLHttpRequest();
             }
-            if(window.ActiveXObject){
-                try{
+            if (window.ActiveXObject) {
+                try {
                     return new window.ActiveXObject("Msxml2.XMLHTTP");
-                }catch (e){
-                    try{
+                } catch (e) {
+                    try {
                         return new window.ActiveXObject("Microsoft.XMLHTTP");
-                    }catch (e){
+                    } catch (e) {
 
                     }
                 }
             }
         }
 
-        function onreadystatechange(){
-            if(xhr.readyState == 4){
-                if(xhr.status )
+        function onreadystatechange() {
+            if (xhr.readyState == 4) {
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                    //消息响应成功
+                } else {
+                    new Error("the request is failed");
+                }
             }
         }
 
+        try {
+            xhr = getXHR();
+
+            if (data && data.toString.call(data) == "[object Object]") {
+                data = _jsonToQuery(data);
+            }
+            if (method == "GET") {
+                if (data) {
+                    url += (url.indexOf("?") >= 0 ? '&' : '?') + data;
+                    data = null;  //释放内存
+                }
+            }
+            if(method == "POST"){
+                xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            }
+
+            for(key in headers){
+                if(headers.hasOwnProperty(key)){
+                    xhr.setRequestHeader(key,headers[key]);
+                }
+            }
+
+            if("withCredentials" in xhr){
+                xhr.withCredentials = withCredentials;
+            }
+
+            if(async){
+                xhr.onreadystatechange = onreadystatechange;
+            }
+
+            xhr.open(method,url,async);
+            xhr.send(data);
+
+            if(!async){
+                onreadystatechange();
+            }
+        } catch (e) {
+            console.log("communicate failed");
+        }
     };
 
 

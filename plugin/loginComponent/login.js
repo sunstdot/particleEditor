@@ -4,9 +4,13 @@
 define(function(require, exports, module){
     var component = {};
     var loginTpl = require('./logintpl');
+    var loginCss = require('./loginCss');
     var loginHtml = require('./loginCss.js');
 
-    var loginCss = require('./loginCss');
+
+
+    var httpInterface = require('../../app/interface');
+
 
 
     function includeStyleElement(styles,styleId) {
@@ -63,21 +67,22 @@ define(function(require, exports, module){
                     var username = this.username;
                     var password = this.password;
 
-                    if(username === ''||username.trim() ||password === ''|| password.trim() === ''){
+                    if(username === ''||username.trim() === ''||password === ''|| password.trim() === ''){
                         return;
                     }
                     console.log(username+"========="+password);
 
                     var param = {
                         username:username,
-                        pwd:password
+                        password:password
                     };
 
-
-
-                    http.json('login',param);
-                    //send login message to node
-
+                    var options = {
+                        data:param,
+                        url:'login'
+                    };
+                    //调用接口
+                    httpInterface(options);
                 }
             }
         })
