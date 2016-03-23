@@ -8,7 +8,7 @@ define(function (require, exports, module) {
 
     function send(options,callback){
         var param = options.data;
-        var method = options.method || "GET";
+        var method = options.method || "POST";
         var timeout = options.timeout || 20000;
         var withCredentials = options.withCredentials;
         var url = options.url;

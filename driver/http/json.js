@@ -69,15 +69,7 @@ define(function (require, exports, module) {
                     data = null;  //释放内存
                 }
             }
-            if(method == "POST"){
-                xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-            }
 
-            for(key in headers){
-                if(headers.hasOwnProperty(key)){
-                    xhr.setRequestHeader(key,headers[key]);
-                }
-            }
 
             if("withCredentials" in xhr){
                 xhr.withCredentials = withCredentials;
@@ -88,6 +80,15 @@ define(function (require, exports, module) {
             }
 
             xhr.open(method,url,async);
+            if(method == "POST"){
+                xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            }
+
+            for(key in headers){
+                if(headers.hasOwnProperty(key)){
+                    xhr.setRequestHeader("requestType",headers[key]);
+                }
+            }
             xhr.send(data);
 
             if(!async){
