@@ -1,0 +1,63 @@
+/*======================================================电灯泡开始======================================================*/
+.iconic-lightbulb {
+    cursor: pointer;
+}
+
+.iconic-lightbulb * {
+    -webkit-transition: .4s;
+    -moz-transition: .4s;
+    transition: .4s;
+}
+
+.iconic-lightbulb .icon-container {
+    fill: #fff;
+    stroke-width: 6;
+    stroke: #fff;
+
+    -webkit-transition: .3s;
+    -moz-transition: .3s;
+    transition: .3s;
+}
+
+.iconic-lightbulb:hover .icon-container {
+    fill: #fff8db;
+
+    -webkit-transition: 2s;
+    transition: 2s;
+    -webkit-transition: 2s;
+}
+
+.iconic-lightbulb .iconic-lightbulb-light * {
+    stroke-width: 16;
+    stroke: #ddd;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.iconic-lightbulb:hover .iconic-lightbulb-light * {
+    stroke: #fc0;
+    stroke-width: 32;
+}
+
+.iconic-lightbulb .iconic-lightbulb-base {
+    fill: #666;
+}
+
+.iconic-lightbulb .iconic-lightbulb-screws * {
+    fill: none;
+    stroke-width: 16;
+    stroke: #333;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+/*======================================================电灯泡结束======================================================*/
+
+
+.testBg{
+    left: 0px;
+    top: 100px;
+    width: 300px;
+    height: 100px;
+    background: url('./testSvg.svg');
+}
