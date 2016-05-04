@@ -1,21 +1,16 @@
 /**
  * Created by sunshitao on 2016/1/20.
  */
-define(function(require,exports,module){
-
-    var component = {};
-    component.exec = function(jobList){
-        if(jobList.constructor !== Array){
-            new Error('the jobList is not array');
+let component = {};
+component.exec = function(jobList){
+    if(jobList.constructor !== Array){
+        new Error('the jobList is not array');
+    }
+    try{
+        let len = jobList.length;
+        for(let i=0;i<len;i++){
+            jobList[i].exec.apply(this);
         }
-
-        try{
-            var len = jobList.length;
-            for(var i=0;i<len;i++){
-                jobList[i].exec.apply(this);
-            }
-        }catch(e){}
-    };
-
-    module.exports = component;
-});
+    }catch(e){}
+};
+export default component;

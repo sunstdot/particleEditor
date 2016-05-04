@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8" content="text/html">
+    <title>canvas Demo</title>
+
+    <script type="application/javascript" src="../../lib/sea-debug.js"></script>
+    <script src="../../lib/echarts-all.js" type="application/javascript"></script>
+    <script src="../../lib/zrender.js" type="application/javascript"></script>
+</head>
+<body>
+    <div>普通方式实现的canvas动画</div>
+    <canvas id="canvasDemo">
+    </canvas>
+    <div>利用zrender实现的canvas动画</div>
+    <div id="canvasDemo2" style="left: 0;top: 250px;width: 300px;height: 100px;">
+    </div>
+
+
+    <script type="application/javascript" src="canvasDemo.js"></script>
+    <script>
+        var canvasDemo = new initDemo();
+        canvasDemo.start();
+    </script>
+
+    <script>
+
+        // seajs 的简单配置
+        seajs.config({
+            base: "./",
+            alias: {
+//                "zrender": "./zrender_original"
+            }
+        });
+
+        // 加载入口模块
+        seajs.use("./zrenderDemo")
+    </script>
+</body>
+</html>

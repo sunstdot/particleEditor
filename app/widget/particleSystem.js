@@ -4,7 +4,7 @@
  */
 define(function (require, exports, module) {
 
-    var vector2 = require("../app/vector2");
+    var vector2 = require("../vector2");
 
     module.exports = function() {
         //private field

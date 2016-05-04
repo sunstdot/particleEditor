@@ -2,19 +2,17 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <link href="css/particleEditor.css" type="text/css" rel="stylesheet">
-    <link href="css/range.css" type="text/css" rel="stylesheet">
-    <script type="application/javascript" src="./lib/sea-debug.js"></script>
-    <script src="lib/jquery-2.2.0.min.js" type="application/javascript"></script>
-    <script src="lib/bootstrap.min.js" type="application/javascript"></script>
+    <!--<link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">-->
+    <!--<link href="css/particleEditor.css" type="text/css" rel="stylesheet">-->
+    <!--<link href="css/range.css" type="text/css" rel="stylesheet">-->
+    <!--<script type="application/javascript" src="./lib/sea-debug.js"></script>-->
+    <!--<script src="lib/jquery-2.2.0.min.js" type="application/javascript"></script>-->
+    <!--<script src="lib/bootstrap.min.js" type="application/javascript"></script>-->
     <script src="lib/echarts-all.js" type="application/javascript"></script>
     <script src="lib/zrender.js" type="application/javascript"></script>
-    <script src="lib/underscore.js" type="application/javascript"></script>
-    <script src="lib/three.js" type="application/javascript"></script>
-    <script src="lib/vue.js" type="application/javascript"></script>
-
-    <title></title>
+    <!--<script src="lib/underscore.js" type="application/javascript"></script>-->
+    <!--<script src="lib/three.js" type="application/javascript"></script>-->
+    <!--<script src="lib/vue.js" type="application/javascript"></script>-->
 </head>
 <body class="editor-wrapper">
     <div class="editor-header">
@@ -22,7 +20,7 @@
         <div class="titleText">粒子编辑器</div>
     </div>
     <!--登陆框承载-->
-    <div style="position: absolute;top: 50%;left: 50%;margin-top: 0px;margin-left: -250px;height: 400px;width: 500px; display: block;" id="loginPanel">
+    <div style="position: absolute;top: 50%;left: 50%;margin-top: 0px;margin-left: -250px;height: 400px;width: 500px; display: block;z-index: 9999;" id="loginPanel">
     </div>
     <div class="editor-body">
         <nav class="editor-nav">
@@ -56,6 +54,7 @@
 
                     <button id="playBtn" class="startBtn start">开始</button>
                     <button id="stopBtn" class="stopBtn end">结束</button>
+                    <button id="fireBtn" class="fireBtn " v-on:click="fireTheHall">fire</button>
                     <div style="width: 100%;height: 140px">
 
                     </div>
@@ -75,8 +74,8 @@
             </div>
         </nav>
         <main id="editorContent" class="editor-content">
-            <!--<canvas id="mainPainter" width="792px" height="803px">-->
-            <!--</canvas>-->
+            <canvas id="mainPainter" width="792px" height="803px">
+            </canvas>
         </main>
         <aside class="editor-ads"><div class="selectTexture">纹理选择器</div>
             <!-- Split button -->
@@ -111,22 +110,10 @@
 
         <!--</div>-->
         <!--<div class="pright">-->
-
         <!--</div>-->
     </div>
     <footer></footer>
-    <script>
-
-        // seajs 的简单配置
-        seajs.config({
-            base: "./",
-            alias: {
-//                "jquery": "jquery-2.2.0.min.js"
-            }
-        });
-
-        // 加载入口模块
-        seajs.use("./plugin/particleEditor")
-    </script>
+    <script type="application/javascript" src="../build/app.js"></script>
+    <script type="application/javascript" src="../build/vendors.js"></script>
 </body>
 </html>

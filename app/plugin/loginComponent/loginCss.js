@@ -77,6 +77,15 @@ define(function (require, exports, module) {
         "  position: relative;"+
         "  z-index: 2;"+
         "}"+
+        ".closeBtn{"+
+            "background:url('./assets/img/close.png') no-repeat;"+
+            "background-size:cover;"+
+            "position: absolute;"+
+            "right: 10px;"+
+            "top: 10px;"+
+            "width: 36px;"+
+            "height: 36px;"+
+        "}"+
         ".divform input {"+
         "  -webkit-appearance: none;"+
         "     -moz-appearance: none;"+

@@ -3,6 +3,7 @@
  * Created by sunshitao on 2016/1/21.
  */
 define(function(require, exports, module){
+    let _ = require('underscore');
     var event = (function(){
         var createHandlerList = function(){
             var list,delIndex,size = 0,arr = [];

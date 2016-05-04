@@ -1,0 +1,51 @@
+.rollWrap{
+    background-color: #ff0000;
+    overflow: hidden;
+}
+.rollBall{
+
+    border-radius: 20px;
+    background-color: blue;
+    animation-duration: 6s;
+    animation-name: slidein;
+    animation-iteration-count: infinite;
+}
+.slidein {
+    -moz-animation-duration: 6s;
+    -webkit-animation-duration: 6s;
+    animation-duration: 6s;
+    -moz-animation-name: slidein;
+    -webkit-animation-name: slidein;
+    animation-timing-function:linear;
+    animation-name: slidein;
+    -moz-animation-iteration-count: 6;
+    -webkit-animation-iteration-count: 6;
+    animation-iteration-count: 6;
+    -moz-animation-direction: alternate;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+}
+
+@-moz-keyframes slidein {
+    0%   {margin-left:0%;}
+    25%  {margin-left:50%;}
+    50%  {margin-left:100%;}
+    75%  {margin-left:50%;}
+    100% {margin-left:0%;}
+}
+
+@-webkit-keyframes slidein {
+    0%   {margin-left:0%;}
+    25%  {margin-left:50%;}
+    50%  {margin-left:100%;}
+    75%  {margin-left:50%;}
+    100% {margin-left:0%;}
+}
+
+@keyframes slidein {
+    0%   {margin-left:0%;}
+    25%  {margin-left:50%;}
+    50%  {margin-left:100%;}
+    75%  {margin-left:50%;}
+    100% {margin-left:0%;}
+}
