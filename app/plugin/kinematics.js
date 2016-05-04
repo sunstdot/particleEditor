@@ -10,6 +10,7 @@ import vector2 from "../vector2";  //引入向量
 import event from "../event";
 import ParticleSystem from "../widget/particleSystem";
 import {drawBall,fireTheHall} from "./fireTheHall.js"
+let Vue = require('vue').default;
 let myCanvas = document.getElementById("mainPainter");
 let ctx = myCanvas.getContext("2d");
 
@@ -112,8 +113,6 @@ function bindEvent() {
             }
         });
     }
-
-
     myCanvas.addEventListener("mousemove",function(e){
         if(e.layerX || e.layerX ==0){  //firefox
             e.target.style.position = 'relative';
@@ -123,10 +122,22 @@ function bindEvent() {
         }
     });
 }
+function vueInit(){
+    let vm = new Vue({
+        el:"#fireBtn",
+        data:{},
+        methods:{
+            fire:function(){
+                fireTheHall();
+            }
+        }
+    })
+}
 component.exec = function () {
     if(!myCanvas){
         return;
     }
+    vueInit();
     bindEvent();
     painterInit();
 };
