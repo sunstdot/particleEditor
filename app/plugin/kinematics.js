@@ -9,7 +9,7 @@ import Color from "../Color";  //引入颜色设置
 import vector2 from "../vector2";  //引入向量
 import event from "../event";
 import ParticleSystem from "../widget/particleSystem";
-import {drawBall,fireTheHall} from "./fireTheHall.js"
+import {drawBall,fireTheHall,shakeBall} from "./fireTheHall.js"
 let Vue = require('vue').default;
 let myCanvas = document.getElementById("mainPainter");
 let ctx = myCanvas.getContext("2d");
@@ -89,30 +89,6 @@ function painterInit() {
 function bindEvent() {
     event.register("selectTexture", selectTexture.bind(this));
     event.register("modifyGravity", modifyGravity.bind(this));
-    //绑定开始按钮
-    let playBtn = document.getElementById("playBtn");
-    if(playBtn){
-        playBtn.addEventListener("click",function(e){
-            //循环播放
-            if(!playtimer){
-                playtimer = setInterval(function(){
-                    core.loop();
-                },10);
-            }
-        });
-    }
-    //绑定结束按钮
-    let stopBtn = document.getElementById("stopBtn");
-    if(stopBtn){
-        stopBtn.addEventListener("click",function(){
-            if(playtimer){
-                clearInterval(playtimer);
-                playtimer = undefined;
-                ps.clear();
-                painterInit();
-            }
-        });
-    }
     myCanvas.addEventListener("mousemove",function(e){
         if(e.layerX || e.layerX ==0){  //firefox
             e.target.style.position = 'relative';
@@ -127,8 +103,25 @@ function vueInit(){
         el:"#fireBtn",
         data:{},
         methods:{
+            start:function(){
+                //循环播放
+                if(!playtimer){
+                    playtimer = setInterval(function(){
+                        core.loop();
+                    },10);
+                }
+            },
+            finish:function(){
+                if(playtimer){
+                    clearInterval(playtimer);
+                    playtimer = undefined;
+                    ps.clear();
+                    painterInit();
+                }
+            },
             fire:function(){
-                fireTheHall();
+                shakeBall(myCanvas);
+                //fireTheHall(myCanvas);
             }
         }
     })

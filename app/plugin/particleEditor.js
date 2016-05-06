@@ -8,9 +8,9 @@ import "../css/particleEditor.css"
 window.$ = require('jquery');
 import execJob from "../execJob";
 import kinematics from "./kinematics";
-//import rightControl from "./rightControl";
-//import particleControl from "./particleControl";
+import rightControl from "./rightControl";
+import particleControl from "./leftControl";
 //import login from "./loginComponent/login";
 
-var jobList = [kinematics];
+var jobList = [kinematics,rightControl,particleControl];
 execJob.exec(jobList);

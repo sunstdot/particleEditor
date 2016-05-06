@@ -10,21 +10,13 @@ define(function (require, exports, module) {
         //private field
         var that = this;
         var particles = new Array();
-
         //设置鼠标位置
         var oldMousePosition = vector2.zero,newMousePosition = vector2.zero;
-
-
         //public field
         //对属性进行初始化
-        this.gravity = new vector2(0, 100);
+        this.gravity = new vector2(0, 10);
         this.velocity = 0;
-
         this.effectors = new Array();
-
-
-
-
         //private methods
 
         //检测粒子超过范围就反方向相应速度,增加粒子碰撞
@@ -38,7 +30,6 @@ define(function (require, exports, module) {
                 }
             }
         };
-
         function aging(dt) {
             for (var i = 0; i < particles.length; i++) {
                 var p = particles[i];
@@ -51,7 +42,6 @@ define(function (require, exports, module) {
                 }
             }
         }
-
         //清除老化粒子
         function kill(index) {
             if (particles.length > 1) {
@@ -88,11 +78,12 @@ define(function (require, exports, module) {
         this.obstacle = function(x,y){
             that.effectors.push(new ChamberBox(0,0,x,y));
         };
-
-
         //修改属性
         this.modifyProperty = function (key, value) {
             this[key] = value;
+        };
+        this.modifyChildProperty = function(key,value){
+            particles[0][key] = value;
         };
 
         //发射粒子
@@ -107,11 +98,10 @@ define(function (require, exports, module) {
         //模拟粒子发射
         this.simulate = function (dt) {
             aging(dt);
-            applyGravity();
+            //applyGravity();
             applyEfforts(dt);
             kinematics(dt);
         };
-
         //对粒子进行渲染
         this.render = function (ctx) {
             for (var i in particles) {

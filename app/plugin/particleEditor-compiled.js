@@ -4,13 +4,13 @@
  */
 import "../css/range.css";
 import "../css/particleEditor.css";
-import "../css/bootstrap.min.css";
+//import "../css/bootstrap.min.css"
 window.$ = require('jquery');
 import execJob from "../execJob";
 import kinematics from "./kinematics";
 import rightControl from "./rightControl";
-import particleControl from "./particleControl";
-import login from "./loginComponent/login";
+import particleControl from "./leftControl";
+//import login from "./loginComponent/login";
 
 var jobList = [kinematics, rightControl, particleControl];
 execJob.exec(jobList);
