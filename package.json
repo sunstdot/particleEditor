@@ -16,6 +16,7 @@
     "echarts": "^3.1.7",
     "expose-loader": "^0.7.1",
     "file-loader": "^0.8.5",
+    "jquery-ui": "^1.10.5",
     "style-loader": "^0.13.1",
     "underscore": "^1.8.3",
     "url-loader": "^0.5.7",

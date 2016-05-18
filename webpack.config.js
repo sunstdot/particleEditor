@@ -6,6 +6,7 @@ var CSS_PATH = path.resolve(APP_PATH,'css');
 module.exports = {
   entry:{
     "app":APP_PATH+"/plugin/particleEditor"
+    //"demo":ROOT_PATH+"/generatorDemo/demo"
   },
   output:{
     path:BUILD_PATH,
@@ -30,7 +31,7 @@ module.exports = {
       },
       {
         test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
-        loader: 'url-loader?limit=50000&name=[path][name].[ext]'
+        loader: 'url-loader?limit=500000&name=[path][name].[ext]'
       },
       {
         test:require.resolve('jquery'),
@@ -39,7 +40,7 @@ module.exports = {
     ]
   },
   externals:{
-    '$':'jquery'
+    //'$':'jquery'
   },
   devServer:{
     historyApiFallback:true,
@@ -57,7 +58,7 @@ module.exports = {
       echarts: "echarts/lib",
       zrender$: "zrender/lib/zrender.js",
       zrender: "zrender/lib",
-      $:"jquery/jquery.js",
+      //$:"jquery/jquery.js",
       vue:"vue/src/index.js"
     },
     modulesDirectories:['node_modules']
