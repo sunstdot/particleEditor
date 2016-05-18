@@ -35,7 +35,6 @@ function canvasMethod(myCanvas){
         }
     }
 }
-
 export function drawBall(myCanvas) {
     if (!myCanvas) {
         return;
@@ -59,10 +58,11 @@ export function drawBall(myCanvas) {
         });
     }
 }
-function fragmentShape(shape){
-    let r = shape.r
-    let center = new vector2(shape.x,shape.y);
+function fragmentShape(pos){
+    let r = pos.r || pos.width;
+    let center = new vector2(pos.x,pos.y);
     let fragmentCenter
+
     for(let i=0;i<count;i++){
         let size = sampleNum(r/10,r/5);
         fragmentCenter = center.add(sampleDirection(size));
@@ -72,25 +72,66 @@ function fragmentShape(shape){
         ps.emit(new Particle(fragmentCenter,velocity,life,color,size));
     }
 }
-
+function getCenter(){
+    return {
+        circle:function(shape){
+            return {
+                x:shape.cx,
+                y:shape.cy,
+                r:shape.r
+            }
+        },
+        square:function(shape){
+            return {
+                x:shape.x + shape.width/2,
+                y:shape.y + shape.height/2,
+                width:shape.width,
+                height:shape.height
+            }
+        }
+    }
+}
+function getSize(){
+    return {
+        circle:function(shape){
+            return shape.r;
+        },
+        square:function(shape){
+            return {
+                width:shape.width,
+                height:shape.height
+            }
+        }
+    }
+}
 export function shakeBall(myCanvas){
     let life = 5;
     let playTimer;
+    let type = shape[0].type;
     let ctx = myCanvas.getContext("2d");
-    let center = new vector2(shape[0].x,shape[0].y);
-    function move(center){
-        center = new vector2(center.x,center.y);
-        let velocity = center.add(sampleDirection(5)).substract(center).multiply(10).add(sampleDirection()).multiply(100);
-        let color = "rgba(142,53,74)";
-        ps.emit(new Particle(center,velocity,life,color,shape[0].r));
+    let pos,center,size;
+    for(var i=0,len=shape.length;i<len;i++){
+        if(shape[i].type !== "fireTheHall"){
+            continue;
+        }
+        pos = getCenter()[type](shape[0].shape);
+        center = new vector2(pos.x,pos.y);
+        size = getSize()[type](shape[0].shape);
+        function move(center){
+            center = new vector2(center.x,center.y);
+            let velocity = center.add(sampleDirection(5)).substract(center).multiply(10).add(sampleDirection()).multiply(100);
+            let color = "rgba(142,53,74)";
+            ps.emit(new Particle(center,velocity,life,color,size,type));
+        }
+
+        move(center);
     }
-    let count = life*100;
+    let count1 = life*100;
     let i=0;
     let clearCanvas = canvasMethod(myCanvas).clearCanvas;
-    move(center);
     playTimer = setInterval(function(){
         i++;
-        if(i>count){
+        if(i>count1){
             clearInterval(playTimer);
             ps.clear();
             fireTheHall(myCanvas);
@@ -105,18 +146,23 @@ export function shakeBall(myCanvas){
 
 export function fireTheHall(myCanvas) {
     let playTimer;
-    fragmentShape(shape[0]);
-    let count = timer*100;
+    let type = shape[0].type;
+    let pos = getCenter()[type](shape[0].shape);
+    fragmentShape(pos);
+    let count1 = timer*100;
     let i=0
     let clearCanvas = canvasMethod(myCanvas).clearCanvas;
     let ctx = myCanvas.getContext("2d");
     playTimer = setInterval(function(){
         i++;
-        if(i>count){
+        if(i>count1){
             clearInterval(playTimer);
         }
         clearCanvas();
         ps.simulate(dt);
         ps.render(ctx);
     },10);
+}
+export function addShape(target){
+    shape.push(target);
 }

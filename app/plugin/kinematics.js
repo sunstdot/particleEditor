@@ -9,15 +9,22 @@ import Color from "../Color";  //引入颜色设置
 import vector2 from "../vector2";  //引入向量
 import event from "../event";
 import ParticleSystem from "../widget/particleSystem";
-import {drawBall,fireTheHall,shakeBall} from "./fireTheHall.js"
+import {
+    sampleDirection,
+    sampleNum,
+    sampleColor
+} from "../widget/particleParam"
+import {drawBall,fireTheHall,shakeBall,addShape} from "./fireTheHall.js"
+import drawMethod from "../widget/drawMethods.js"
+
 let Vue = require('vue').default;
 let myCanvas = document.getElementById("mainPainter");
 let ctx = myCanvas.getContext("2d");
-
 let ps = new ParticleSystem();
 let acceleration = 0;  //初始加速度设置为0
 let dt = 0.01;
-let playtimer;
+let target;
+
 //设置鼠标交互
 let oldMousePosition = vector2.zero,newMousePosition = vector2.zero;
 
@@ -29,34 +36,13 @@ function clearCanvas(){
       ctx.restore();
   }
 }
-
-let sampleOption = (function(){
-  let sample = function(){};
-  sample.prototype.sampleDirection = function(){
-    let theta = Math.random()*2*Math.PI;
-    return new vector2(Math.cos(theta), Math.sin(theta));
-  };
-  sample.prototype.sampleColor = function(color1,color2){
-    let t = Math.random();
-    return color1.multiply(t).add(color2.multiply(1-t));
-  };
-  sample.prototype.sampleNumber = function(num1,num2){
-    let t = Math.random();
-    return num1*t+num2*(1-t);
-  };
-  return sample;
-}());
-let SampleOption = new sampleOption();
-
-//todo 还是得引入类的思想，将速度，位置等的改变封装起来，做速度类，提供速度的add，multi，minus等方法？还是提供一个粒子类
 let core = {
     //循环积分展示粒子运动轨迹
     loop: function () {
-        let velocity = newMousePosition.substract(oldMousePosition).multiply(10);
-        velocity = velocity.add(SampleOption.sampleDirection(0,Math.PI*2)).multiply(10);
-        let color = SampleOption.sampleColor(Color.red,Color.yellow);
-        let life = SampleOption.sampleNumber(1,2);
-        let size = SampleOption.sampleNumber(2,4);
+        let velocity = newMousePosition.substract(oldMousePosition).multiply(10).add(sampleDirection());
+        let color = sampleColor(Color.red,Color.yellow);
+        let life = sampleNum(1,2);
+        let size = sampleNum(2,4);
         ps.emit(new Particle(newMousePosition, velocity,life,color,size));
         oldMousePosition = newMousePosition;
         ps.simulate(dt);
@@ -65,30 +51,49 @@ let core = {
         ps.render(ctx);
     }
 };
-//选择一个特效纹理
-function selectTexture(param) {
-    let type = param.type;
-    //todo 拿到了一种特效类型,下次start时候需要绘制出来
-    console.log("------------" + type);
-}
-
-//修改特效重力场
-function modifyGravity(param) {
-    let downGravity = param.downGravity, rightGravity = param.rightGravity;
-    console.log(downGravity + "-----------------" + rightGravity);
-    //todo 修改粒子的加速度,所有粒子共用一个gravity和velocity，只要修改即可
-}
-
-
 function painterInit() {
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height);
     ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
     ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
-    drawBall(myCanvas);
+
+}
+//选择一个特效纹理
+function selectTexture(param) {
+    let type = param.type;
+    console.log("------------" + type);
+}
+function selectParticle(param){
+    target.particle = "fireTheHall";
+
+    //drawBall(myCanvas);
+}
+//修改特效重力场
+function modifyGravity(param) {
+    let downGravity = param.downGravity, rightGravity = param.rightGravity;
+    console.log(downGravity + "-----------------" + rightGravity);
+}
+function selectTarget(param){
+    target = param.target;
+}
+//绘制拖拽图形
+function drawDragShape(data){
+    let pos = {
+        x:data.pos.left,
+        y:data.pos.top
+    };
+    drawMethod[data.type](pos,function(shape){
+        addShape(shape);
+    });
+}
+function init(){
+    drawMethod.init(myCanvas);
 }
 function bindEvent() {
     event.register("selectTexture", selectTexture.bind(this));
     event.register("modifyGravity", modifyGravity.bind(this));
+    event.register("selectParticle",selectParticle.bind(this));
+    event.register("selectTarget",selectTarget.bind(this));
+    event.register("drawDragShape",drawDragShape.bind(this));
     myCanvas.addEventListener("mousemove",function(e){
         if(e.layerX || e.layerX ==0){  //firefox
             e.target.style.position = 'relative';
@@ -99,29 +104,29 @@ function bindEvent() {
     });
 }
 function vueInit(){
+    let playTimer;
     let vm = new Vue({
-        el:"#fireBtn",
+        el:"#ctrlBtn",
         data:{},
         methods:{
             start:function(){
                 //循环播放
-                if(!playtimer){
-                    playtimer = setInterval(function(){
+                if(!playTimer){
+                    playTimer = setInterval(function(){
                         core.loop();
                     },10);
                 }
             },
             finish:function(){
-                if(playtimer){
-                    clearInterval(playtimer);
-                    playtimer = undefined;
-                    ps.clear();
-                    painterInit();
+                if(playTimer){
+                    clearInterval(playTimer);
+                    playTimer = undefined;
                 }
+                ps.clear();
+                painterInit();
             },
             fire:function(){
                 shakeBall(myCanvas);
-                //fireTheHall(myCanvas);
             }
         }
     })
@@ -130,6 +135,7 @@ component.exec = function () {
     if(!myCanvas){
         return;
     }
+    init();
     vueInit();
     bindEvent();
     painterInit();

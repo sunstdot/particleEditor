@@ -1,5 +1,6 @@
 /**
  * 这里先按照雏形设计粒子效果，尚需要更抽象的封装，以及考虑效果的输出
+ * 所有粒子都是圆形
  * Created by sunshitao on 2016/2/15.
  */
 define(function (require, exports, module) {
@@ -98,25 +99,46 @@ define(function (require, exports, module) {
         //模拟粒子发射
         this.simulate = function (dt) {
             aging(dt);
-            //applyGravity();
+            applyGravity();
             applyEfforts(dt);
             kinematics(dt);
         };
+        function particleShape(type){
+            if(!type){
+                type = 'circle';
+            }
+            var method = {
+                circle:function(ctx,p){
+                    var alpha = 1 - p.age / p.life;
+                    //颜色设置部分需要提出来单独封装.至少也在私有方法中进行封装
+                    ctx.fillStyle = "rgba("
+                        + Math.floor(p.color.r * 255) + ","
+                        + Math.floor(p.color.g) + ","
+                        + Math.floor(p.color.b) + ","
+                        + alpha.toFixed(2) + ")";
+                    ctx.beginPath();
+                    ctx.arc(p.position.x, p.position.y, p.size, 0, 2 * Math.PI, true);
+                    ctx.closePath();
+                    ctx.fill();
+                },
+                square:function(ctx,p){
+                    var alpha = 1-p.age/p.life;
+                    ctx.fillStyle = "rgba("
+                        + Math.floor(p.color.r * 255) + ","
+                        + Math.floor(p.color.g) + ","
+                        + Math.floor(p.color.b) + ","
+                        + alpha.toFixed(2) + ")";
+                    ctx.fillRect(p.position.x,p.position.y,p.size.width,p.size.height);
+                }
+            };
+            return method[type];
+        }
         //对粒子进行渲染
         this.render = function (ctx) {
             for (var i in particles) {
                 var p = particles[i];
-                var alpha = 1 - p.age / p.life;
-                //颜色设置部分需要提出来单独封装.至少也在私有方法中进行封装
-                ctx.fillStyle = "rgba("
-                    + Math.floor(p.color.r * 255) + ","
-                    + Math.floor(p.color.g) + ","
-                    + Math.floor(p.color.b) + ","
-                    + alpha.toFixed(2) + ")";
-                ctx.beginPath();
-                ctx.arc(p.position.x, p.position.y, p.size, 0, 2 * Math.PI, true);
-                ctx.closePath();
-                ctx.fill();
+                var type = p.type || "circle";
+                particleShape(p.type)(ctx,p);
             }
         };
     };

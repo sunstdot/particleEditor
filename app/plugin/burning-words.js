@@ -13,7 +13,7 @@
  *
  * add by sunshitao copy from github,to be modified
  */
-function BurningWords(text, args){
+export default function BurningWords(text, args){
    function BurningWords_Start(){
       var dc = self.canvas.getContext('2d');
 

@@ -4,15 +4,17 @@
  */
 import "../css/range.css";
 import "../css/particleEditor.css";
-//import "../css/bootstrap.min.css"
-window.$ = require('jquery');
+import "../css/bootstrap.min.css";
+//window.$ = require('jquery');
 import execJob from "../execJob";
 import kinematics from "./kinematics";
 import rightControl from "./rightControl";
-import particleControl from "./leftControl";
+import leftControl from "./leftControl";
+import timeline from "./timeline";
+require("jquery-ui");
 //import login from "./loginComponent/login";
 
-var jobList = [kinematics, rightControl, particleControl];
+var jobList = [kinematics, rightControl, leftControl, timeline];
 execJob.exec(jobList);
 
 //# sourceMappingURL=particleEditor-compiled.js.map

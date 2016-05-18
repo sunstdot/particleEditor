@@ -229,7 +229,7 @@ let bindEvent = function () {
 component.exec = function () {
     bindEvent();
     gravityControl();
-    obj.velocityRecorder()({value: 90});
+    //obj.velocityRecorder()({value: 90});
 };
 
 export default component;

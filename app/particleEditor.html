@@ -2,25 +2,17 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <!--<link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">-->
-    <!--<link href="css/particleEditor.css" type="text/css" rel="stylesheet">-->
-    <!--<link href="css/range.css" type="text/css" rel="stylesheet">-->
-    <!--<script type="application/javascript" src="./lib/sea-debug.js"></script>-->
-    <!--<script src="lib/jquery-2.2.0.min.js" type="application/javascript"></script>-->
-    <!--<script src="lib/bootstrap.min.js" type="application/javascript"></script>-->
-    <script src="lib/echarts-all.js" type="application/javascript"></script>
-    <script src="lib/zrender.js" type="application/javascript"></script>
-    <!--<script src="lib/underscore.js" type="application/javascript"></script>-->
-    <!--<script src="lib/three.js" type="application/javascript"></script>-->
-    <!--<script src="lib/vue.js" type="application/javascript"></script>-->
+    <script src="lib/jquery-2.2.0.min.js" type="application/javascript"></script>
+    <script src="lib/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body class="editor-wrapper">
     <div class="editor-header">
         <img class="leftIcon imgIcon" src="assets/img/flower.png">
         <div class="titleText">粒子编辑器</div>
+        <button id="exportOp" class="btn export-btn">导出效果</button>
     </div>
     <!--登陆框承载-->
-    <div style="position: absolute;top: 50%;left: 50%;margin-top: 0px;margin-left: -250px;height: 400px;width: 500px; display: block;z-index: 9999;" id="loginPanel">
+    <div style="position: absolute;top: 50%;left: 50%;margin-top: 0px;margin-left: -250px;height: 400px;width: 500px; display: none;z-index: 9999;" id="loginPanel">
     </div>
     <div class="editor-body">
         <nav class="editor-nav">
@@ -52,9 +44,9 @@
                         </div>
                     </div>
                     <div id="ctrlBtn">
-                        <button id="playBtn" class="startBtn start" v-on="start">开始</button>
+                        <button id="playBtn" class="startBtn start" v-on:click="start">开始</button>
                         <button id="stopBtn" class="stopBtn end" v-on:click="finish">结束</button>
-                        <button id="fireBtn" class="fireBtn " v-on:click="fire">fire</button>
+                        <button id="fireBtn" class="fireBtn end" v-on:click="fire">fire</button>
                     </div>
                     <div style="width: 100%;height: 140px">
 
@@ -75,10 +67,22 @@
             </div>
         </nav>
         <main id="editorContent" class="editor-content">
-            <canvas id="mainPainter" width="792px" height="803px">
-            </canvas>
+            <div id="painterContainer" class="painterWrap">
+                <canvas id="mainPainter" width="1160px" height="610px">
+                </canvas>
+            </div>
+            <div id="timelineWrap" class="timelineWrap">
+                <div id="animRecorder" class="animationBtn" v-on:click="doRecord" title="Record Animation"></div>
+                <div id="clearRecorder" class="clearBtn" v-on:click="clearRecord" title="Clear Recording"></div>
+                <!-- 拖动区域-->
+                <div id="timelineArea" class="timelineArea">
+                    <div class="bar"></div>
+                    <div id="slider" class="slider"></div>
+                </div>
+            </div>
         </main>
-        <aside class="editor-ads"><div class="selectTexture">纹理选择器</div>
+        <aside class="editor-ads" id="rightParts">
+            <div class="titleName">纹理选择器</div>
             <!-- Split button -->
             <div class="textCont">
                 <div class="btn-group selectBtn">
@@ -87,26 +91,40 @@
                         <span class="caret"></span>
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
-                    <ul id="textureValue" class="dropdown-menu" >
-                        <li><a href="#" type="circle">圆圈</a></li>
-                        <li><a href="#" type="snow">雪花</a></li>
-                        <li><a href="#" type="rain">雨滴</a></li>
-                        <li><a href="#" type="star">星星</a></li>
-                        <li><a href="#" type="smoke">烟雾</a></li>
-                        <li><a href="#" type="">正六边形</a></li>
+                    <ul id="textureValue" class="dropdown-menu" v-on:click="textureClick">
+                        <li type="circle"><a href="javascript:void(0);">圆圈</a></li>
+                        <li type="snow"><a href="javascript:void(0);">雪花</a></li>
+                        <li type="rain"><a href="javascript:void(0);">雨滴</a></li>
+                        <li type="star"><a href="javascript:void(0);">星星</a></li>
+                        <li type="smoke"><a href="javascript:void(0);" >烟雾</a></li>
+                        <li type=""><a href="javascript:void(0);">正六边形</a></li>
                         <!--<li role="separator" class="divider"></li>-->
-                        <li><a href="#" type="hexagon">五角星</a></li>
+                        <li><a href="javascript:void(0);" type="hexagon">五角星</a></li>
                     </ul>
                 </div>
             </div>
-        </aside>
-        <script>
-//            var contentDom = document.getElementById("editorContent");
-//            var myCanvas = document.getElementById("mainPainter");
-//            myCanvas.width = contentDom.offsetWidth;
-//            myCanvas.height = contentDom.offsetHeight;
-        </script>
 
+            <div class="titleName">粒子选择器</div>
+            <div class="textCont">
+                <div class="btn-group selectBtn">
+                    <button id="showParticle" type="button" class="btn btn-danger" style="width: 135px">手榴弹</button>
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul id="particleValue" class="dropdown-menu" v-on:click="particleClick">
+                        <li type="grenade"><a href="javascript:void(0);">手榴弹</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="titleName">burning word</div>
+            <input id="burningInput" class="burningInput" type="text" placeholder="Type something burning…" v-model="newWord" v-on:keyup="inputWord">
+            <div class="titleName">选择图形</div>
+            <div class="shapeWrap" style="display:block;">
+                <div id="squareShape" class="square shape" shapeType="square"></div>
+                <div id="circleShape" class="circle shape" shapeType="circle"></div>
+            </div>
+        </aside>
         <!--<div class="pmiddle">-->
 
         <!--</div>-->

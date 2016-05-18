@@ -9,8 +9,9 @@
 }
 
 body{
-    background:url('../assets/img/book-bg.jpg') top left;
-    background-size: 100% 100%;
+    background:url('../assets/img/bookBg.png');
+    background-size: cover;
+    cursor:url('../assets/img/pointer.png'), default;
 }
 header,
 footer {
@@ -38,8 +39,7 @@ footer {
 }
 .editor-content {
     flex: 1;
-    background-color:#000044;
-    background:url('../assets/img/editor-bg.jpg') repeat;
+
     margin:0px;
     overflow:hidden;
 }
@@ -139,7 +139,7 @@ footer {
     width: 360px;
     height: 280px;
 }
-.selectTexture{
+.titleName{
     position: relative;
     width: 100%;
     /*border-color: peachpuff chartreuse thistle firebrick;*/
@@ -164,14 +164,13 @@ footer {
 .startBtn{
     width: 64px;
     height: 32px;
-    left: 75px;
+    left: 35px;
     color:#fff;
     font-weight: 700;
     font-size: 14px;
     position: relative;
     /*background: url("../assets/img/pointRight.png") no-repeat center top;*/
 }
-
 .startBtn:hover{
     /*background: url("../assets/img/Fist.png") no-repeat center top;*/
     color:#ff0;
@@ -182,7 +181,6 @@ footer {
     background-color: #5bb75b;
     /*background: url("../assets/img/pointRight.png") no-repeat center top;*/
 }
-
 .start,.end{
     color: #fff;
     text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
@@ -198,11 +196,10 @@ footer {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de',endColorstr='#ff2f96b4',GradientType=0);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
-
 .stopBtn{
     width: 64px;
     height: 32px;
-    left: 155px;
+    left: 80px;
     color:#fff;
     font-weight: 700;
     font-size: 14px;
@@ -214,8 +211,27 @@ footer {
     color:#ff0;
     background-color: #5bb75b;
 }
-
 .stopBtn:active{
+    color:#ff0;
+    background-color: #5bb75b;
+    /*background: url("../assets/img/Fist.png") no-repeat center top;*/
+}
+.fireBtn{
+    width: 64px;
+    height: 32px;
+    left: 130px;
+    color:#fff;
+    font-weight: 700;
+    font-size: 14px;
+    position: relative;
+}
+.fireBtn:hover{
+    /*background: url("../assets/img/pointRight.png") no-repeat center top;*/
+    color:#ff0;
+    background-color: #5bb75b;
+}
+
+.fireBtn:active{
     color:#ff0;
     background-color: #5bb75b;
     /*background: url("../assets/img/Fist.png") no-repeat center top;*/
@@ -460,5 +476,120 @@ footer {
 .selectBtn{
     margin-left: auto;
     margin-right: auto;
+}
+.burningInput{
+    left: 80px;
+    position: relative;
+    top: 15px;
+    width: 200px;
+}
+.shapeWrap{
+    position: relative;
+    width: 275px;
+    height: 370px;
+    left: 50px;
+    top: 25px;
+    border: 1px solid gray;
+}
+.shape{
+    position: relative;
+    float: left;
+    width: 54px;
+    height: 54px;
+    margin: 10px;
+}
+.square{
+    background:url("../assets/img/square.png") no-repeat;
+    background-size: cover;
+}
+.circle{
+    background:url("../assets/img/circle.png") no-repeat;
+    background-size: cover;
+}
+
+.export-btn{
+    position: absolute;
+    right: 180px;
+    top: 60px;
+    color: #fff;
+    width: 100px;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    background-color: #5bb75b;
+    background-image: -moz-linear-gradient(top,#62c462,#51a351);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#62c462),to(#51a351));
+    background-image: -webkit-linear-gradient(top,#62c462,#51a351);
+    background-image: -o-linear-gradient(top,#62c462,#51a351);
+    background-image: linear-gradient(to bottom,#62c462,#51a351);
+    background-repeat: repeat-x;
+    border-color: #51a351 #51a351 #387038;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462',endColorstr='#ff51a351',GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.painterWrapper{
+    background-color:#000044;
+    background:url('../assets/img/editor-bg.jpg') repeat;
+}
+.timelineWrap{
+    width: 100%;
+    height: 200px;
+    /*background-color: #f2f2f2;*/
+    border: 1px solid;
+}
+.animationBtn{
+    position: relative;
+    float: left;
+    left: 35px;
+    top: 20px;
+    width: 25px;
+    height: 25px;
+    border-radius: 12px;
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -ms-border-radius: 12px;
+    background-color: #A79496;
+}
+.animationBtn:hover{
+    background-color: #041A13;
+}
+.btnActive{
+    background-color: red;
+}
+.clearBtn{
+    position: relative;
+    float: left;
+    left: 50px;
+    top: 20px;
+    width: 25px;
+    height: 25px;
+    border-radius: 12px;
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -ms-border-radius: 12px;
+    background: url("../assets/img/cancel.png") no-repeat;
+    background-size: cover;
+}
+.timelineArea{
+    position: relative;
+    top: 50px;
+    height: 100px;
+    left: 70px;
+    width: 1025px;
+}
+.slider{
+    position: absolute;
+    width: 10px;
+    top: 20px;
+    height: 60px;
+    background-color: #2E3161;
+    cursor: pointer;
+}
+.bar{
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    left: 0;
+    top: 38px;
+    background-color: #AB4B52;
 }
 
