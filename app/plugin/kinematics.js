@@ -14,36 +14,41 @@ import {
     sampleNum,
     sampleColor
 } from "../widget/particleParam"
-import {drawBall,fireTheHall,shakeBall,addShape} from "./fireTheHall.js"
-import drawMethod from "../widget/drawMethods.js"
+import {drawBall,fireTheHall,shakeBall,addShape} from "./fireTheHall"
+import drawMethod from "../widget/drawMethods"
+import particleMethod from "../widget/particleMethod"
 
+let Sketch = require("../widget/sketch");
 let Vue = require('vue').default;
-let myCanvas = document.getElementById("mainPainter");
-let ctx = myCanvas.getContext("2d");
+
+const COLORS = ['#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423'];
+
+//let myCanvas = document.createElement("canvas");
+let canvasCtx;
 let ps = new ParticleSystem();
 let acceleration = 0;  //初始加速度设置为0
 let dt = 0.01;
 let target;
 
 //设置鼠标交互
-let oldMousePosition = vector2.zero,newMousePosition = vector2.zero;
+let oldMousePosition = vector2.zero, newMousePosition = vector2.zero;
 
-function clearCanvas(){
-  if(ctx != null){
-      ctx.save();
-      ctx.fillStyle="rgba(0, 0, 0, 0.1)";
-      ctx.fillRect(0,0,myCanvas.width,myCanvas.height);
-      ctx.restore();
-  }
+function clearCanvas() {
+    if (ctx != null) {
+        ctx.save();
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+        ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
+        ctx.restore();
+    }
 }
 let core = {
     //循环积分展示粒子运动轨迹
     loop: function () {
         let velocity = newMousePosition.substract(oldMousePosition).multiply(10).add(sampleDirection());
-        let color = sampleColor(Color.red,Color.yellow);
-        let life = sampleNum(1,2);
-        let size = sampleNum(2,4);
-        ps.emit(new Particle(newMousePosition, velocity,life,color,size));
+        let color = sampleColor(Color.red, Color.yellow);
+        let life = sampleNum(1, 2);
+        let size = sampleNum(2, 4);
+        ps.emit(new Particle(newMousePosition, velocity, life, color, size));
         oldMousePosition = newMousePosition;
         ps.simulate(dt);
         clearCanvas();
@@ -52,7 +57,7 @@ let core = {
     }
 };
 function painterInit() {
-    ctx.clearRect(0,0,myCanvas.width, myCanvas.height);
+    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
     ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
     ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
 
@@ -62,82 +67,79 @@ function selectTexture(param) {
     let type = param.type;
     console.log("------------" + type);
 }
-function selectParticle(param){
-    target.particle = "fireTheHall";
-
-    //drawBall(myCanvas);
+function selectParticle(param) {
+    //target.particle = "fireTheHall";
+    particleMethod[param.type](canvasCtx);
 }
 //修改特效重力场
 function modifyGravity(param) {
     let downGravity = param.downGravity, rightGravity = param.rightGravity;
     console.log(downGravity + "-----------------" + rightGravity);
 }
-function selectTarget(param){
+function selectTarget(param) {
     target = param.target;
 }
 //绘制拖拽图形
-function drawDragShape(data){
+function drawDragShape(data) {
     let pos = {
-        x:data.pos.left,
-        y:data.pos.top
+        x: data.pos.left,
+        y: data.pos.top
     };
-    drawMethod[data.type](pos,function(shape){
+    drawMethod[data.type](pos, function (shape) {
         addShape(shape);
     });
 }
-function init(){
+function init() {
     drawMethod.init(myCanvas);
 }
 function bindEvent() {
     event.register("selectTexture", selectTexture.bind(this));
     event.register("modifyGravity", modifyGravity.bind(this));
-    event.register("selectParticle",selectParticle.bind(this));
-    event.register("selectTarget",selectTarget.bind(this));
-    event.register("drawDragShape",drawDragShape.bind(this));
-    myCanvas.addEventListener("mousemove",function(e){
-        if(e.layerX || e.layerX ==0){  //firefox
-            e.target.style.position = 'relative';
-            newMousePosition = new vector2(e.layerX, e.layerY);
-        }else{
-            newMousePosition = new vector2(e.offsetX, e.offsetY);
-        }
-    });
+    event.register("selectParticle", selectParticle.bind(this));
+    event.register("selectTarget", selectTarget.bind(this));
+    event.register("drawDragShape", drawDragShape.bind(this));
+    //myCanvas.addEventListener("mousemove", function (e) {
+    //    if (e.layerX || e.layerX == 0) {  //firefox
+    //        e.target.style.position = 'relative';
+    //        newMousePosition = new vector2(e.layerX, e.layerY);
+    //    } else {
+    //        newMousePosition = new vector2(e.offsetX, e.offsetY);
+    //    }
+    //});
 }
-function vueInit(){
+function vueInit() {
     let playTimer;
     let vm = new Vue({
-        el:"#ctrlBtn",
-        data:{},
-        methods:{
-            start:function(){
-                //循环播放
-                if(!playTimer){
-                    playTimer = setInterval(function(){
-                        core.loop();
-                    },10);
-                }
+        el: "#ctrlBtn",
+        data: {},
+        methods: {
+            start: function () {
+
             },
-            finish:function(){
-                if(playTimer){
-                    clearInterval(playTimer);
-                    playTimer = undefined;
-                }
-                ps.clear();
-                painterInit();
+            finish: function () {
+                //if(playTimer){
+                //    clearInterval(playTimer);
+                //    playTimer = undefined;
+                //}
+                //ps.clear();
+                //painterInit();
+                canvasCtx.destroy();
             },
-            fire:function(){
+            fire: function () {
                 shakeBall(myCanvas);
+            },
+            create:function(){
+                canvasCtx = Sketch.create({
+                    container:document.getElementById('painterContainer')
+                });
             }
         }
     })
 }
 component.exec = function () {
-    if(!myCanvas){
-        return;
-    }
-    init();
+    //init();
     vueInit();
     bindEvent();
-    painterInit();
+    //painterInit();
 };
 export default component;

@@ -138,7 +138,7 @@ define(function (require, exports, module) {
             for (var i in particles) {
                 var p = particles[i];
                 var type = p.type || "circle";
-                particleShape(p.type)(ctx,p);
+                particleShape(type)(ctx,p);
             }
         };
     };

@@ -127,11 +127,11 @@ export function shakeBall(myCanvas){
         move(center);
     }
     let count1 = life*100;
-    let i=0;
+    let j=0;
     let clearCanvas = canvasMethod(myCanvas).clearCanvas;
     playTimer = setInterval(function(){
-        i++;
-        if(i>count1){
+        j++;
+        if(j>count1){
             clearInterval(playTimer);
             ps.clear();
             fireTheHall(myCanvas);

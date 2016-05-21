@@ -12,7 +12,7 @@ define(function(require, exports, module){
         this.life = life;
         this.color = color;
         this.size = size;
-        this.type = type;
+        this.type = type || '';
     };
 
     //设置粒子的setter和getter方法

@@ -169,6 +169,7 @@ footer {
     font-weight: 700;
     font-size: 14px;
     position: relative;
+    float: left;
     /*background: url("../assets/img/pointRight.png") no-repeat center top;*/
 }
 .startBtn:hover{
@@ -204,6 +205,7 @@ footer {
     font-weight: 700;
     font-size: 14px;
     position: relative;
+    float: left;
     /*background: url("../assets/img/Fist.png") no-repeat center top;*/
 }
 .stopBtn:hover{
@@ -224,6 +226,7 @@ footer {
     font-weight: 700;
     font-size: 14px;
     position: relative;
+    float: left;
 }
 .fireBtn:hover{
     /*background: url("../assets/img/pointRight.png") no-repeat center top;*/
@@ -232,6 +235,28 @@ footer {
 }
 
 .fireBtn:active{
+    color:#ff0;
+    background-color: #5bb75b;
+    /*background: url("../assets/img/Fist.png") no-repeat center top;*/
+}
+.createBtn{
+    width: 96px;
+    height: 32px;
+    left: 35px;
+    top: 60px;
+    color:#fff;
+    font-weight: 700;
+    font-size: 14px;
+    position: relative;
+    float: left;
+}
+.createBtn:hover{
+    /*background: url("../assets/img/pointRight.png") no-repeat center top;*/
+    color:#ff0;
+    background-color: #5bb75b;
+}
+
+.createBtn:active{
     color:#ff0;
     background-color: #5bb75b;
     /*background: url("../assets/img/Fist.png") no-repeat center top;*/
@@ -592,4 +617,10 @@ footer {
     top: 38px;
     background-color: #AB4B52;
 }
-
+.painterWrap{
+    width: 1160px;
+    height: 610px;
+    position: relative;
+    background-color: #000044;
+    opacity: 0.6;
+}

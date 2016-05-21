@@ -19,12 +19,9 @@ let particles = [];
 let particle;
 let globalPos = {left:380,top:150};
 function createGeometry(texture) {
-
     let geometry = new THREE.PlaneGeometry(15, 15, 1, 1);
-
 //        let material = new THREE.MeshBasicMaterial({map:texture});
     let material = new THREE.ParticleBasicMaterial({map: texture});
-
     geometry.vertices[0].uv = new THREE.Vector2(0, 0);
     geometry.vertices[1].uv = new THREE.Vector2(0, 1);
     geometry.vertices[2].uv = new THREE.Vector2(1, 1);
@@ -113,10 +110,10 @@ function vueInit() {
                     target = target.parentNode;
                 }
                 let text = $(e.target).text();
-                let type = $(e.target).attr('type');
+                let type = $(target).attr('type');
                 let qShowDom = $('#showParticle');
                 qShowDom.html(text);
-                event.notify('selectParticle', {type: text});
+                event.notify('selectParticle', {type: type});
             },
             inputWord: function (e) {
                 burnWord(this.newWord, {
