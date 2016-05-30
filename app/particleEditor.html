@@ -114,13 +114,14 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul id="particleValue" class="dropdown-menu" v-on:click="particleClick">
-                        <li type="grenade"><a href="javascript:void(0);">手榴弹</a></li>
+                        <li type="fireTheHall"><a href="javascript:void(0);">手榴弹</a></li>
                         <li type="mouseEffect"><a href="javascript:void(0);">鼠标特效</a></li>
+                        <li type="burningWord"><a href="javascript:void(0);">燃烧文字</a></li>
                     </ul>
                 </div>
             </div>
             <div class="titleName">burning word</div>
-            <input id="burningInput" class="burningInput" type="text" placeholder="Type something burning…" v-model="newWord" v-on:keyup="inputWord">
+            <input id="burningInput" class="burningInput" type="text" placeholder="Type something burning…" v-model="newWord" v-on:keyup.enter="inputWord">
             <div class="titleName">选择图形</div>
             <div class="shapeWrap" style="display:block;">
                 <div id="squareShape" class="square shape" shapeType="square"></div>

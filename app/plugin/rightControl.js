@@ -116,15 +116,10 @@ function vueInit() {
                 event.notify('selectParticle', {type: type});
             },
             inputWord: function (e) {
-                burnWord(this.newWord, {
-                    "text_color": "FFFFCC",
-                    "id": "loginPanel",
-                    "font": "Times New Roman",
-                    "font_size": 64,
-                    "bg_color": "1A0A4A",
-                    "bg_alpha": 200,
-                    "speed": "fast"
-                })
+                let targetPos = {left:1000,top:60};
+                let type = "text";
+                let newWord = this.newWord;
+                event.notify("drawDragShape",{pos:targetPos,type:type,text:newWord});
             }
         }
     })
@@ -145,6 +140,7 @@ function init() {
         }
     })
 }
+
 
 let bindEvent = function () {
 

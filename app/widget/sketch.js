@@ -284,8 +284,8 @@
 
             if (context.fullscreen) {
 
-                h = context.height = win.innerHeight;
-                w = context.width = win.innerWidth;
+                h = context.height = context.element.clientHeight;
+                w = context.width = context.element.clientWidth;
             }
 
             if (context.retina && is2D && ratio) {
@@ -469,10 +469,10 @@
             start: start,
             stop: stop
         });
-
+        context.doUpdate = update;
         instances.push(context);
 
-        return ( context.autostart && start(), bind(true), resize(), update(), context );
+        return ( context.autostart && start(), bind(true), resize(), context );
     }
 
     /*

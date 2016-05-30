@@ -18,6 +18,13 @@ export function sampleDirection(r){
     let theta = Math.random()*2*Math.PI;
     return new vector2(r*Math.cos(theta),r*Math.sin(theta));
 }
+export function pseudorandomDirection(r,range){
+    if(!r){
+        r = 1;
+    }
+    let theta = Math.random()*range;
+    return new vector2(r*Math.cos(theta),r*Math.sin(theta));
+}
 export function sampleNum(num1,num2){
     let t = Math.random();
     return num1*t+num2*(1-t);

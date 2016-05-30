@@ -7,12 +7,16 @@ import ParticleSystem from "./particleSystem"
 import {
     sampleDirection,
     sampleNum,
-    sampleColor
+    sampleColor,
+    pseudorandomDirection
 } from "./particleParam"
 
+//import burnWord from "../plugin/burning-words"
+
 const COLORS = ['#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423'];
+
 let ps = new ParticleSystem();
-let dt = 0.01;
+let dt = 0.02;
 let Methods = {};
 Methods.mouseEffect = function(mouseDemo){
     mouseDemo.setup = function(){
@@ -25,9 +29,9 @@ Methods.mouseEffect = function(mouseDemo){
     }
     mouseDemo.spawn = function(pos){
         let color = random(COLORS);
-        let size = random(5,30);
-        let life = 5,force = random(4,8);
-        let velocity = sampleDirection(force);
+        let size = random(5,20);
+        let life = random(0,1),force = random(4,8);
+        let velocity = sampleDirection(force).multiply(30);
         let particle = new Particle(pos,velocity,life,color,size);
         particle.acceleration = new vector2(random(0.9,0.99),random(0.9,0.99));
         ps.emit(particle);
@@ -43,10 +47,52 @@ Methods.mouseEffect = function(mouseDemo){
         let touch,max,j;
         for(var i=0,len=mouseDemo.touches.length;i<len;i++){
             touch = mouseDemo.touches[i],max = random(1,4);
-            for(j=0;j<max;j++){
-                mouseDemo.spawn(touch.x, touch.y);
-            }
+            //for(j=0;j<max;j++){
+                mouseDemo.spawn(new vector2(touch.x,touch.y));
+            //}
         }
     }
+}
+let burningCount = 200;
+Methods.burningWord = function(mouseDemo,target){
+    //let text = target.style.text;
+    let pos = {x:target.style.x,y:target.style.y};
+    let width = target.style.width;
+    let height = target.style.height;
+    mouseDemo.spawn = function(pos1){
+        let color = '#FFB90F';
+        let size = random(2,5);
+        let life = Math.random()*8;
+        let force = random(4,8);
+        let velocity = pseudorandomDirection(force,Math.PI);
+        let particle = new Particle(pos1,velocity,life,color,size);
+        particle.acceleration = new vector2(random(0.9,0.99),random(0.9,0.99));
+        ps.emit(particle);
+    }
+    mouseDemo.update = function(){
+        ps.simulate(dt);
+    }
+    mouseDemo.draw = function(){
+        //mouseDemo.globalCompositeOperation = 'source-over';
+        ps.render(mouseDemo);
+        //mouseDemo.globalCompositeOperation = 'lighter';
+        var tempPos = {};
+        for(var i=0;i<burningCount;i++){
+            tempPos.x = Math.random()*width+pos.x;
+            tempPos.y = 220;
+            mouseDemo.spawn(new vector2(tempPos.x,tempPos.y));
+        }
+    }
+    mouseDemo.doUpdate();
+
+    //burnWord(text, {
+    //    "text_color": "FFFFCC",
+    //    "id": "loginPanel",
+    //    "font": "Times New Roman",
+    //    "font_size": 64,
+    //    "bg_color": "1A0A4A",
+    //    "bg_alpha": 200,
+    //    "speed": "fast"
+    //})
 }
 export default Methods;

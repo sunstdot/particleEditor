@@ -5,20 +5,62 @@ let drawMethod = {}
 import snapshoot from "./snapshoot.js"
 let zrender = require('zrender');
 let event = require('../event');
-//‘≤–Œ
+//ÂúÜÂΩ¢
 let CircleShape = require('zrender/lib/graphic/shape/Circle');
-var RectangleShape = require('zrender/lib/graphic/shape/Rect');
+let RectangleShape = require('zrender/lib/graphic/shape/Rect');
+let ZText = require('zrender/lib/graphic/Text');
 let eventTool = require('zrender/lib/core/event');
 let selectTarget;
 let canvasZr;
+let context;
+let globalTxt;
 const r = 40;
 
 function init(myCanvas){
+    context = myCanvas.getContext('2d');
     canvasZr = zrender.init(myCanvas);
 }
+function extend(target,source){
+    for(var key in source){
+        if(!target.hasOwnProperty(key)){
+            target[key] = source[key];
+        }
+    }
+    return target;
+}
+
+let opt = {
+    draggable:true,
+    onmousedown:function(e){
+
+    },
+    ondragstart:function(e){
+        //ËÆ∞ÂΩïÂàùÂßã‰ΩçÁΩÆ
+    },
+    onclick:function(e){
+        if(selectTarget != e.target){
+            if(selectTarget){
+                selectTarget.attr({style:{fill:'red',lineWidth:0}});//ËøòÂéüÈÄâ‰∏≠Áä∂ÊÄÅ
+                selectTarget.dirty();
+            }
+            selectTarget = e.target;
+            //Âä†border
+            selectTarget.attr({style:{lineWidth:4,stroke:'#000'}});
+            selectTarget.dirty();
+            canvasZr.refreshImmediately();
+            event.notify("selectTarget",{target:selectTarget});
+        }
+    },
+    ondragend:function(e){
+        //ËÆ∞ÂΩïÁªìÊùü‰ΩçÁΩÆ
+    },
+    onmouseup:function(){
+    }
+}
+
 
 function circle(pos,callback){
-    let circle = new CircleShape({
+    let circle = new CircleShape(extend({
         scale: [1, 1],
         shape: {
             cx: pos.x,
@@ -28,33 +70,7 @@ function circle(pos,callback){
         style: {
             fill:'red'
         },
-        draggable:true,
-        onmousedown:function(e){
-
-        },
-        ondragstart:function(e){
-            //º«¬º≥ı ºŒª÷√
-        },
-        onclick:function(e){
-            if(selectTarget != e.target){
-                if(selectTarget){
-                    selectTarget.attr({style:{fill:'red',lineWidth:0}});//ªπ‘≠—°÷–◊¥Ã¨
-                    selectTarget.dirty();
-                }
-                selectTarget = e.target;
-                //º”border
-                selectTarget.attr({style:{lineWidth:4,stroke:'#000'}});
-                selectTarget.dirty();
-                canvasZr.refreshImmediately();
-                event.notify("selectTarget",{target:selectTarget});
-            }
-        },
-        ondragend:function(e){
-            //º«¬ºΩ· ¯Œª÷√
-        },
-        onmouseup:function(){
-        },
-        // œÏ”¶ ¬º˛≤¢∂ØÃ¨–ﬁ∏ƒÕº–Œ‘™Àÿ
+        // ÂìçÂ∫î‰∫ã‰ª∂Âπ∂Âä®ÊÄÅ‰øÆÊîπÂõæÂΩ¢ÂÖÉÁ¥†
         onmousewheel: function(e){
             var delta = eventTool.getDelta(e.event);
             var r = e.target.style.r;
@@ -66,7 +82,7 @@ function circle(pos,callback){
             e.target.dirty();
             eventTool.stop(e.event);
         }
-    });
+    },opt));
     circle.type = 'circle';
     canvasZr.add(circle);
     if(callback){
@@ -74,7 +90,7 @@ function circle(pos,callback){
     }
 }
 function square(pos,callback){
-    let square = new RectangleShape({
+    let square = new RectangleShape(extend({
         shape:{
             x:pos.x-r,
             y:pos.y-r,
@@ -83,32 +99,6 @@ function square(pos,callback){
         },
         style:{
             fill: 'red'
-        },
-        draggable:true,
-        onmousedown:function(e){
-        },
-        ondragstart:function(e){
-            //º«¬º≥ı ºŒª÷√
-        },
-        onclick:function(e){
-            if(selectTarget != e.target){
-                if(selectTarget){
-                    selectTarget.attr({style:{fill:'red',lineWidth:0}});//ªπ‘≠—°÷–◊¥Ã¨
-                    selectTarget.dirty();
-
-                }
-                selectTarget = e.target;
-                //º”border
-                selectTarget.attr({style:{lineWidth:4,stroke:'#000'}});
-                selectTarget.dirty();
-                canvasZr.refreshImmediately();
-                event.notify("selectTarget",{target:selectTarget});
-            }
-        },
-        ondragend:function(e){
-            //º«¬ºΩ· ¯Œª÷√
-        },
-        onmouseup:function(){
         },
         onmousewheel:function(e){
             var delta = eventTool.getDelta(e.event);
@@ -122,15 +112,52 @@ function square(pos,callback){
             canvasZr.refreshImmediately();
             eventTool.stop(e.event);
         }
-    });
+    },opt));
     square.type = "square";
     canvasZr.add(square);
     if(callback){
         callback(square);
     }
 }
+function text(option,text,callback){
+    context.font = '18px Microsoft Yahei';
+    let width=context.measureText(text).width;
+    let text1 = (text + '').split('\n');
+    let height = (context.measureText('ÂõΩ').width + 2)*text1.length;
+    if(globalTxt){
+         canvasZr.remove(globalTxt);
+    }
+    globalTxt = new ZText(extend({
+        style:{
+            x:option.x,
+            y:option.y,
+            text:text,
+            width:width,
+            height:height,
+            fill:'#FFF',
+            textFont: '18px Microsoft Yahei',
+            textBaseline: 'top'
+        },
+        //Â§çÂÜôclickÊñπÊ≥ï
+        onclick:function(e){
+            selectTarget = e.target;
+            //Âä†border
+            selectTarget.attr({style:{fill:'#FF3030'}});
+            selectTarget.dirty();
+            canvasZr.refreshImmediately();
+            event.notify("selectTarget",{target:selectTarget});
+        }
+    },opt));
+    canvasZr.add(globalTxt);
+    if(callback){
+        callback(globalTxt);
+    }
+}
+
+
 export default drawMethod = {
     init:init,
     circle:circle,
-    square:square
+    square:square,
+    text:text
 }

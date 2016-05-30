@@ -109,13 +109,19 @@ define(function (require, exports, module) {
             }
             var method = {
                 circle:function(ctx,p){
-                    var alpha = 1 - p.age / p.life;
+
                     //颜色设置部分需要提出来单独封装.至少也在私有方法中进行封装
-                    ctx.fillStyle = "rgba("
-                        + Math.floor(p.color.r * 255) + ","
-                        + Math.floor(p.color.g) + ","
-                        + Math.floor(p.color.b) + ","
-                        + alpha.toFixed(2) + ")";
+
+                    if(typeof p.color === "string"){
+                        ctx.fillStyle = p.color;
+                    }else{
+                        var alpha = 1 - p.age / p.life;
+                        ctx.fillStyle = "rgba("
+                            + Math.floor(p.color.r * 255) + ","
+                            + Math.floor(p.color.g) + ","
+                            + Math.floor(p.color.b) + ","
+                            + alpha.toFixed(2) + ")";
+                    }
                     ctx.beginPath();
                     ctx.arc(p.position.x, p.position.y, p.size, 0, 2 * Math.PI, true);
                     ctx.closePath();
@@ -123,11 +129,15 @@ define(function (require, exports, module) {
                 },
                 square:function(ctx,p){
                     var alpha = 1-p.age/p.life;
-                    ctx.fillStyle = "rgba("
-                        + Math.floor(p.color.r * 255) + ","
-                        + Math.floor(p.color.g) + ","
-                        + Math.floor(p.color.b) + ","
-                        + alpha.toFixed(2) + ")";
+                    if(typeof p.color === "string"){
+                        ctx.fillStyle = p.color;
+                    }else{
+                        ctx.fillStyle = "rgba("
+                            + Math.floor(p.color.r * 255) + ","
+                            + Math.floor(p.color.g) + ","
+                            + Math.floor(p.color.b) + ","
+                            + alpha.toFixed(2) + ")";
+                    }
                     ctx.fillRect(p.position.x,p.position.y,p.size.width,p.size.height);
                 }
             };

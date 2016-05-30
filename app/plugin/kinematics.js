@@ -29,6 +29,7 @@ let ps = new ParticleSystem();
 let acceleration = 0;  //初始加速度设置为0
 let dt = 0.01;
 let target;
+let painterContainer = document.getElementById('painterContainer');
 
 //设置鼠标交互
 let oldMousePosition = vector2.zero, newMousePosition = vector2.zero;
@@ -68,8 +69,8 @@ function selectTexture(param) {
     console.log("------------" + type);
 }
 function selectParticle(param) {
-    //target.particle = "fireTheHall";
-    particleMethod[param.type](canvasCtx);
+    target.particle = param.type;
+    //particleMethod[param.type](canvasCtx);
 }
 //修改特效重力场
 function modifyGravity(param) {
@@ -85,12 +86,21 @@ function drawDragShape(data) {
         x: data.pos.left,
         y: data.pos.top
     };
-    drawMethod[data.type](pos, function (shape) {
+    drawMethod[data.type](pos, data.text, function (shape) {
         addShape(shape);
     });
 }
 function init() {
-    drawMethod.init(myCanvas);
+    var mainCanvas = document.createElement('canvas');
+    mainCanvas.width = painterContainer.offsetWidth;
+    mainCanvas.height = painterContainer.offsetHeight;
+    //painterContainer.appendChild(mainCanvas);
+    canvasCtx = Sketch.create({
+        container:document.getElementById('painterContainer'),
+        element:mainCanvas
+    });
+
+    drawMethod.init(mainCanvas);
 }
 function bindEvent() {
     event.register("selectTexture", selectTexture.bind(this));
@@ -126,7 +136,8 @@ function vueInit() {
                 canvasCtx.destroy();
             },
             fire: function () {
-                shakeBall(myCanvas);
+                //shakeBall(myCanvas);  手榴弹粒子特效
+                particleMethod[target.particle](canvasCtx,target);
             },
             create:function(){
                 canvasCtx = Sketch.create({
@@ -137,7 +148,7 @@ function vueInit() {
     })
 }
 component.exec = function () {
-    //init();
+    init();
     vueInit();
     bindEvent();
     //painterInit();
