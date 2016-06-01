@@ -269,6 +269,7 @@
                 if (is2D && context.retina)
 
                     context.restore();
+                context.canvasZr.refreshImmediately();
             }
 
             counter = ++counter % context.interval;

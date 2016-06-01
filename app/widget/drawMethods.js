@@ -19,6 +19,7 @@ const r = 40;
 function init(myCanvas){
     context = myCanvas.getContext('2d');
     canvasZr = zrender.init(myCanvas);
+    return canvasZr;
 }
 function extend(target,source){
     for(var key in source){

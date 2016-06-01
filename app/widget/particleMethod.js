@@ -32,7 +32,7 @@ Methods.mouseEffect = function(mouseDemo){
         let size = random(5,20);
         let life = random(0,1),force = random(4,8);
         let velocity = sampleDirection(force).multiply(30);
-        let particle = new Particle(pos,velocity,life,color,size);
+        let particle = new Particle(pos,velocity,life,color,size,0);
         particle.acceleration = new vector2(random(0.9,0.99),random(0.9,0.99));
         ps.emit(particle);
     }
@@ -61,25 +61,26 @@ Methods.burningWord = function(mouseDemo,target){
     let height = target.style.height;
     mouseDemo.spawn = function(pos1){
         let color = '#FFB90F';
-        let size = random(2,5);
-        let life = Math.random()*8;
-        let force = random(4,8);
-        let velocity = pseudorandomDirection(force,Math.PI);
-        let particle = new Particle(pos1,velocity,life,color,size);
-        particle.acceleration = new vector2(random(0.9,0.99),random(0.9,0.99));
+        let size = random(5,8);
+        let life = 15+Math.random()*8;
+        //let force = random(4,8);
+        //let velocity = pseudorandomDirection(force,Math.PI);
+        let velocity = new vector2(random()*5,-15+random()*10);
+        let particle = new Particle(pos1,velocity,life,color,size,0);
+        //particle.acceleration = new vector2(random(0.9,0.99),random(0.9,0.99));
         ps.emit(particle);
     }
     mouseDemo.update = function(){
-        ps.simulate(dt);
+        ps.simulate(dt,1);
     }
     mouseDemo.draw = function(){
-        //mouseDemo.globalCompositeOperation = 'source-over';
+        mouseDemo.globalCompositeOperation = 'source-over';
         ps.render(mouseDemo);
-        //mouseDemo.globalCompositeOperation = 'lighter';
+        mouseDemo.globalCompositeOperation = 'lighter';
         var tempPos = {};
         for(var i=0;i<burningCount;i++){
             tempPos.x = Math.random()*width+pos.x;
-            tempPos.y = 220;
+            tempPos.y = Math.random()*height+pos.y;
             mouseDemo.spawn(new vector2(tempPos.x,tempPos.y));
         }
     }

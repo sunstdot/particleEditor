@@ -95,12 +95,15 @@ function init() {
     mainCanvas.width = painterContainer.offsetWidth;
     mainCanvas.height = painterContainer.offsetHeight;
     //painterContainer.appendChild(mainCanvas);
+    var canvasZr = drawMethod.init(mainCanvas);
     canvasCtx = Sketch.create({
         container:document.getElementById('painterContainer'),
-        element:mainCanvas
+        element:mainCanvas,
+        autoclear:false,
+        canvasZr:canvasZr
     });
 
-    drawMethod.init(mainCanvas);
+
 }
 function bindEvent() {
     event.register("selectTexture", selectTexture.bind(this));
@@ -140,9 +143,7 @@ function vueInit() {
                 particleMethod[target.particle](canvasCtx,target);
             },
             create:function(){
-                canvasCtx = Sketch.create({
-                    container:document.getElementById('painterContainer')
-                });
+
             }
         }
     })
