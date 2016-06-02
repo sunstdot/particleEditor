@@ -255,9 +255,12 @@
                         context.scale(ratio, ratio);
                     }
 
-                    if (context.autoclear)
-
+                    if (context.autoclear){
                         context.clear();
+                    }
+                    if(context.zrenderClear){
+                        context.canvasZr.refreshImmediately();
+                    }
                 }
 
                 // Draw
@@ -269,7 +272,6 @@
                 if (is2D && context.retina)
 
                     context.restore();
-                context.canvasZr.refreshImmediately();
             }
 
             counter = ++counter % context.interval;

@@ -56,7 +56,7 @@ Methods.mouseEffect = function(mouseDemo){
 let burningCount = 200;
 Methods.burningWord = function(mouseDemo,target){
     //let text = target.style.text;
-    let pos = {x:target.style.x,y:target.style.y};
+    let pos = {x:target.style.x + target.position.x,y:target.style.y+target.position.y};
     let width = target.style.width;
     let height = target.style.height;
     mouseDemo.spawn = function(pos1){
@@ -74,7 +74,7 @@ Methods.burningWord = function(mouseDemo,target){
         ps.simulate(dt,1);
     }
     mouseDemo.draw = function(){
-        mouseDemo.globalCompositeOperation = 'source-over';
+        mouseDemo.globalCompositeOperation = 'destination-over';
         ps.render(mouseDemo);
         mouseDemo.globalCompositeOperation = 'lighter';
         var tempPos = {};

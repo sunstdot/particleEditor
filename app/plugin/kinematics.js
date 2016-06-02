@@ -24,12 +24,13 @@ let Vue = require('vue').default;
 const COLORS = ['#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423'];
 
 //let myCanvas = document.createElement("canvas");
-let canvasCtx;
+let canvasSketch;
 let ps = new ParticleSystem();
 let acceleration = 0;  //初始加速度设置为0
 let dt = 0.01;
 let target;
 let painterContainer = document.getElementById('painterContainer');
+let fireFlag = false;
 
 //设置鼠标交互
 let oldMousePosition = vector2.zero, newMousePosition = vector2.zero;
@@ -70,7 +71,7 @@ function selectTexture(param) {
 }
 function selectParticle(param) {
     target.particle = param.type;
-    //particleMethod[param.type](canvasCtx);
+    //particleMethod[param.type](canvasSketch);
 }
 //修改特效重力场
 function modifyGravity(param) {
@@ -96,14 +97,14 @@ function init() {
     mainCanvas.height = painterContainer.offsetHeight;
     //painterContainer.appendChild(mainCanvas);
     var canvasZr = drawMethod.init(mainCanvas);
-    canvasCtx = Sketch.create({
+    canvasSketch = Sketch.create({
         container:document.getElementById('painterContainer'),
         element:mainCanvas,
         autoclear:false,
+        zrenderClear:true,
         canvasZr:canvasZr
     });
-
-
+    drawMethod.initSketch(canvasSketch);
 }
 function bindEvent() {
     event.register("selectTexture", selectTexture.bind(this));
@@ -136,11 +137,13 @@ function vueInit() {
                 //}
                 //ps.clear();
                 //painterInit();
-                canvasCtx.destroy();
+                canvasSketch.destroy();
+                fireFlag = false;
             },
             fire: function () {
                 //shakeBall(myCanvas);  手榴弹粒子特效
-                particleMethod[target.particle](canvasCtx,target);
+                particleMethod[target.particle](canvasSketch,target);
+                fireFlag = true;
             },
             create:function(){
 

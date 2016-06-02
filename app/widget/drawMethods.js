@@ -3,6 +3,7 @@
  */
 let drawMethod = {}
 import snapshoot from "./snapshoot.js"
+import particleMethod from "./particleMethod"
 let zrender = require('zrender');
 let event = require('../event');
 //圆形
@@ -12,6 +13,7 @@ let ZText = require('zrender/lib/graphic/Text');
 let eventTool = require('zrender/lib/core/event');
 let selectTarget;
 let canvasZr;
+let canvasSketch;
 let context;
 let globalTxt;
 const r = 40;
@@ -21,6 +23,10 @@ function init(myCanvas){
     canvasZr = zrender.init(myCanvas);
     return canvasZr;
 }
+function initSketch(canvasCtx){
+    canvasSketch = canvasCtx;
+}
+
 function extend(target,source){
     for(var key in source){
         if(!target.hasOwnProperty(key)){
@@ -37,6 +43,7 @@ let opt = {
     },
     ondragstart:function(e){
         //记录初始位置
+        console.log('-==================');
     },
     onclick:function(e){
         if(selectTarget != e.target){
@@ -54,6 +61,13 @@ let opt = {
     },
     ondragend:function(e){
         //记录结束位置
+        console.log('-----');
+    },
+    ondrag:function(e){
+        let target = e.target;
+        if(target.particle){
+            particleMethod[target.particle](canvasSketch,target);
+        }
     },
     onmouseup:function(){
     }
@@ -158,6 +172,7 @@ function text(option,text,callback){
 
 export default drawMethod = {
     init:init,
+    initSketch:initSketch,
     circle:circle,
     square:square,
     text:text
