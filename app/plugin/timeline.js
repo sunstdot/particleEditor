@@ -2,25 +2,17 @@
  * Created by sunshitao on 2016/5/11.
  */
 
+import {
+    startRecord,
+    stopRecord,
+    clearRecord
+} from '../widget/snapshoot'
 let Vue = require('vue').default;
 let event = require('../event');
 let recorder = false;
 let components = {};
-let recordBtn = $("#animRecorder");
-let recordObj = {}; //从这里去根据时间去取数据，  time --- position
-let time = 0;
-let parentPos = {};
-let recordTime = 0;
+var recordBtn;
 
-function recordStart() {
-    recordTime = new Date();
-}
-function recordEnd() {
-    if (time < 2) {
-        return;
-    }
-    recordTime -= new Date();
-}
 function tween() {
     //todo 补间动画
 }
@@ -35,17 +27,17 @@ function vueInit() {
                     if (!recordBtn.hasClass("btnActive")) {
                         recordBtn.addClass("btnActive");
                     }
-                    recordStart();
+                    startRecord();
                 } else {
                     if (recordBtn.hasClass("btnActive")) {
                         recordBtn.removeClass("btnActive");
                     }
-                    recordEnd();
+                    stopRecord();
                 }
                 recorder = !recorder;
             },
             clearRecord: function () {
-                //todo 清楚特效
+                clearRecord();
             }
         }
     });
@@ -53,9 +45,10 @@ function vueInit() {
 
 function init() {
     let slider = $("#slider");
+    recordBtn = $("#animRecorder")
     slider.draggable({containment: "#timelineArea", axis: "x", scroll: false})
 }
-function eventInit() {
+function eventBind() {
     event.register('animSpeed', function (data) {
 
     });
@@ -66,5 +59,6 @@ function eventInit() {
 components.exec = function () {
     init();
     vueInit();
+    eventBind();
 }
 export default components;

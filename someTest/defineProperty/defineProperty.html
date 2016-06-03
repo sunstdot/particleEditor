@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div id="testDefine" style="position: absolute;width: 100%;height: 100%;background-color: #000044"></div>
+    <script>
+        var obj = {x:[1,2]};
+        function define(obj,key,val){
+            var property = Object.getOwnPropertyDescriptor(obj,key);
+            if(property && property.configurable === false){
+                return;
+            }
+            var setter = property && property.setter;
+            var getter = property && property.getter;
+            Object.defineProperty(obj,key,{
+                enumerable:true,
+                configurable:true,
+                get:function reactiveGetter(){
+                    var value = getter ? getter.call(obj) : val;
+                    return value;
+                },
+                set:function reactiveSetter(newVal){
+                    var value = getter ? getter.call(obj) : val;
+                    if(value === newVal){
+                        return;
+                    }
+                    if(setter){
+                        setter.call(obj,newVal);
+                    }else{
+                        val = newVal;
+                    }
+                }
+            })
+        }
+        define(obj,'x',[1,2]);
+
+        var dom = document.getElementById("testDefine");
+        dom.addEventListener("click",function(){
+            var y = obj.x;
+            obj.x = [0,6];
+        });
+    </script>
+</body>
+</html>

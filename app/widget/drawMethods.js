@@ -2,8 +2,9 @@
  * Created by sunshitao on 2016/5/13.
  */
 let drawMethod = {}
-import snapshoot from "./snapshoot.js"
 import particleMethod from "./particleMethod"
+import {defineReactive} from "../observer"
+
 let zrender = require('zrender');
 let event = require('../event');
 //圆形
@@ -41,10 +42,6 @@ let opt = {
     onmousedown:function(e){
 
     },
-    ondragstart:function(e){
-        //记录初始位置
-        console.log('-==================');
-    },
     onclick:function(e){
         if(selectTarget != e.target){
             if(selectTarget){
@@ -58,10 +55,6 @@ let opt = {
             canvasZr.refreshImmediately();
             event.notify("selectTarget",{target:selectTarget});
         }
-    },
-    ondragend:function(e){
-        //记录结束位置
-        console.log('-----');
     },
     ondrag:function(e){
         let target = e.target;
@@ -164,6 +157,8 @@ function text(option,text,callback){
         }
     },opt));
     canvasZr.add(globalTxt);
+    //数据进行绑定
+    defineReactive(globalTxt,'position',globalTxt.position);
     if(callback){
         callback(globalTxt);
     }
