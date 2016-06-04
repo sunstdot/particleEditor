@@ -234,3 +234,4 @@ export function def(obj,key,val,enumerable){
         configurable:true
     })
 }
+export const isArray = Array.isArray;

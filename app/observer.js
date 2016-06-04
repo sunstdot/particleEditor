@@ -2,8 +2,9 @@
  * Created by sunshitao on 2016/6/3.
  */
 
-import toArray from "./util"
+import {toArray,isArray} from "./util"
 import {Sampling} from "./widget/snapshoot"
+import arrayMethods from './util/array'
 
 export function Dep(){
     this.subs = [];
@@ -32,24 +33,29 @@ export function defineReactive(obj,key,val){
     var getter = property && property.getter;
     var sampling = new Sampling(obj);
     dep.addSub(sampling);
-    Object.defineProperty(obj,key,{
-        enumerable:true,
-        configurable:true,
-        get:function reactiveGetter(){
-            var value = getter ? getter.call(obj) : val;
-            return value;
-        },
-        set:function reactiveSetter(newVal){
-            var value = getter ? getter.call(obj) : val;
-            if(value === newVal){
-                return;
+
+    if(isArray(val)){
+        arrayMethods(val)
+    }else{
+        Object.defineProperty(obj,key,{
+            enumerable:true,
+            configurable:true,
+            get:function reactiveGetter(){
+                var value = getter ? getter.call(obj) : val;
+                return value;
+            },
+            set:function reactiveSetter(newVal){
+                var value = getter ? getter.call(obj) : val;
+                if(value === newVal){
+                    return;
+                }
+                if(setter){
+                    setter.call(obj,newVal);
+                }else{
+                    val = newVal;
+                }
+                dep.notify();
             }
-            if(setter){
-                setter.call(obj,newVal);
-            }else{
-                val = newVal;
-            }
-            dep.notify();
-        }
-    })
+        })
+    }
 }
