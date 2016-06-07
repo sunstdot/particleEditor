@@ -12,20 +12,16 @@ let CircleShape = require('zrender/lib/graphic/shape/Circle');
 let RectangleShape = require('zrender/lib/graphic/shape/Rect');
 let ZText = require('zrender/lib/graphic/Text');
 let eventTool = require('zrender/lib/core/event');
-let selectTarget;
+var selectTarget;
 let canvasZr;
-let canvasSketch;
 let context;
-let globalTxt;
+var globalTxt;
 const r = 40;
 
 function init(myCanvas){
     context = myCanvas.getContext('2d');
     canvasZr = zrender.init(myCanvas);
     return canvasZr;
-}
-function initSketch(canvasCtx){
-    canvasSketch = canvasCtx;
 }
 
 function extend(target,source){
@@ -58,8 +54,9 @@ let opt = {
     },
     ondrag:function(e){
         let target = e.target;
-        if(target.particle){
-            particleMethod[target.particle](canvasSketch,target);
+        var type = target.particle[0];
+        if(type){
+            particleMethod[type](target);
         }
     },
     onmouseup:function(){
@@ -164,11 +161,27 @@ function text(option,text,callback){
     }
 }
 
+function zrenderAnimation(recordData,callback){
+    var timeArr = Object.keys(recordData);
+    var length,len;
+    length = len = timeArr.length;
+
+    var zrAnimate = selectTarget.animate("",false);
+    while(len){
+        var times = timeArr[length -len];
+        zrAnimate.when(parseInt(times,10),{
+            position:recordData[times]
+        });
+        len--;
+    }
+    zrAnimate.done(callback(selectTarget)).start();
+}
+
 
 export default drawMethod = {
     init:init,
-    initSketch:initSketch,
     circle:circle,
     square:square,
-    text:text
+    text:text,
+    zrenderAnimation:zrenderAnimation
 }

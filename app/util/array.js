@@ -34,7 +34,6 @@ export const arrayMethods = Object.create(arrayProto);
                 inserted = args.slice(2)
                 break
         }
-        this.observe(this);
         return result;
     })
 });

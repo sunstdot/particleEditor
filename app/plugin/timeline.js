@@ -5,8 +5,12 @@
 import {
     startRecord,
     stopRecord,
-    clearRecord
+    clearRecord,
+    getRecordData
 } from '../widget/snapshoot'
+
+import drawMethod from '../widget/drawMethods'
+import particleMethod from '../widget/particleMethod'
 let Vue = require('vue').default;
 let event = require('../event');
 let recorder = false;
@@ -15,6 +19,25 @@ var recordBtn;
 
 function tween() {
     //todo 补间动画
+}
+
+function playAnimation(){
+    var recordData = getRecordData();
+    var timeArr = Object.keys(recordData);
+    //reset target position
+    event.notify("resetPosition",recordData[timeArr[0]]);
+    drawMethod.zrenderAnimation(recordData,function(target){
+        target.particle.unshift();
+        var type = target.particle[0];
+        if(type){
+            particleMethod[type](target,null,function(){
+                target.particle.unshift();
+                var type = target.particle[0];
+                particleMethod[type](target);
+            });
+        }
+    });
+
 }
 //todo 拖动slider控制
 function vueInit() {
@@ -49,6 +72,9 @@ function init() {
     slider.draggable({containment: "#timelineArea", axis: "x", scroll: false})
 }
 function eventBind() {
+    event.register('animationPlay',function(){
+        playAnimation();
+    });
     event.register('animSpeed', function (data) {
 
     });

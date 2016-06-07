@@ -70,13 +70,15 @@ function selectTexture(param) {
     console.log("------------" + type);
 }
 function selectParticle(param) {
-    target.particle = param.type;
-    //particleMethod[param.type](canvasSketch);
+    //particle should be an array
+    if(!target.particle){
+        target.particle = [];
+    }
+    target.particle.push(param.type);
 }
 //修改特效重力场
 function modifyGravity(param) {
     let downGravity = param.downGravity, rightGravity = param.rightGravity;
-    console.log(downGravity + "-----------------" + rightGravity);
 }
 function selectTarget(param) {
     target = param.target;
@@ -95,7 +97,6 @@ function init() {
     var mainCanvas = document.createElement('canvas');
     mainCanvas.width = painterContainer.offsetWidth;
     mainCanvas.height = painterContainer.offsetHeight;
-    //painterContainer.appendChild(mainCanvas);
     var canvasZr = drawMethod.init(mainCanvas);
     canvasSketch = Sketch.create({
         container:document.getElementById('painterContainer'),
@@ -104,7 +105,6 @@ function init() {
         zrenderClear:true,
         canvasZr:canvasZr
     });
-    drawMethod.initSketch(canvasSketch);
 }
 function bindEvent() {
     event.register("selectTexture", selectTexture.bind(this));
@@ -112,14 +112,6 @@ function bindEvent() {
     event.register("selectParticle", selectParticle.bind(this));
     event.register("selectTarget", selectTarget.bind(this));
     event.register("drawDragShape", drawDragShape.bind(this));
-    //myCanvas.addEventListener("mousemove", function (e) {
-    //    if (e.layerX || e.layerX == 0) {  //firefox
-    //        e.target.style.position = 'relative';
-    //        newMousePosition = new vector2(e.layerX, e.layerY);
-    //    } else {
-    //        newMousePosition = new vector2(e.offsetX, e.offsetY);
-    //    }
-    //});
 }
 function vueInit() {
     let playTimer;
@@ -131,22 +123,20 @@ function vueInit() {
 
             },
             finish: function () {
-                //if(playTimer){
-                //    clearInterval(playTimer);
-                //    playTimer = undefined;
-                //}
-                //ps.clear();
-                //painterInit();
                 canvasSketch.destroy();
                 fireFlag = false;
             },
             fire: function () {
                 //shakeBall(myCanvas);  手榴弹粒子特效
-                particleMethod[target.particle](canvasSketch,target);
+                var type = target.particle[0];
+                particleMethod[type](target,canvasSketch);
                 fireFlag = true;
             },
             create:function(){
 
+            },
+            replay:function(){
+                event.notify('animationPlay');
             }
         }
     })
