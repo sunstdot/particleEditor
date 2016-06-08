@@ -1,0 +1,47 @@
+//分三段粒子特效
+{
+  "startParticles":{
+    "shape":{
+      "type":"burningWord",
+      "stroke":{
+        "width":0,
+        "color":""
+      }
+    },
+    "text":{
+      "content":"世界和平",
+      "size":"16px",
+      "font":"Microsoft Yahei",
+      "color":"#FFF"
+    },
+    "startPos":{
+      "x":1000,
+      "y":60
+    },
+    "endPos":{
+      "x":0,
+      "y":0
+    },
+    "property":{
+      "minLife":15,
+      "floatLife":8,
+      "minSize":0,
+      "floatSize":8,
+      "color":"FFB90F",
+      "reduceSize":1,
+      "reduceLife":0.02,
+      "opacity":1,
+      "minXVelocity":0,
+      "minYVelocity":-15,
+      "floatXVelocity":5,
+      "floatTVelocity":10,
+      "compositeOperation":"destination-over"
+    }
+  },
+  "midParticles":{
+
+  },
+  "endParticles":{
+
+  }
+}
