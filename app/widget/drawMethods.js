@@ -24,6 +24,12 @@ function init(myCanvas){
     return canvasZr;
 }
 
+export function zrClear(){
+    if(canvasZr){
+        canvasZr.clear();
+    }
+}
+
 function extend(target,source){
     for(var key in source){
         if(!target.hasOwnProperty(key)){
@@ -161,7 +167,7 @@ function text(option,text,callback){
     }
 }
 
-function zrenderAnimation(recordData,callback){
+export function zrenderAnimation(recordData,callback){
     var timeArr = Object.keys(recordData);
     var length,len;
     length = len = timeArr.length;
@@ -174,7 +180,7 @@ function zrenderAnimation(recordData,callback){
         });
         len--;
     }
-    zrAnimate.done(callback(selectTarget)).start();
+    zrAnimate.done(callback).start();
 }
 
 
@@ -182,6 +188,5 @@ export default drawMethod = {
     init:init,
     circle:circle,
     square:square,
-    text:text,
-    zrenderAnimation:zrenderAnimation
+    text:text
 }

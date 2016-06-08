@@ -9,7 +9,7 @@ import {
     getRecordData
 } from '../widget/snapshoot'
 
-import drawMethod from '../widget/drawMethods'
+import {zrenderAnimation} from '../widget/drawMethods'
 import particleMethod from '../widget/particleMethod'
 let Vue = require('vue').default;
 let event = require('../event');
@@ -26,12 +26,13 @@ function playAnimation(){
     var timeArr = Object.keys(recordData);
     //reset target position
     event.notify("resetPosition",recordData[timeArr[0]]);
-    drawMethod.zrenderAnimation(recordData,function(target){
-        target.particle.unshift();
+    zrenderAnimation(recordData,function(){
+        var target = this._target;
+        target.particle.shift();
         var type = target.particle[0];
         if(type){
             particleMethod[type](target,null,function(){
-                target.particle.unshift();
+                target.particle.shift();
                 var type = target.particle[0];
                 particleMethod[type](target);
             });

@@ -3,8 +3,10 @@
  */
 import Particle from "../particle"
 import vector2 from "../vector2"
+import Color from "../Color"
 import ParticleSystem from "./particleSystem"
 import {fireTheHall,shakeBall} from "../plugin/fireTheHall"
+import {zrenderAnimation,zrClear} from './drawMethods'
 import {
     sampleDirection,
     sampleNum,
@@ -18,7 +20,8 @@ var particleDemo;
 const COLORS = ['#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423'];
 
 let ps = new ParticleSystem();
-let dt = 0.02;
+let dt = 0.002;
+const count = 100;
 let Methods = {};
 
 function getCenter(){
@@ -47,8 +50,8 @@ function getCenter(){
         text:function(shape){
             return [
                 {
-                    x:shape.style.x+shape.style.width,
-                    y:shape.style.y+shape.style.height
+                    x:shape.style.x+shape.position[0],
+                    y:shape.style.y+shape.position[1]
                 },
                 {
                     width:shape.style.width,
@@ -156,23 +159,44 @@ Methods.shakeTheBall = function(target,mouseDemo,callback){
     var time;
     particleDemo.spawn = function(){
         time = (new Date()).getTime();
-        var life = 5;
-        let velocity = center.add(sampleDirection(5)).substract(center).multiply(10).add(sampleDirection()).multiply(100);
-        let color = "rgba(142,53,74)";
-        ps.emit(new Particle(center,velocity,life,color,size,1,type))
+        if(type ==="text"){
+            var obj = {};
+            var count1 = 25;
+            var position = target.position;
+            var tempPos;
+            for(var i=0;i<count1;i++){
+                var velocity = center.add(sampleDirection(5)).substract(center);
+                tempPos = [position[0]+velocity.x,position[1]+velocity.y];
+                var times = i*100;
+                obj[times] = tempPos;
+            }
+            zrenderAnimation(obj,callback);
+        }else{
+            var life = 5000;
+            let velocity = center.add(sampleDirection(5)).substract(center).multiply(10).add(sampleDirection());
+            let color = "rgba(142,53,74)";
+            ps.clear();
+            ps.emit(new Particle(center,velocity,life,color,size,1,type))
+        }
     }
+    particleDemo.spawn();
 
     particleDemo.update = function(){
-        ps.simulate(dt,1);
+        if(type !== 'text'){
+            ps.simulate(dt,1);
+        }
     }
     particleDemo.draw = function(){
         var time1 = (new Date()).getTime();
-        if((time1 - time) > 5000){
-            particleDemo.stop();
-            callback();
+        if(type !== 'text'){
+            if((time1 - time) > 5000){
+                particleDemo.stop();
+                callback();
+            }else{
+                ps.modifyChildProperty("velocity",center.add(sampleDirection(5)).substract(center));
+                ps.render(particleDemo);
+            }
         }
-        ps.modifyChildProperty("velocity",center.add(sampleDirection(5)).substract(center).multiply(10).add(sampleDirection()).multiply(100));
-        ps.render(ctx);
     }
 }
 Methods.fireTheHall = function(target,mouseDemo,callback){
@@ -182,32 +206,39 @@ Methods.fireTheHall = function(target,mouseDemo,callback){
     if(!particleDemo){
         return;
     }
+    zrClear(); //清楚zrender图形
     var type = target.type;
-    let [pos] = getCenter()[type](target)
+    let [pos,size] = getCenter()[type](target)
     var time;
+    //没有zrender元素需要开启sketch画布更新
+    particleDemo.autoclear = true;
+    particleDemo.running = true;
     particleDemo.spawn = function(){
-        let r = pos.r || pos.width;
+        let r = size.r || size.width;
+        ps.clear();
         let center = new vector2(pos.x,pos.y);
         time = (new Date()).getTime();
         let fragmentCenter
         for(let i=0;i<count;i++){
             let size = sampleNum(r/10,r/5);
             fragmentCenter = center.add(sampleDirection(size));
-            let velocity = center.substract(fragmentCenter).multiply(10).add(sampleDirection());
-            let life = sampleNum(1,2);
+            let velocity = center.substract(fragmentCenter).multiply(2);
+            let life = sampleNum(4,6);
             let color = sampleColor(Color.red,Color.yellow);
             ps.emit(new Particle(fragmentCenter,velocity,life,color,size));
         }
     }
+    particleDemo.spawn();
     particleDemo.update = function(){
-        ps.simulate(dt);
+        ps.simulate(dt,0.02);
     }
     particleDemo.draw = function(){
         var time1 = (new Date()).getTime();
-        if((time-time1)>5000){
+        if((time1-time)>5000){
             particleDemo.stop();
+        }else{
+            ps.render(particleDemo);
         }
-        ps.render(ctx);
     }
 }
 

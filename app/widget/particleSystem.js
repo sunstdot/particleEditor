@@ -151,6 +151,17 @@ define(function (require, exports, module) {
                             + alpha.toFixed(2) + ")";
                     }
                     ctx.fillRect(p.position.x, p.position.y, p.size.width, p.size.height);
+                },
+                text:function(ctx,p){
+                    if (typeof p.color === "string") {
+                        ctx.fillStyle = p.color;
+                    } else {
+                        ctx.fillStyle = "rgba("
+                            + Math.floor(p.color.r * 255) + ","
+                            + Math.floor(p.color.g) + ","
+                            + Math.floor(p.color.b) + ","
+                            + alpha.toFixed(2) + ")";
+                    }
                 }
             };
             return method[type];
