@@ -15,9 +15,9 @@
     },
     "property":{
       "compositeOperation":"destination-over",
-      "repeat":true,
-      "coexist":true,
-      "state":0
+      "coexist":false,
+      "state":2,
+      "awaitTime":1000
     },
     "life":{
       "value":15,
@@ -30,7 +30,7 @@
       }
     },
     "number":{
-      "value":20,
+      "value":100,
       "density":{
         "enable":true,
         "value_area":800
@@ -38,8 +38,8 @@
     },
     "size":{
       "value":0,
-      "minVal":5,
-      "maxVal":8,
+      "minVal":10,
+      "maxVal":16,
       "random":true,
       "anim":{
         "enable":true,
@@ -56,29 +56,26 @@
     },
     "move":{
       "enable":true,
-      "speedX":0,
-      "speedY":-15,
-      "floatSpeedX":5,
-      "floatSpeedY":10,
+      "speed":10,
       "random":true
     }
   },
   "entity":{
     "shape":{
-      "type":"text"
+      "type":"circle"
     },
     "position":{
       "x":1000,
       "y":160
     },
     "property":{
+      "r":40,
       "width":80,
-      "height":30,
+      "height":80,
       "coexist":true,
       "state":1,
-      "value":"∏Òﬂ¥∏Òﬂ¥",
-      "font":"16px Microsoft Yahei",
-      "color":"#FFF"
+      "compositeOperation":"lighter",
+      "color":"#FF0000"
     }
   }
 }
