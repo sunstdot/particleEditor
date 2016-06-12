@@ -120,7 +120,7 @@ define(function (require, exports, module) {
                     //颜色设置部分需要提出来单独封装.至少也在私有方法中进行封装
 
                     if (typeof p.color === "string") {
-                        let rgb = {r: 255, g: 185, b: 15};
+                        let rgb = hexToRgb(p.color);
                         var gradient = ctx.createRadialGradient(p.position.x, p.position.y, 0, p.position.x, p.position.y, p.size);
                         gradient.addColorStop(0, "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + "," + p.opacity + ")");
                         gradient.addColorStop(0.5, "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + "," + p.opacity + ")");
@@ -129,7 +129,7 @@ define(function (require, exports, module) {
                     } else {
                         var alpha = 1 - p.age / p.life;
                         ctx.fillStyle = "rgba("
-                            + Math.floor(p.color.r * 255) + ","
+                            + Math.floor(p.color.r) + ","
                             + Math.floor(p.color.g) + ","
                             + Math.floor(p.color.b) + ","
                             + alpha.toFixed(2) + ")";
