@@ -235,3 +235,27 @@ export function def(obj,key,val,enumerable){
     })
 }
 export const isArray = Array.isArray;
+
+
+export function deepExtend(destination, source){
+    var property;
+    for(property in source){
+        if(source[property] && source[property].constructor && source[property].constructor === Object){
+            destination[property] = destination[property] || {};
+            arguments.callee(destination[property],source[property]);
+        }else{
+            destination[property] = source[property];
+        }
+    }
+}
+
+export function seekProperty(destination,source){
+    var property;
+    for(property in source){
+        if(destination[property]){
+            deepExtend(destination[property],source[property]);
+        }else{
+            arguments.callee(destination[property],source);
+        }
+    }
+}

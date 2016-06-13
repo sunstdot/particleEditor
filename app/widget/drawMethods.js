@@ -160,6 +160,23 @@ function text(option,text,callback){
         }
     },opt));
     canvasZr.add(globalTxt);
+    var entity = {
+        "shape":{
+            "type":"text"
+        },
+        "position":{
+            "x":option.x,
+            "y":option.y
+        },
+        "property":{
+            "width":80,
+            "height":30,
+            "value":text,
+            "font":"18px Microsoft Yahei",
+            "color":"#FFF"
+        }
+    }
+    event.notify("setEntityProperty",entity);
     //数据进行绑定
     defineReactive(globalTxt,'position',globalTxt.position);
     if(callback){

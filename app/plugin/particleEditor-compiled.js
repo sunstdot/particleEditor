@@ -11,10 +11,12 @@ import kinematics from "./kinematics";
 import rightControl from "./rightControl";
 import leftControl from "./leftControl";
 import timeline from "./timeline";
+import extParticle from "./exportParticle";
+
 require("jquery-ui");
 //import login from "./loginComponent/login";
 
-var jobList = [kinematics, rightControl, leftControl, timeline];
+var jobList = [kinematics, rightControl, leftControl, timeline, extParticle];
 execJob.exec(jobList);
 
 //# sourceMappingURL=particleEditor-compiled.js.map

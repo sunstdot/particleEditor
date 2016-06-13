@@ -14,6 +14,8 @@ import {
     pseudorandomDirection
 } from "./particleParam"
 
+import event from "../event"
+
 //import burnWord from "../plugin/burning-words"
 var particleDemo;
 
@@ -121,8 +123,8 @@ Methods.burningWord = function(target,mouseDemo){
     }
     let width = target.style.width;
     let height = target.style.height;
+    var color = '#FFB90F';
     particleDemo.spawn = function(pos1){
-        let color = '#FFB90F';
         let size = random(5,8);
         let life = 15+Math.random()*8;
         let velocity = new vector2(random()*5,-15+random()*10);
@@ -145,6 +147,67 @@ Methods.burningWord = function(target,mouseDemo){
         }
     }
     particleDemo.doUpdate();
+    var particles = {
+        "shape":{
+            "type":"circle",
+            "stroke":{
+                "width":0,
+                "color":""
+            }
+        },
+        "position":{
+            "x":target.style.x,
+            "y":target.style.y
+        },
+        "property":{
+            "compositeOperation":"destination-over",
+            "awaitTime":1000,
+            "await":true,
+            "state":2
+        },
+        "life":{
+            "value":15,
+            "floatLife":8,
+            "random":true,
+            "anim":{
+                "enable":true,
+                "reduce_life":0.02,
+                "state":2,
+                "life_min":0
+            }
+        },
+        "number":{
+            "value":burningCount,
+            "density":{
+                "enable":true,
+                "value_area":800
+            }
+        },
+        "size":{
+            "value":0,
+            "minVal":5,
+            "maxVal":8,
+            "random":true,
+            "anim":{
+                "enable":true,
+                "speed":40,
+                "size_min":0
+            }
+        },
+        "color":{
+            "value":color
+        },
+        "opacity":{
+            "value":0.5,
+            "random":false
+        },
+        "move":{
+            "enable":true,
+            "speed":10,
+            "random":true
+        }
+    }
+    event.notify("setParticleProperty",particles);
 }
 
 Methods.shakeTheBall = function(target,mouseDemo,callback){

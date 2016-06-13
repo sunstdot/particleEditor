@@ -6,10 +6,10 @@
     <script src="lib/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body class="editor-wrapper">
-    <div class="editor-header">
+    <div id="editorHeader" class="editor-header">
         <img class="leftIcon imgIcon" src="assets/img/flower.png">
         <div class="titleText">粒子编辑器</div>
-        <button id="exportOp" class="btn export-btn">导出效果</button>
+        <button id="exportOp" class="btn export-btn" v-on:click="exportMethod">导出效果</button>
     </div>
     <!--登陆框承载-->
     <div style="position: absolute;top: 50%;left: 50%;margin-top: 0px;margin-left: -250px;height: 400px;width: 500px; display: none;z-index: 9999;" id="loginPanel">
@@ -138,6 +138,5 @@
     </div>
     <footer></footer>
     <script type="application/javascript" src="../build/app.js"></script>
-    <script type="application/javascript" src="../build/vendors.js"></script>
 </body>
 </html>
