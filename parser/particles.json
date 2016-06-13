@@ -16,7 +16,6 @@
     "property":{
       "compositeOperation":"destination-over",
       "repeat":true,
-      "coexist":true,
       "state":0
     },
     "life":{
@@ -74,11 +73,10 @@
     "property":{
       "width":80,
       "height":30,
-      "coexist":true,
-      "state":1,
       "value":"∏Òﬂ¥∏Òﬂ¥",
       "font":"16px Microsoft Yahei",
-      "color":"#FFF"
+      "color":"#FFF",
+      "state":1
     }
   }
 }

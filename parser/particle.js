@@ -270,9 +270,6 @@ var pJS = function (tag_id, params, canvas_el) {
     }
     pJS.fn.particlesDraw = function () {
         /* update each particles param */
-        if(pJS.state === 0){
-            pJS.fn.canvasClear();
-        }
         pJS.fn.particlesUpdate();
         function particleShape(type) {
             if (!type) {
@@ -357,21 +354,27 @@ var pJS = function (tag_id, params, canvas_el) {
         pJS.fn.particlesCreate();
     }
     pJS.fn.vendors.draw = function(){
-        if(pJS.state === 0){
-            pJS.fn.entityDraw();
-            pJS.state = pJS.entity.property.state;
+        if(pJS.state != 1){
+            pJS.fn.canvasClear();
         }
-        if(pJS.particles.property.awaitTime){
+        if(pJS.state === 0){
+            pJS.state = pJS.entity.property.state;
+            pJS.fn.entityDraw();
+        }else if(pJS.state === 2){
+            pJS.state = 1;
+        }
+        if(pJS.particles.property.await){
             setTimeout(function(){
                 if(pJS.state === 1){
-                    pJS.fn.particlesDraw();
                     pJS.state = pJS.particles.property.state;
+                    pJS.particles.property.await = false;
+                    pJS.fn.particlesDraw();
                 }
             },pJS.particles.property.awaitTime)
         }else{
             if(pJS.state === 1){
-                pJS.fn.particlesDraw();
                 pJS.state = pJS.particles.property.state;
+                pJS.fn.particlesDraw();
             }
         }
         //是否重复发射粒子
@@ -393,7 +396,6 @@ var pJS = function (tag_id, params, canvas_el) {
     pJS.fn.vendors.start = function(){
         pJS.fn.vendors.checkBeforeDraw();
     }
-
     pJS.fn.vendors.start();
 }
 

@@ -15,9 +15,9 @@
     },
     "property":{
       "compositeOperation":"destination-over",
-      "coexist":false,
-      "state":2,
-      "awaitTime":1000
+      "awaitTime":1000,
+      "await":true,
+      "state":2
     },
     "life":{
       "value":15,
@@ -26,6 +26,7 @@
       "anim":{
         "enable":true,
         "reduce_life":0.02,
+        "state":2,
         "life_min":0
       }
     },
@@ -72,7 +73,6 @@
       "r":40,
       "width":80,
       "height":80,
-      "coexist":true,
       "state":1,
       "compositeOperation":"lighter",
       "color":"#FF0000"
