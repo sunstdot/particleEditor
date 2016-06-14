@@ -1,12 +1,11 @@
 var path = require('path');
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH,'app');
-var BUILD_PATH = path.resolve(ROOT_PATH,'build');
+var BUILD_PATH = "E:/amazingCode/particleServer/assets/build";
 var CSS_PATH = path.resolve(APP_PATH,'css');
 module.exports = {
   entry:{
     "app":APP_PATH+"/plugin/particleEditor"
-    //"demo":ROOT_PATH+"/generatorDemo/demo"
   },
   output:{
     path:BUILD_PATH,
@@ -58,7 +57,7 @@ module.exports = {
       echarts: "echarts/lib",
       zrender$: "zrender/lib/zrender.js",
       zrender: "zrender/lib",
-      //$:"jquery/jquery.js",
+      //jquery:"jquery/jquery.js",
       vue:"vue/src/index.js"
     },
     modulesDirectories:['node_modules']
