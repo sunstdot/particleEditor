@@ -198,7 +198,8 @@ var pJS = function (tag_id, params, canvas_el) {
 
     pJS.fn.particlesCreate = function (pos) {
         var position = pos || pJS.particles.position;
-        for (var i = 0; i < pJS.particles.number.value; i++) {
+        var numVal = pJS.particles.number || 20;
+        for (var i = 0; i < numVal; i++) {
             var tempPos = {};
             tempPos.x = position.x + random() * pJS.entity.property.width;
             tempPos.y = position.y + random() * pJS.entity.property.height;

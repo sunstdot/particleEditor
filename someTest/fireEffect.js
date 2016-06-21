@@ -26,7 +26,7 @@ function particle() {
 }
 
 function draw() {
-    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalCompositeOperation = 'destination-over';
     ctx.fillStyle = '#000';
     ctx.fillRect(0,0,canvas.width,canvas.height);
     ctx.globalCompositeOperation = 'lighter';
