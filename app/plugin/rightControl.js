@@ -87,6 +87,7 @@ function threeStart(type) {
     init(type);
     animate();
 }
+
 function vueInit() {
     let vm = new vue({
         el: "#rightParts",

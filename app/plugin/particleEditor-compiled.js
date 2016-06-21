@@ -5,6 +5,8 @@
 import "../css/range.css";
 import "../css/particleEditor.css";
 import "../css/bootstrap.min.css";
+import "../css/vueModal.css";
+
 //window.$ = require('jquery');
 import execJob from "../execJob";
 import kinematics from "./kinematics";

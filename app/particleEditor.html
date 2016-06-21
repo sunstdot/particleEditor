@@ -4,16 +4,40 @@
     <meta charset="UTF-8">
     <script src="lib/jquery-2.2.0.min.js" type="application/javascript"></script>
     <script src="lib/bootstrap.min.js" type="application/javascript"></script>
+    <script src="lib/remodal.min.js" type="application/javascript"></script>
 </head>
 <body class="editor-wrapper">
+
     <div id="editorHeader" class="editor-header">
         <img class="leftIcon imgIcon" src="assets/img/flower.png">
         <div class="titleText">粒子编辑器</div>
-        <button id="exportOp" class="btn export-btn" v-on:click="exportMethod">导出效果</button>
+        <a id="exportOp" class="btn export-btn" v-on:click="exportMethod">导出效果</a>
     </div>
     <!--登陆框承载-->
     <div style="position: absolute;top: 50%;left: 50%;margin-top: 0px;margin-left: -250px;height: 400px;width: 500px; display: none;z-index: 9999;" id="loginPanel">
     </div>
+    <!-- template for the modal component -->
+    <script type="x/template" id="modal-template">
+        <div class="modal-mask" v-show="show" transition="modal">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <div id="showUrl1" class="modal-body">
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <slot name="footer">
+                            default footer
+                            <button class="modal-default-button"
+                                    @click="show = false">
+                                OK
+                            </button>
+                        </slot>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
     <div class="editor-body">
         <nav class="editor-nav">
             <div id="myTab" class="nav">
@@ -135,7 +159,18 @@
         <!--</div>-->
         <!--<div class="pright">-->
         <!--</div>-->
+
     </div>
+    <div class="remodal-overlay remodal-is-closed" style="display: none;"></div>
+    <div class="remodal-wrapper remodal-is-closed" style="display: none;"><div class="remodal remodal-is-initialized remodal-is-closed" data-remodal-id="modal" aria-labelledby="modalTitle" aria-describedby="modalDesc" tabindex="-1">
+        <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+        <div>
+            <h2 id="modalTitle">Remodal v1</h2>
+        </div>
+        <br>
+        <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+        <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
+    </div></div>
     <footer></footer>
     <script type="application/javascript" src="../build/app.js"></script>
 </body>
