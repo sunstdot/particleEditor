@@ -29,9 +29,8 @@ particlesJS("particle-js",{
     },
     "property":{
       "compositeOperation":"destination-over",
-      "awaitTime":1000,
-      "await":true,
-      "state":2
+      "repeat":true,
+      "state":0
     },
     "life":{
       "value":15,
@@ -40,12 +39,11 @@ particlesJS("particle-js",{
       "anim":{
         "enable":true,
         "reduce_life":0.02,
-        "state":2,
         "life_min":0
       }
     },
     "number":{
-      "value":100,
+      "value":20,
       "density":{
         "enable":true,
         "value_area":800
@@ -53,8 +51,8 @@ particlesJS("particle-js",{
     },
     "size":{
       "value":0,
-      "minVal":10,
-      "maxVal":16,
+      "minVal":5,
+      "maxVal":8,
       "random":true,
       "anim":{
         "enable":true,
@@ -71,25 +69,28 @@ particlesJS("particle-js",{
     },
     "move":{
       "enable":true,
-      "speed":10,
+      "speedX":0,
+      "speedY":-15,
+      "floatSpeedX":5,
+      "floatSpeedY":10,
       "random":true
     }
   },
   "entity":{
     "shape":{
-      "type":"circle"
+      "type":"text"
     },
     "position":{
       "x":1000,
-      "y":160
+      "y":100
     },
     "property":{
-      "r":40,
-      "width":80,
-      "height":80,
-      "state":1,
-      "compositeOperation":"lighter",
-      "color":"#FF0000"
+      "width":60,
+      "height":30,
+      "value":"大帝都",
+      "font":"16px Microsoft Yahei",
+      "color":"#FFF",
+      "state":1
     }
   }
 })
