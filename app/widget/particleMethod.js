@@ -263,6 +263,7 @@ Methods.shakeTheBall = function(target,mouseDemo,callback){
     }
 }
 Methods.fireTheHall = function(target,mouseDemo,callback){
+    let fireCount = 200;
     if(mouseDemo){
         particleDemo = mouseDemo;
     }
@@ -282,12 +283,19 @@ Methods.fireTheHall = function(target,mouseDemo,callback){
         let center = new vector2(pos.x,pos.y);
         time = (new Date()).getTime();
         let fragmentCenter
-        for(let i=0;i<count;i++){
+        for(let i=0;i<fireCount;i++){
             let size = sampleNum(r/10,r/5);
+            console.log(size+"---------------");
             fragmentCenter = center.add(sampleDirection(size));
-            let velocity = center.substract(fragmentCenter).multiply(2);
-            let life = sampleNum(4,6);
-            let color = sampleColor(Color.red,Color.yellow);
+            let velocity = center.substract(fragmentCenter).multiply(0.3);
+            console.log(JSON.stringify(velocity)+"=======");
+            let life = sampleNum(40,60);
+            // let color = sampleColor(Color.red,Color.yellow);
+            let color = {
+                r: (Math.floor(random() * (255 - 0 + 1)) + 0),
+                g: (Math.floor(random() * (255 - 0 + 1)) + 0),
+                b: (Math.floor(random() * (255 - 0 + 1)) + 0)
+            }
             ps.emit(new Particle(fragmentCenter,velocity,life,color,size));
         }
     }
@@ -297,11 +305,11 @@ Methods.fireTheHall = function(target,mouseDemo,callback){
     }
     particleDemo.draw = function(){
         var time1 = (new Date()).getTime();
-        if((time1-time)>5000){
-            particleDemo.stop();
-        }else{
+        // if((time1-time)>5000){
+        //     particleDemo.stop();
+        // }else{
             ps.render(particleDemo);
-        }
+        // }
     }
 }
 

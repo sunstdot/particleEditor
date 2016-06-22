@@ -15,25 +15,13 @@ import {
     seekProperty
 } from "../util"
 function setEntityProperty(data){
-    if(obj.entity){
-        alert("some entity has draw,please do clean operation!");
-        return;
-    }
     obj.entity = data;
 }
 function updateEntityProperty(data){
-    if(!obj.entity){
-        alert("there is no entity,please choose one");
-        return;
-    }
     seekProperty(obj.entity,data);
 }
 
 function setParticleProperty(data){
-    if(obj.particles){
-        alert("some particles has selected,please do clean operation!");
-        return;
-    }
     obj.particles = data;
 }
 
@@ -68,9 +56,7 @@ function vueInit(){
                     },
                     dataType: "json",
                     success: function(data){
-                        if(data.code === "A00000"){
-                            $('#showUrl1').html(data.url);
-                            this.showModal = true;
+                        if(data.code === "A00000"){                           
                             $('#showUrl').html(data.url);
                         }
                     }
