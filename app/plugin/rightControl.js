@@ -117,7 +117,7 @@ function vueInit() {
                 event.notify('selectParticle', {type: type});
             },
             inputWord: function (e) {
-                let targetPos = {left:1000,top:60};
+                let targetPos = {left:400,top:60};
                 let type = "text";
                 let newWord = this.newWord;
                 event.notify("drawDragShape",{pos:targetPos,type:type,text:newWord});

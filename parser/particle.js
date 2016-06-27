@@ -76,7 +76,7 @@ function install(context) {
                 return min + M.random() * (max - min);
             },
             directionRandom:function(r){
-                let theta = Math.random()*2*Math.PI;
+                var theta = Math.random()*2*Math.PI;
                 return {x:r*Math.cos(theta),y:r*Math.sin(theta)};
             }
         })
@@ -198,7 +198,7 @@ var pJS = function (tag_id, params, canvas_el) {
 
     pJS.fn.particlesCreate = function (pos) {
         var position = pos || pJS.particles.position;
-        var numVal = pJS.particles.number || 20;
+        var numVal = pJS.particles.number.value || 20;
         for (var i = 0; i < numVal; i++) {
             var tempPos = {};
             tempPos.x = position.x + random() * pJS.entity.property.width;
@@ -280,7 +280,7 @@ var pJS = function (tag_id, params, canvas_el) {
                 circle: function (ctx, p) {
                     if(p.size < 0) return;
                     if (typeof p.color === "string") {
-                        let rgb = {r: 255, g: 185, b: 15};
+                        var rgb = {r: 255, g: 185, b: 15};
                         var gradient = ctx.createRadialGradient(p.position.x, p.position.y, 0, p.position.x, p.position.y, p.size);
                         gradient.addColorStop(0, "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + "," + p.opacity + ")");
                         gradient.addColorStop(0.5, "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + "," + p.opacity + ")");

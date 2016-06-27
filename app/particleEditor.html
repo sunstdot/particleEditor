@@ -9,7 +9,33 @@
 <body class="editor-wrapper">
 
     <div id="editorHeader" class="editor-header">
+<<<<<<< HEAD
         <a style="left: 10px;top: 20px;width: 100px;height: 40px;background-color: #00008B" href="http://localhost:1337/test.html"></a>
+=======
+        <!-- template for the modal component -->
+        <script type="x/template" id="modal-template">
+            <div class="modal-mask" v-show="show" transition="modal">
+                <div class="modal-wrapper">
+                    <div class="modal-container">
+                        <div id="showUrl1" class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <slot name="footer">
+                                default footer
+                                <button class="modal-default-button"
+                                        @click="show = false">
+                                    OK
+                                </button>
+                            </slot>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <modal :show.sync="showModal">
+        </modal>
+>>>>>>> d0c8e0b9020bcf2d5e0342984c56bd2586095dd9
         <img class="leftIcon imgIcon" src="assets/img/flower.png">
         <div class="titleText">粒子编辑器</div>
         <a id="exportOp" class="btn export-btn" v-on:click="exportMethod">导出效果</a>
@@ -17,28 +43,7 @@
     <!--登陆框承载-->
     <div style="position: absolute;top: 50%;left: 50%;margin-top: 0px;margin-left: -250px;height: 400px;width: 500px; display: none;z-index: 9999;" id="loginPanel">
     </div>
-    <!-- template for the modal component -->
-    <script type="x/template" id="modal-template">
-        <div class="modal-mask" v-show="show" transition="modal">
-            <div class="modal-wrapper">
-                <div class="modal-container">
-                    <div id="showUrl1" class="modal-body">
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <slot name="footer">
-                            default footer
-                            <button class="modal-default-button"
-                                    @click="show = false">
-                                OK
-                            </button>
-                        </slot>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
+    
     <div class="editor-body">
         <nav class="editor-nav">
             <div id="myTab" class="nav">
@@ -53,15 +58,15 @@
                     <div class="argSet">
                         <span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>
                         <div id="gravityControl" class="gravityControl">
-                            <!--<canvas  width="360px" height="200px" style="border:1px solid"></canvas>-->
+                            <canvas  width="360px" height="200px" style="border:1px solid"></canvas>
                         </div>
-                        <!--<fieldset>-->
-                        <!--<span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>    -->
-                        <!--<input id="gravity" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateGravityInput(this.value);" onchange="updateGravityInput(this.value);"/>-->
+                        <fieldset>
+                        <span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>    
+                        <input id="gravity" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateGravityInput(this.value);" onchange="updateGravityInput(this.value);"/>
 
-                        <!--<span class="text">力度控制：</span> <span id="dynamicsValudata-mediumfocuspicture-eleme" class="valueShow">50</span>-->
-                        <!--<input id="dynamics" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateDynamicsInput(this.value);" onchange="updateDynamicsInput(this.value);"/>-->
-                        <!--</fieldset>-->
+                        <span class="text">力度控制：</span> <span id="dynamicsValudata-mediumfocuspicture-eleme" class="valueShow">50</span>
+                        <input id="dynamics" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateDynamicsInput(this.value);" onchange="updateDynamicsInput(this.value);"/>
+                        </fieldset>
                     </div>
                     <div class="velocityCvs">
                         <span class="text">速度记录仪</span>
