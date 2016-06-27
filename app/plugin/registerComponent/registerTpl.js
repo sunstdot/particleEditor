@@ -1,15 +1,16 @@
-//ÁôªÈôÜÊ®°Êùø
+//µ«¬Ωƒ£∞Â
 define(function (require, exports, module) {
     var loginTpl = '<div class="wrapper">'+
-            '<div class="closeBtn" v-on:click="doClose()"></div>'+
+        '<div class="closeBtn" v-on:click="doClose()"></div>'+
         '<div class="container" id="loginContainer">'+
         '<template v-for="branch in branches">'+
-            '<div class="divform">'+
-            '<h1>{{branch.word}}</h1>'+
-            '<input type="text" v-model="username" placeholder="{{branch.name}}">'+
-            '<input type="password" v-model="password" placeholder="{{branch.pwd}}">'+
-            '<button type="submit" id="login-button" v-on:click="doLogin()">{{branch.btname}}</button>'+
-            '</div>'+
+        '<div class="divform">'+
+        '<h1>{{branch.word}}</h1>'+
+        '<input type="text" v-model="username" placeholder="{{branch.name}}">'+
+        '<input type="password" v-model="password" placeholder="{{branch.pwd}}">'+
+        '<input type="mailBox" v-model="mailBox" placeholder="{{branch.mailBox}}">'+
+        '<button type="submit" id="login-button" v-on:click="doRegister()">{{branch.btname}}</button>'+
+        '</div>'+
         '</template>'+
         '</div>'+
         '<ul class="bg-bubbles">'+
@@ -27,4 +28,3 @@ define(function (require, exports, module) {
         '</div>';
     module.exports = loginTpl;
 });
-
