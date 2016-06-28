@@ -21,18 +21,10 @@ function vueInit(){
         template:registerHtml,
         data:function(){
             return dataModel;
-        }
-    });
-    //Vue.component('register-component',registerComponent);
-    var vm = new Vue({
-        el:'#registerContainer',
-        data:{
-        },
-        components: {
-            'v-register': registerComponent
         },
         methods:{
-            doRegister:function(){
+            doRegister:function(event){
+                event.preventDefault();
                 var form = document.getElementById('registerForm');
                 form.submit();
             },
@@ -59,6 +51,18 @@ function vueInit(){
                   if(!mailReg.test(value)) console.log("error");
                 }
             }
+        }
+    });
+    //Vue.component('register-component',registerComponent);
+    var vm = new Vue({
+        el:'#registerContainer',
+        data:{
+        },
+        components: {
+            'v-register': registerComponent
+        },
+        methods:{
+            
         }
     })
 }

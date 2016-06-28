@@ -2,34 +2,13 @@
  * Created by sunshitao on 2016/3/10.
  */
 var component = {};
-var loginTpl = require('./logintpl');
-var loginCss = require('./loginCss');
-//var loginHtml = require('./loginCss.js');
+var loginTpl = require('./login.html');
+import './registerLogin.css'
 
 var Vue = require('vue').default;
 
 var httpInterface = require('../../interface');
 var loginPanel;
-
-function includeStyleElement(styles, styleId) {
-
-    if (document.getElementById(styleId)) {
-        return
-    }
-    var style = document.createElement("style");
-    style.id = styleId;
-//这里最好给ie设置下面的属性
-    /*if (isIE()) {
-     style.type = "text/css";
-     style.media = "screen"
-     }*/
-    (document.getElementsByTagName("head")[0] || document.body).appendChild(style);
-    if (style.styleSheet) { //for ie
-        style.styleSheet.cssText = styles;
-    } else {//for w3c
-        style.appendChild(document.createTextNode(styles));
-    }
-}
 
 //登陆注册事件绑定
 function bindEvent() {
@@ -88,9 +67,6 @@ function vueInit() {
 }
 
 function init() {
-    loginPanel = document.getElementById('loginPanel');
-    loginPanel.innerHTML = loginTpl;
-    includeStyleElement(loginCss, "loginStyle");
     vueInit();
 }
 
