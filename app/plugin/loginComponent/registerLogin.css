@@ -57,10 +57,10 @@ body :-ms-input-placeholder {
     transform: translateY(85px);
 }
 .container {
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
-    padding: 80px 0;
-    height: 400px;
+    padding: 60px 0;
+    height: 420px;
     text-align: center;
 }
 .container h1 {
@@ -86,7 +86,7 @@ form input {
     width: 250px;
     border-radius: 3px;
     padding: 10px 15px;
-    margin: 0 auto 10px auto;
+    margin: 0 auto 20px auto;
     display: block;
     text-align: center;
     font-size: 18px;

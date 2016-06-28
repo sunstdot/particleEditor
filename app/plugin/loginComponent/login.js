@@ -51,7 +51,7 @@ function vueInit() {
     var demo = new Vue({
         el: '#loginContainer',
         data: {
-            branches: [dataModel],
+            branch: [dataModel],
             username: "",
             password: ""
         },
