@@ -2,7 +2,7 @@
  * Created by sunshitao on 2016/3/10.
  */
 var component = {};
-var loginTpl = require('./login.html');
+var loginHtml = require('./login.html');
 import './registerLogin.css'
 
 var Vue = require('vue').default;
@@ -25,10 +25,18 @@ var dataModel = {
 //登陆框初始化
 function vueInit() {
 
-    //获取login.html并将其添加到div中
+    var loginComponent = Vue.extend({
+        data:function(){
+            return dataModel
+        },
+        template:loginHtml
+    });
     //带提示栏的用户输入框
     var demo = new Vue({
         el: '#loginContainer',
+        components:{
+            'v-login':loginComponent
+        },
         data: {
             branch: [dataModel],
             username: "",

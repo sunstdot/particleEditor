@@ -15,9 +15,9 @@ import leftControl from "./leftControl";
 import timeline from "./timeline";
 import extParticle from "./exportParticle";
 import register from "./registerComponent/register";
-
+import modal from "./modalComponent/modal"
 require("jquery-ui");
 //import login from "./loginComponent/login";
 
-var jobList = [kinematics,rightControl,leftControl,timeline,extParticle,register];
+var jobList = [kinematics,rightControl,leftControl,timeline,extParticle,register,modal];
 execJob.exec(jobList);

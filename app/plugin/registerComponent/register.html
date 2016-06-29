@@ -2,8 +2,9 @@
     <div class="closeBtn" v-on:click="doClose"></div>
     <div class="container" id="registerContainer">
         <div class="divform">
-            <form action="http://localhost:1337/register" id="registerForm" method="post" enctype="application/x-www-form-urlencoded">
-                <input type="username" v-model="username" placeholder="{{name}}" @:blur="checkName">
+            <!--action="http://localhost:1337/register" id="registerForm" method="post" target="id_iframe" enctype="application/x-www-form-urlencoded"-->
+            <form>
+                <input v-model="username" placeholder="{{name}}" @:blur="checkName">
                 <input type="password" v-model="password" placeholder="{{pwd}}" @:blur="checkPwd">
                 <input type="email" v-model="email" placeholder="{{email}}" @:blur="checkEmail">
                 <button type="submit" id="register-button" v-on:click="doRegister">{{btname}}</button>

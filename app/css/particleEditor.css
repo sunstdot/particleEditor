@@ -602,3 +602,13 @@ footer {
     background-color: #000044;
     opacity: 0.6;
 }
+#registerContainer,#loginPanel,#modalBox{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -200px;
+    margin-left: -250px;
+    height: 400px;
+    width: 500px;
+    z-index: 9999;
+}

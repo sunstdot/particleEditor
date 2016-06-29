@@ -7,7 +7,6 @@
     <script src="lib/remodal.min.js" type="application/javascript"></script>
 </head>
 <body class="editor-wrapper">
-
     <div id="editorHeader" class="editor-header">
         <a style="left: 10px;top: 20px;width: 100px;height: 40px;background-color: #00008B" href="http://localhost:1337/test.html"></a>
         <!-- template for the modal component -->
@@ -40,7 +39,10 @@
     <!--登陆框承载-->
     <div style="position: absolute;top: 50%;left: 50%;margin-top: 0px;margin-left: -250px;height: 400px;width: 500px; display: none;z-index: 9999;" id="loginPanel">
     </div>
-    
+    <div style="position: absolute;top: 50%;left: 50%;margin-top: -200px;margin-left: -250px;height: 400px;width: 500px; z-index: 9999;" id="registerContainer">
+        <v-register></v-register>
+    </div>
+    <iframe id="id_iframe" name="id_iframe" style=""></iframe>
     <div class="editor-body">
         <nav class="editor-nav">
             <div id="myTab" class="nav">
@@ -53,12 +55,8 @@
                 <!-- 物理参数设置 -->
                 <div id="physicalSet" class="tabClass tabBg1 flip in">
                     <div class="argSet">
-                        <span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>
-                        <div id="gravityControl" class="gravityControl">
-                            <canvas  width="360px" height="200px" style="border:1px solid"></canvas>
-                        </div>
                         <fieldset>
-                        <span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>    
+                        <span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>
                         <input id="gravity" class="rangeInput" type="range" name="rangeInput" min="0" max="100" oninput="updateGravityInput(this.value);" onchange="updateGravityInput(this.value);"/>
 
                         <span class="text">力度控制：</span> <span id="dynamicsValudata-mediumfocuspicture-eleme" class="valueShow">50</span>

@@ -4,8 +4,9 @@
 var component = {};
 var Vue = require("vue").default;
 var registerHtml = require('./register.html');
+import {salt} from "../../util/safty"
 import "../loginComponent/registerLogin.css"
-
+var md5 = require("../../lib/md5.min.js");
 let dataModel = {
     name:"用户名",
     pwd:"密码",
@@ -13,6 +14,9 @@ let dataModel = {
     btname:"注册"
 }
 
+function successFunc(data){
+    console.log(data);
+}
 function init(){
 
 }
@@ -25,8 +29,23 @@ function vueInit(){
         methods:{
             doRegister:function(event){
                 event.preventDefault();
-                var form = document.getElementById('registerForm');
-                form.submit();
+                //var form = document.getElementById('registerForm');
+                console.log(this.password);
+                var passwordHash = md5(salt(this.password));
+                var url = "http://localhost:1337/register";
+                var data = {
+                    username:this.username,
+                    password:passwordHash,
+                    email:this.email
+                };
+                //form.submit();
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: data,
+                    success: successFunc,
+                    dataType: 'json'
+                });
             },
             doClose:function(){
                 console.log("todo close op");
