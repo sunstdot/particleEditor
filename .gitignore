@@ -1,0 +1,5 @@
+*-compiled.js
+*.map
+build
+node_modules
+.idea
