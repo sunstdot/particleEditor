@@ -1,6 +1,0 @@
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0" width="300px" height="100px" viewBox="0 0 300 100" style="enable-background:new 0 0 300 100;" xml:space="preserve">
-    <rect x="0" y="0" width="300" height="100" stroke="black" fill="red" stroke-width="1" />
-    <circle cx="0" cy="50" r="15" fill="blue" stroke="black" stroke-width="1">
-        <animateMotion path="M 0 0 H 300 Z" dur="3s" repeatCount="indefinite" />
-    </circle>
-</svg>

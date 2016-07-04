@@ -1,7 +1,7 @@
 var path = require('path');
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH,'app');
-var BUILD_PATH = "E:/codeForFun/particleServer/assets/build";
+var BUILD_PATH = "E:/amazingCode/particleServer/assets/build";
 
 var CSS_PATH = path.resolve(APP_PATH,'css');
 module.exports = {
