@@ -512,8 +512,8 @@ footer {
 
 .export-btn{
     position: absolute;
-    right: 180px;
-    top: 60px;
+    right: 200px;
+    top: 48px;
     color: #fff;
     width: 100px;
     text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
@@ -609,6 +609,44 @@ footer {
     margin-top: -200px;
     margin-left: -250px;
     height: 400px;
-    width: 500px;
-    z-index: 9999;
+    width: 500px;    
+}
+.topnav-noauth {
+    float: right;
+    margin: 0 0 0 15px;
+    line-height: 46px;
+    top: 7px;
+    right: 30px;
+    position: relative;
+    background-color: #DE8c68;
+    border-radius: 4px;
+}
+.clearfix {
+}
+.topnav-noauth>li {
+    float: left;
+    list-style: none;
+}
+.topnav-noauth a {
+    padding: 0 10px;
+    width: auto;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    display: block;
+    color: #eee;
+    text-shadow: 0 1px 1px rgba(0,0,0,.12);
+    white-space: nowrap;
+    font-size: 14px;
+}
+a:link {
+    -webkit-tap-highlight-color: rgba(225,225,225,.5);
+}
+.topnav-noauth .zg-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+}
+.zg-icon-dd-home {
+    background-position: -6px -7px;
 }

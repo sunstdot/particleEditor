@@ -12,6 +12,14 @@
   <img class="leftIcon imgIcon" src="images/flower.png">
   <div class="titleText">粒子编辑器</div>
   <a id="exportOp" class="btn export-btn" v-on:click="exportMethod">导出效果</a>
+  <ul class="topnav-noauth clearfix">
+    <li>
+      <a href="javascript:;" class="js-signup-noauth" v-on:click="register"><i class="zg-icon zg-icon-dd-home"></i>注册用户</a>
+    </li>
+    <li>
+      <a href="javascript:;" class="js-signin-noauth" v-on:click="login">登录</a>
+    </li>
+  </ul>
 </div>
 <!--登陆框承载-->
 <div style="display: none" id="loginPanel">
@@ -20,7 +28,7 @@
 <div style="display: none" id="registerContainer">
   <v-register></v-register>
 </div>
-<div style="display:block" id="modalBox">
+<div style="display:none" id="modalBox">
   <modal :show.sync="showModal">
   </modal>
 </div>

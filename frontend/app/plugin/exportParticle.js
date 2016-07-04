@@ -6,11 +6,14 @@ var obj = {};
 let components = {};
 let Vue = require('vue').default;
 import event from "../event"
-import modal from "../util/modal"
 import {
     deepExtend,
     seekProperty
 } from "../util"
+
+import generateModal from "./modalComponent/modal"
+import login from "./loginComponent/login"
+import register from "./registerComponent/register"
 function setEntityProperty(data){
     obj.entity = data;
 }
@@ -36,6 +39,7 @@ Vue.component('modal', {
         }
     }
 })
+//todo particleName将从cookie中获取
 function vueInit(){
     var vm = new Vue({
         el:"#editorHeader",
@@ -55,10 +59,21 @@ function vueInit(){
                     success: function(data){
                         if(data.code === "A00000"){                           
                             $('#showUrl').html(data.url);
+                            var param = {
+                                body:data.url
+                            };
+                            generateModal(param);
                         }
                     }
                 });
+            },
+            register:function(){
+                register();
+            },
+            login:function(){
+                login();
             }
+
         }
     })
 }

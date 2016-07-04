@@ -5,6 +5,7 @@ var component = {};
 var loginHtml = require('./login.html');
 import './registerLogin.css'
 
+var loginWrapper;
 var Vue = require('vue').default;
 
 var loginPanel;
@@ -25,24 +26,10 @@ var dataModel = {
 function vueInit() {
 
     var loginComponent = Vue.extend({
-        data:function(){
+        data: function () {
             return dataModel
         },
-        template:loginHtml
-    });
-    //带提示栏的用户输入框
-    var demo = new Vue({
-        el: '#loginContainer',
-        components:{
-            'v-login':loginComponent
-        },
-        data: {
-            branch: [dataModel],
-            username: "",
-            password: ""
-        },
-        //计算方法,详见http://cn.vuejs.org/guide/computed.html
-        compute: {},
+        template: loginHtml,
         methods: {
             doLogin: function () {
                 //执行登陆操作
@@ -52,8 +39,6 @@ function vueInit() {
                 if (username === '' || username.trim() === '' || password === '' || password.trim() === '') {
                     return;
                 }
-                console.log(username + "=========" + password);
-
                 var param = {
                     username: username,
                     password: password
@@ -67,20 +52,34 @@ function vueInit() {
                 //todo ajax调用接口
             },
             doClose: function () {
-                loginPanel.innerHtml = "";
+                loginWrapper.style.display="none";
             }
         }
+    });
+    //带提示栏的用户输入框
+    var demo = new Vue({
+        el: '#loginContainer',
+        components: {
+            'v-login': loginComponent
+        },
+        data: {
+            branch: [dataModel],
+            username: "",
+            password: ""
+        },
+        //计算方法,详见http://cn.vuejs.org/guide/computed.html
+        compute: {}
     })
 }
 
-function init() {
+export default function login() {
+    loginWrapper = document.getElementById("loginPanel");
+    if(loginWrapper.style.display==="none"){
+        loginWrapper.style.display="block";
+    }
     vueInit();
 }
 
-component.exec = function () {
-    init();
-    bindEvent();
-};
 
 
 //==============================================================组件化探索===================================================================
@@ -111,4 +110,3 @@ component.exec = function () {
  * 1.面向对象开发，提供良好的封装
  *
  * */
-module.exports = component;

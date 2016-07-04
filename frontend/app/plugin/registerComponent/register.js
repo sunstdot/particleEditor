@@ -14,6 +14,7 @@ let dataModel = {
     btname:"注册"
 }
 
+var registerWrapper;
 function successFunc(data){
     console.log(data);
 }
@@ -47,8 +48,9 @@ function vueInit(){
                     dataType: 'json'
                 });
             },
-            doClose:function(){
-                console.log("todo close op");
+            doRegisterClose:function(event){
+                event.preventDefault();
+                registerWrapper.style.display = "none";
             },
             checkName:function(){
                 var value = this.value();
@@ -81,13 +83,14 @@ function vueInit(){
             'v-register': registerComponent
         },
         methods:{
-            
         }
     })
 }
 
-component.exec = function(){
-    init();
+export default function register(){
+    registerWrapper = document.getElementById('registerContainer');
+    if(registerWrapper.style.display === "none"){
+        registerWrapper.style.display = "block";
+    }
     vueInit();
 }
-module.exports = component;
