@@ -1,7 +1,7 @@
 var path = require('path');
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH,'app');
-var BUILD_PATH = "E:/amazingCode/particleServer/assets/build";
+var BUILD_PATH = "../backend/assets/build";
 
 var CSS_PATH = path.resolve(APP_PATH,'css');
 module.exports = {
@@ -44,7 +44,6 @@ module.exports = {
     ]
   },
   externals:{
-    //'$':'jquery'
   },
   devServer:{
     historyApiFallback:true,
@@ -52,7 +51,6 @@ module.exports = {
     inline:true,
     progress:true
   },
-  //devtool:'eval-source-map',
   plugins:[
   ],
   resolve:{
@@ -62,7 +60,6 @@ module.exports = {
       echarts: "echarts/lib",
       zrender$: "zrender/lib/zrender.js",
       zrender: "zrender/lib",
-      //jquery:"jquery/jquery.js",
       vue:"vue/src/index.js"
     },
     modulesDirectories:['node_modules']

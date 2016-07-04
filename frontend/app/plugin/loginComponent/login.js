@@ -7,7 +7,6 @@ import './registerLogin.css'
 
 var Vue = require('vue').default;
 
-var httpInterface = require('../../interface');
 var loginPanel;
 
 //登陆注册事件绑定
@@ -65,7 +64,7 @@ function vueInit() {
                     url: 'login'
                 };
                 //调用接口
-                httpInterface(options);
+                //todo ajax调用接口
             },
             doClose: function () {
                 loginPanel.innerHtml = "";

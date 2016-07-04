@@ -8,9 +8,6 @@ let Vue = require('vue').default;
 import event from "../event"
 import modal from "../util/modal"
 import {
-    send
-} from "../interface"
-import {
     deepExtend,
     seekProperty
 } from "../util"
