@@ -95,8 +95,10 @@ function drawDragShape(data) {
 }
 function init() {
     var mainCanvas = document.createElement('canvas');
+    mainCanvas.style.backgroundColor="black";
     mainCanvas.width = painterContainer.offsetWidth;
     mainCanvas.height = painterContainer.offsetHeight;
+    
     var canvasZr = drawMethod.init(mainCanvas);
     canvasSketch = Sketch.create({
         container:document.getElementById('painterContainer'),
