@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>vue作业</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <link type="text/css" href="resources/css/reset.css" rel="Stylesheet" />
+    <link type="text/css" href="resources/css/default.css" rel="Stylesheet" />
+    <style>
+        .mod-tab{
+            height: 30px;
+        }
+        .mod-tab li{
+            float: left;
+            display: inline;
+            padding-right: 18px;
+            cursor: pointer;
+        }
+        .change{
+            background-color: #e1e1e1
+        }
+        .change:hover{
+            background-color: #6fa900
+        }
+        .mainHead{
+            top: 0;
+            width: 100%;
+            height: 10%;
+            background:gray;
+            position: relative;
+        }
+        .mainHead h1 {
+            text-align: center;
+            line-height: 50px;
+        }
+        .mainCont{
+            position: relative;
+            height: 90%;
+            left: 10%;
+            width: 90%;
+            background: #A2B4BA;    
+        }
+    </style>
+</head>
+<body>
+    <div id="app" style="left:0;top:0;width:100%;height:100%;position:absolute;">    
+        <div class="mainHead">
+            <h1>我是导航</h1>
+            <div class="mod-tab">
+                <ul>
+                   <li><a class="change" v-link="{ path: '/Home' }">Home</a></li>     
+                   <li><a class="change" v-link="{ path: '/ImageList' }">ImageList</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mainCont">
+            <router-view></router-view>
+        </div>
+    </div>
+    <script src="./build/app.js" type="application/javascript"></script>
+</body>
+</html>
