@@ -1,17 +1,17 @@
 var path = require('path');
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH,'app');
-var BUILD_PATH = "../backend/assets/build";
+var BUILD_PATH = "./build";
 
 var CSS_PATH = path.resolve(APP_PATH,'css');
 module.exports = {
   entry:{
-    "app":APP_PATH+"/plugin/particleEditor"
+    "app":APP_PATH+"/particleEditor"
   },
   output:{
     path:BUILD_PATH,
     publicPath:BUILD_PATH,
-    filename:'[name].js'
+    filename:'[name].bundle.js'
   },
   module:{
     loaders:[
@@ -21,6 +21,7 @@ module.exports = {
         include:[APP_PATH,path.resolve(ROOT_PATH, "node_modules/vue/src")],
         query:{
           presets:['es2015'],
+          plugins:['transform-object-assign'],
           compact:false
         }
       },
@@ -40,6 +41,10 @@ module.exports = {
       {
         test:/\.html$/,
         loader:'html'
+      },
+      {
+        test:/\.vue$/,
+        loader:'vue'
       }
     ]
   },
