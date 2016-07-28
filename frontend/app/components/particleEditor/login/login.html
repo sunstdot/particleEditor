@@ -1,0 +1,25 @@
+<div class="wrapper">
+    <div class="closeBtn" v-on:click="doClose()"></div>
+    <div class="container" id="loginContainer">
+        <template v-for="branch in branches">
+            <div class="divform">
+                <h1>{{word}}</h1>
+                <input type="text" v-model="username" placeholder="{{name}}">
+                <input type="password" v-model="password" placeholder="{{pwd}}">
+                <button type="submit" id="login-button" v-on:click="doLogin()">{{btname}}</button>
+            </div>
+        </template>
+    </div>
+    <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
