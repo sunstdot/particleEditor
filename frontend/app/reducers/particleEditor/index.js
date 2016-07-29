@@ -7,13 +7,13 @@ const defaultState = {};
 
 import {
     ADD_PARTICLE
-} from '../../actions/'
+} from '../../actions'
 
 //componets 通过 dispatch({
 //      type:TYPE,
 //      value:'value'
 // }) 触发事件
-let state = (state = defaultstate, action)=> {
+let state = (state = defaultState, action)=> {
     let newState;
     switch(action.type){
         case ADD_PARTICLE:

@@ -1,0 +1,9 @@
+<div id="timelineWrap" class="timelineWrap">
+    <div class="animationBtn" v-bind:class="[record=='record' ? 'btnActive' : '']" v-on:click="recordOption('record')" title="Record Animation"></div>
+    <div class="clearBtn" v-on:click="recordOption('clear')" title="Clear Recording"></div>
+    <!-- 拖动区域-->
+    <div id="timelineArea" class="timelineArea">
+        <div class="bar"></div>
+        <div id="slider" class="slider"></div>
+    </div>
+</div>

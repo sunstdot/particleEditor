@@ -21,6 +21,8 @@
     "isomorphic-fetch": "^2.2.1",
     "jquery-ui": "^1.10.5",
     "qs": "^6.2.1",
+    "redux-thunk": "^2.1.0",
+    "revue": "^2.2.0",
     "sails-mongo": "^0.12.0",
     "style-loader": "^0.13.1",
     "underscore": "^1.8.3",

@@ -5,7 +5,7 @@ import Vue from 'vue'
 import template from './header.html'
 export default Vue.component({
     data(){
-
+        return{}
     },
     computed:{
         work(){
@@ -17,10 +17,10 @@ export default Vue.component({
     },
     template,
     method: {
-        exportEffect = () => {
+        exportEffect(){
 
         },
-        login = (event) => {
+        login(){
             this.$dispatch()
         }
     }

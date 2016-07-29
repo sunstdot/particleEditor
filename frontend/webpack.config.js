@@ -61,6 +61,7 @@ module.exports = {
   resolve:{
     root:ROOT_PATH,
     alias: {
+      'jquery.ui':"jquery-ui",
       echarts$: "echarts/lib/echarts.js",
       echarts: "echarts/lib",
       zrender$: "zrender/lib/zrender.js",

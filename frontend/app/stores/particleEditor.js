@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Revue from 'revue'
 import {createStore,applyMiddleware} from 'redux';
-import reducer from 'reducers/particleEditor'
+import reducer from '../reducers/particleEditor'
 import thunk from 'redux-thunk'
 import * as actions from '../actions'
 

@@ -9,11 +9,13 @@ export default Vue.component({
             pwd: 'ÃÜÂë',
             username: null,
             password: null,
+            btnname:'µÇÂ¼',
             type: 'login'
         };
     },
+    template,
     method:{
-        login = (event) => {
+        login(event){
             event.preventDefault();
             if(!this.username || !this.password){
                 alert('ÓÃ»§Ãû»òÃÜÂëÎ´ÌîĞ´');
@@ -22,6 +24,7 @@ export default Vue.component({
                 name:this.name,
                 password:this.password
             }));
+            this.$dispatch('show-loginPanel',{})
         }
     }
 })
