@@ -2,42 +2,41 @@
  * Created by sunshitao on 2016/7/29.
  */
 import Vue from 'vue'
-import physicalControl from './physicalControl.html'
+import template from './physicalControl.html'
 import $ from 'jquery'
-export default Vue.component({
+export default Vue.component('v-physicalcontrol',{
     data(){
         return {
-            'styleObject':{
-                display:'block'
-            },
             'tabName':'physics'
         }
     },
+    template,
     ready(){
         this.tabBackOrFront();
-        this.renderController();
     },
-    method:{
+    methods:{
         renderController(){
-            //todo zrenderäÖÈ¾ÒÇ±íÅÌ¿ØÖÆÆ÷Ö®ÀàµÄ
+            //todo zrenderæ¸²æŸ“ä»ªè¡¨ç›˜
         },
         tabBackOrFront(){
             let eleList = $('.tabClass');
-            eleList.each((elem)=>{
-                if($(elem).hasClass("in")){
-                    this.eleFront = $(elem);
+            if(eleList.length && eleList.length > 0){
+                for(let i=0,len = eleList.length;i<len;i++){
+                    if($(eleList[i]).hasClass("in")){
+                        this.eleFront = $(eleList[i]);
+                    }
                 }
-            });
+            }
         },
         showTab(type){
-            this.tabName = type;
             this.eleFront.addClass("out").removeClass('in');
             this.eleBack = $('#'+type);
             setTimeout(()=>{
                 this.eleFront.css("display", "none");
                 this.eleBack.addClass("in").removeClass("out");
                 this.eleBack.css("display", "block");
-                tabBackOrFront();
+                this.tabName = type;
+                this.tabBackOrFront();
             },225);
         },
         controlBtn(type){

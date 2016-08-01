@@ -3,19 +3,22 @@
  */
 import Vue from 'vue'
 import template from './header.html'
-export default Vue.component({
+export default Vue.component('v-header',{
     data(){
-        return{}
+        return {
+            login:'ç™»å½•'
+        };
     },
+    template,
     computed:{
         work(){
             return this.state.work;
         }
     },
     ready(){
-        //äÖÈ¾µÇÂ¼¿ò
+        //åˆå§‹åŒ–ç™»å½•æ¡†
+        console.log("it's ready");
     },
-    template,
     method: {
         exportEffect(){
 

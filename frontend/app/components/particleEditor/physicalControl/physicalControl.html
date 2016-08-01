@@ -1,12 +1,12 @@
 <div class="editor-nav" id="editorController">
     <div id="myTab" class="nav">
-        <div class="btn-group" ><button class="btn1 btn-physics" @click="showTab('physics')">物理参数</button></div>
-        <div class="btn-group" ><button class="btn1 btn-appear" @click="showTab('appearance')">外观参数</button></div>
-        <div class="btn-group" ><button class="btn1 btn-track" @click="showTab('track')">轨迹参数</button></div>
+        <div class="btn-group" ><button class="btn1 btn-physics" v-on:click="showTab('physics')">物理参数</button></div>
+        <div class="btn-group" ><button class="btn1 btn-appear" v-on:click="showTab('appearance')">外观参数</button></div>
+        <div class="btn-group" ><button class="btn1 btn-track" v-on:click="showTab('track')">轨迹参数</button></div>
     </div>
     <div id="myTabContent" class="tab-content">
         <!-- 物理参数设置 -->
-        <div id="physics" class="tabClass tabBg1 flip in" v-bind:style="[showTab == 'physics' ? styleObject : 'display:none']">
+        <div id="physics" class="tabClass tabBg1 flip in" v-bind:style="{display:tabName == 'physics' ? 'block' : 'none'}">
             <div class="argSet">
                 <span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>
                 <div id="gravityControl" class="gravityControl">
@@ -26,13 +26,13 @@
             </div>
         </div>
         <!-- 外观参数设置-->
-        <div class="tabClass tabBg2 flip" id="appearance"  v-bind:style="[showTab == 'appearance' ? styleObject : 'display:none']">
+        <div class="tabClass tabBg2 flip" id="appearance"  v-bind:style="{display:tabName == 'appearance' ? 'block' : 'none'}">
             <div style="width:100%;height: 740px;border: 1px solid ">
                 我是外观参数设置
             </div>
         </div>
         <!-- 轨迹参数设置 -->
-        <div class="tabClass tabBg3 flip" id="track" v-bind:style="[showTab == 'track' ? styleObject : 'display:none']">
+        <div class="tabClass tabBg3 flip" id="track" v-bind:style="{display:tabName == 'track' ? 'block' : 'none'}">
             <div style="width:100%;height: 740px;border: 1px solid ">
                 我是轨迹参数设置
             </div>

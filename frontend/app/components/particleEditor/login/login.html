@@ -1,14 +1,14 @@
-<div class="wrapper">
-    <div class="closeBtn" v-on:click="doClose()"></div>
+<div class="wrapper" v-bind:style="{display:showModal?'block':'none'}">
+    <div class="closeBtn" @click="close()"></div>
     <div class="container" id="loginContainer">
-        <template v-for="branch in branches">
+        <form>
             <div class="divform">
                 <h1>{{word}}</h1>
                 <input type="text" v-model="username" placeholder="{{name}}">
                 <input type="password" v-model="password" placeholder="{{pwd}}">
-                <button type="submit" id="login-button" v-on:click="doLogin()">{{btname}}</button>
+                <button id="login-button" @click="login">{{btname}}</button>
             </div>
-        </template>
+        </form>
     </div>
     <ul class="bg-bubbles">
         <li></li>

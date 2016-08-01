@@ -2,10 +2,10 @@
  * 代码编写采用 ES6语法
  * Created by sunshitao on 2016/1/20.
  */
-import "../css/range.css"
-import "../css/particleEditor.css"
-import "../css/bootstrap.min.css"
-import "../css/vueModal.css"
+import "../../build/css/range.css"
+import "../../build/css/particleEditor.css"
+import "../../build/css/bootstrap.min.css"
+import "../../build/css/vueModal.css"
 
 //window.$ = require('jquery');
 import execJob from "../execJob";

@@ -35,8 +35,11 @@ module.exports = {
    * @param res
    */
   login:function(req,res){
-    var username = req.param('username');
-    var password = md5(req.param('password'));
+    console.log("======="+JSON.stringify(req.body));
+    var body = req.body;
+    var username = body.name;
+    console.log('-------'+username);
+    var password = body.password;
     var query = function(db,obj){
       return new Promise(function(resolve,reject){
         db.find(obj).exec(function(err,result){
@@ -46,18 +49,39 @@ module.exports = {
           resolve(result);
         })
       })
-    }
+    };
+    var create=(db,obj)=>{
+      return new Promise(function(resolve,reject){
+        db.create(obj).exec(function(err,created){
+          if(err){
+            reject(err);
+          }
+          resolve(created);
+        })
+      })
+    };
+
+    var insertUser = ()=>{
+      co(function* (){
+        yield create(user,{username:username,password:password});
+      }).then(function(value){
+        console.log(value);
+        res.send({code:'A00000',data:value});
+      },function(err){
+        res.send({code:'A00001',err:err});
+      });
+    };
+
     co(function* (){
       yield query(user,{username:username})
     }).then(function(result){
-      var pwd = result.password;
-      if(pwd && pwd === password){
+      if(result && result.password && result.password === password){
         res.send({code:'A00000'});
       }else{
-        res.send({code:'A00002'});
+        insertUser();
       }
     },function(err){
-       res.send({code:'A00001',err:err});
+      insertUser();
     });
   }
 };

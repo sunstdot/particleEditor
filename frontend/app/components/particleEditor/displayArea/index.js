@@ -4,14 +4,14 @@
 import Vue from 'vue'
 import template from './displayArea.html';
 
-export default Vue.component({
+export default Vue.component('v-displayarea',{
     data(){
         return {
 
         };
     },
     template,
-    method: {
+    methods: {
 
     }
 })

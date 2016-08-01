@@ -6,7 +6,7 @@ var BUILD_PATH = "./build";
 var CSS_PATH = path.resolve(APP_PATH,'css');
 module.exports = {
   entry:{
-    "app":APP_PATH+"/particleEditor"
+    "particleEditor":APP_PATH+"/particleEditor"
   },
   output:{
     path:BUILD_PATH,

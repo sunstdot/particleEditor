@@ -3,20 +3,13 @@
     <!-- Split button -->
     <div class="textCont">
         <div class="btn-group selectBtn">
-            <button id="showTexture" type="button" class="btn btn-danger" style="width: 135px">{{textureText}}}</button>
-            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button id="showTexture" type="button" class="btn btn-danger" v-on:click="showDropBox('texture')" style="width: 135px">{{textureText}}</button>
+            <button type="button" class="btn btn-danger dropdown-toggle" v-on:click="showDropBox('texture')">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
-            <ul id="textureValue" class="dropdown-menu" >
-                <li v-on:click="textureClick('circle')"><a href="javascript:void(0);">圆圈</a></li>
-                <li v-on:click="textureClick('snow')"><a href="javascript:void(0);">雪花</a></li>
-                <li v-on:click="textureClick('rain')"><a href="javascript:void(0);">雨滴</a></li>
-                <li v-on:click="textureClick('star')"><a href="javascript:void(0);">星星</a></li>
-                <li v-on:click="textureClick('smoke')"><a href="javascript:void(0);" >烟雾</a></li>
-                <li v-on:click="textureClick('hexagon')"><a href="javascript:void(0);">正六边形</a></li>
-                <!--<li role="separator" class="divider"></li>-->
-                <li v-on:click="textureClick('circle')"><a href="javascript:void(0);" type="hexagon">五角星</a></li>
+            <ul id="textureValue" class="dropdown-menu" v-bind:style="{display:tabName=='texture' ?'block':'none'}">
+                <li v-for="item in textureItems" v-on:click="textureClick(item.type)"><a href="javascript:void(0);">{{item.name}}</a></li>
             </ul>
         </div>
     </div>
@@ -24,21 +17,18 @@
     <div class="titleName">粒子选择器</div>
     <div class="textCont">
         <div class="btn-group selectBtn">
-            <button type="button" class="btn btn-danger" style="width: 135px">{{particleText}}}</button>
-            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn btn-danger" style="width: 135px" v-on:click="showDropBox('particle')">{{particleText}}</button>
+            <button type="button" class="btn btn-danger dropdown-toggle" v-on:click="showDropBox('particle')">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
-            <ul id="particleValue" class="dropdown-menu" >
-                <li v-on:click="particleClick('fireTheHall')"><a href="javascript:void(0);">手榴弹</a></li>
-                <li v-on:click="particleClick('shakeTheBall')"><a href="javascript:void(0);">震动</a></li>
-                <li v-on:click="particleClick('mouseEffect')"><a href="javascript:void(0);">鼠标特效</a></li>
-                <li v-on:click="particleClick('burningWord')"><a href="javascript:void(0);">燃烧文字</a></li>
+            <ul id="particleValue" class="dropdown-menu" v-bind:style="{display:tabName=='particle' ?'block':'none'}">
+                <li v-for="item in particleItems" v-on:click="particleClick(item.type)"><a href="javascript:void(0);">{{item.name}}</a></li>
             </ul>
         </div>
     </div>
     <div class="titleName">burning word</div>
-    <input id="burningInput" class="burningInput" type="text" placeholder="Type something burning…" v-model="newWord" v-on:keyup.enter="inputWord">
+    <input id="burningInput" class="burningInput" type="text" placeholder="Type something burning…" v-model="newWord" @input="inputText()" @blur="inputText()">
     <div class="titleName">选择图形</div>
     <div class="shapeWrap" style="display:block;">
         <div id="squareShape" class="square shape" shapeType="square"></div>

@@ -1,30 +1,40 @@
 import Vue from 'vue'
 import template from './login.html';
 
-export default Vue.component({
+export default Vue.component('v-login',{
     data(){
         return {
             word: 'welcome',
-            name: 'ÓÃ»§Ãû',
-            pwd: 'ÃÜÂë',
+            name: 'ç”¨æˆ·å',
+            pwd: 'å¯†ç ',
             username: null,
             password: null,
-            btnname:'µÇÂ¼',
-            type: 'login'
+            btname:'ç™»å½•',
+            showModal:true,
+            user:this.$select('session')
         };
     },
     template,
-    method:{
+    ready(){
+        //this.$dispatch('show-loginPanel',{show:true});
+        this.unwatch = this.$watch('session',this.close);
+    },
+    methods:{
         login(event){
             event.preventDefault();
             if(!this.username || !this.password){
-                alert('ÓÃ»§Ãû»òÃÜÂëÎ´ÌîĞ´');
+                alert('ç”¨æˆ·åå’Œå¯†ç ä¸èƒ½ä¸ºç©º');
             }
             store.dispatch(store.actions.session.create({
-                name:this.name,
+                name:this.username,
                 password:this.password
             }));
-            this.$dispatch('show-loginPanel',{})
+            //this.showModal = false;
+            //this.$dispatch('show-loginPanel',{})
+        },
+        close(){
+            console.log('do close operation');
+            this.$dispatch('show-loginPanel',{show:true});
         }
     }
 })

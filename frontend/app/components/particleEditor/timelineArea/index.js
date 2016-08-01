@@ -4,18 +4,18 @@
 import Vue from 'vue'
 import template from './timelineArea.html';
 
-export default Vue.component({
+export default Vue.component('v-timelinearea',{
     data(){
         return {
             record:'clear'
-        }
+        };
     },
     template,
     ready(){
-        let slider = $("#slider");
-        slider.draggable({containment:"#timelineArea",axis:'x',scroll:false});
+        //let slider = $("#slider");
+        //slider.draggable({containment:"#timelineArea",axis:'x',scroll:false});
     },
-    method: {
+    methods: {
         recordOption(type){
             this.record = type;
             if(type === "record"){

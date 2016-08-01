@@ -11,31 +11,21 @@ import TimelineArea from './timelineArea'
 export default {
     el:'body',
     data:{
-        showModal:false
     },
     components:{
         'v-header':Header,
-        'v-loginModal':Login,
-        'v-physicalControl':PhysicalControl,
-        'v-ParticleControl':ParticleControl,
-        'v-displayArea':DisplayArea,
-        'v-timelineArea':TimelineArea
+        'v-login':Login,
+        'v-physicalcontrol':PhysicalControl,
+        'v-particlecontrol':ParticleControl,
+        'v-displayarea':DisplayArea,
+        'v-timelinearea':TimelineArea
     },
     events:{
-        //'show-popup'(info){
-        //    this.popupdata = {
-        //        "title":info.title,
-        //        "isshow":true,
-        //        "content":info.content,
-        //        "iserror":info.iserror,
-        //        "onconfirm":info.onconfirm
-        //    }
-        //},
-        'show-loginPanel'(){
-            this.showModal = this.store.actions.login;
+        'show-loginPanel'(info){
+            this.showModal = info.show;
         }
     },
-    method:{
+    methods:{
         fetchWork(){
 
         },

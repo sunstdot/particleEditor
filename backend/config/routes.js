@@ -45,6 +45,6 @@ module.exports.routes = {
   'POST /uploadJson':'uploadParticleController.uploadParticles',
   'GET /getParticle/:id':'getParticleController.getParticle',
   'POST /register':'loginRegisterController.register',
-  'GET /login':'loginRegisterController.login',
+  'POST /session':'loginRegisterController.login',
   'GET /getimg':'getImageController.getimg'
 };

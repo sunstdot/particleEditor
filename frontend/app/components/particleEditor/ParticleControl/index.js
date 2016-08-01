@@ -4,35 +4,55 @@
 import Vue from 'vue'
 import template from './particleControl.html';
 
-export default Vue.component({
+export default Vue.component('v-particlecontrol',{
     data(){
         return {
-            particleText: 'ÊÖÁñµ¯',
-            textureText: 'Ô²È¦'
+            particleText: 'æ‰‹æ¦´å¼¹',
+            textureText: 'åœ†åœˆ',
+            textureItems:[
+                {'type':'circle','name':'åœ†åœˆ'},
+                {'type':'snow','name':'é›ªèŠ±'},
+                {'type':'rain','name':'é›¨æ»´'},
+                {'type':'star','name':'æ˜Ÿæ˜Ÿ'},
+                {'type':'smoke','name':'çƒŸé›¾'},
+                {'type':'hexagon','name':'æ­£å…­è¾¹å½¢'},
+                {'type':'hexagon','name':'æ­£å…­è¾¹å½¢'},
+            ],
+            particleItems:[
+                {'type':'fireTheHall','name':'æ‰‹æ¦´å¼¹'},
+                {'type':'shakeTheBall','name':'éœ‡åŠ¨'},
+                {'type':'mouseEffect','name':'é¼ æ ‡ç‰¹æ•ˆ'},
+                {'type':'burningWord','name':'ç‡ƒçƒ§æ–‡å­—'}
+            ],
+            tabName:""
         };
     },
     template,
-    method: {
+    methods: {
+        findText(arr,type){
+            for(let i=0;i<arr.length;i++){
+                if(arr[i].type === type){
+                    return arr[i].name;
+                }
+            }
+        },
         particleClick(type){
-            let textObj = {
-                'fireTheHall': 'ÊÖÁñµ¯',
-                'shakeTheBall': 'Õð¶¯',
-                'mouseEffect': 'Êó±êÌØÐ§',
-                'burningWord': 'È¼ÉÕÎÄ×Ö'
-            };
-            this.particleText = textObj[type] || 'ÊÖÁñµ¯';
+            this.particleText = this.findText(this.particleItems,type) || 'æ‰‹æ¦´å¼¹';
+            this.tabName = "";
         },
         textureClick(type){
-            let textObj = {
-                'circle': 'Ô²È¦',
-                'snow': 'Ñ©»¨',
-                'rain': 'ÓêµÎ',
-                'star': 'ÐÇÐÇ',
-                'smoke': 'ÑÌÎí',
-                'hexagon': 'ÕýÁù±ßÐÎ',
-                'pentagram': 'Îå½ÇÐÇ'
-            };
-            this.textureText = textObj[type] || 'Ô²È¦';
+            this.textureText = this.findText(this.textureItems,type) || 'åœ†åœˆ';
+            this.tabName = "";
+        },
+        inputText(event){
+            console.log('test the event value');
+        },
+        showDropBox(type){
+            if(type===this.tabName){
+                this.tabName = "";
+            }else{
+                this.tabName = type;
+            }
         }
     }
 })
