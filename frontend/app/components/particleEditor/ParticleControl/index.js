@@ -3,7 +3,8 @@
  */
 import Vue from 'vue'
 import template from './particleControl.html';
-
+import $ from 'jquery'
+import 'jquery-ui/draggable'
 export default Vue.component('v-particlecontrol',{
     data(){
         return {
@@ -28,6 +29,10 @@ export default Vue.component('v-particlecontrol',{
         };
     },
     template,
+    ready(){
+        $("#squareShape").draggable({opacity:0.7,helper:"clone"});
+        $("#circleShape").draggable({opacity:0.7,helper:"clone"});
+    },
     methods: {
         findText(arr,type){
             for(let i=0;i<arr.length;i++){

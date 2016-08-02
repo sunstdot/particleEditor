@@ -11,13 +11,12 @@ export default Vue.component('v-login',{
             password: null,
             btname:'登录',
             showModal:true,
-            user:this.$select('session')
+            user:this.$select('session as user')
         };
     },
     template,
     ready(){
-        //this.$dispatch('show-loginPanel',{show:true});
-        this.unwatch = this.$watch('session',this.close);
+        this.unwatch = this.$watch('user',this.close);
     },
     methods:{
         login(event){
@@ -29,12 +28,9 @@ export default Vue.component('v-login',{
                 name:this.username,
                 password:this.password
             }));
-            //this.showModal = false;
-            //this.$dispatch('show-loginPanel',{})
         },
         close(){
-            console.log('do close operation');
-            this.$dispatch('show-loginPanel',{show:true});
+            this.showModal = false;
         }
     }
 })

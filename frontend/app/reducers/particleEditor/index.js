@@ -5,6 +5,7 @@ import {combineReducers} from 'redux';
 //todo 引入抽象化的状态
 const defaultState = {};
 import session from '../common/session'
+import {drawEntity} from "../common/particle"
 import {
     ADD_PARTICLE
 } from '../../actions'
@@ -24,5 +25,6 @@ let state = (state = defaultState, action)=> {
 };
 export default combineReducers({
     state,
-    session
+    session,
+    drawEntity
 })
