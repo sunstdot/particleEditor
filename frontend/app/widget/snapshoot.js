@@ -21,16 +21,18 @@ Sampling.prototype.update = function(pos){
     }
 }
 
-export function startRecord(){
+export function startRecord(pos){
     recordData = {};  //÷√ø’∂‘œÛ
     var name = 0;
     samplingTimer = setInterval(function(){
-        if(samplingTarget){
-            var x = samplingTarget.position[0];
-            var y = samplingTarget.position[1];
-            recordData[name] = [x,y];
-            name +=samplingTime;
-        }
+        recordData[name] = [pos.top,pos.left];
+        name +=samplingTime;
+        // if(samplingTarget){
+        //     var x = samplingTarget.position[0];
+        //     var y = samplingTarget.position[1];
+        //     recordData[name] = [x,y];
+        //     name +=samplingTime;
+        // }
     },samplingTime);
 }
 

@@ -26,12 +26,17 @@ export default Vue.component('v-displayarea',{
                 //目标拖动到画布的位置
                 let targetPos = {
                     left:event.clientX - self.globalPos.left,
-                    top:event.clientY - self.globalPos.top
+                    top:event.clientY - self.globalPos.top,                    
+                };
+                let targetSize = {
+                    width:80,
+                    height:80    
                 };
                 let type = ui.helper.attr("shapeType");
                 let item = {
                     pos:targetPos,
-                    type:type
+                    type:type,
+                    size:targetSize
                 };
                 store.dispatch(store.actions.particle.drawentity(item));
             }
@@ -49,7 +54,7 @@ export default Vue.component('v-displayarea',{
             zrenderClear:true,
             painterZr
         })
-
+        store.dispatch(store.action.particle.painterSketch({'sketch':painterSketch}));
     },
     methods: {
         drawEntities(){

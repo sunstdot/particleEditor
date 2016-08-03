@@ -53,6 +53,14 @@ let opt = {
         if(type){
             particleMethod[type](target);
         }
+        let item = {
+            type:target.type,
+            pos:{
+                left:target.pos.x,
+                top:target.pos.y
+            }
+        };        
+        store.dispatch(store.actions.particle.drawEntity(item));
     },
     onmouseup:function(){
     }

@@ -5,12 +5,13 @@ import Vue from 'vue'
 import template from './particleControl.html';
 import $ from 'jquery'
 import 'jquery-ui/draggable'
+import particleMethod from '../../../widget/particleMethod'
 export default Vue.component('v-particlecontrol',{
     data(){
         return {
-            particleText: '手榴弹',
-            textureText: '圆圈',
-            textureItems:[
+            'particleText': '手榴弹',
+            'textureText': '圆圈',
+            'textureItems':[
                 {'type':'circle','name':'圆圈'},
                 {'type':'snow','name':'雪花'},
                 {'type':'rain','name':'雨滴'},
@@ -19,19 +20,25 @@ export default Vue.component('v-particlecontrol',{
                 {'type':'hexagon','name':'正六边形'},
                 {'type':'hexagon','name':'正六边形'},
             ],
-            particleItems:[
+            'particleItems':[
                 {'type':'fireTheHall','name':'手榴弹'},
                 {'type':'shakeTheBall','name':'震动'},
                 {'type':'mouseEffect','name':'鼠标特效'},
                 {'type':'burningWord','name':'燃烧文字'}
             ],
-            tabName:""
+            'tabName':"",
+            'drawEntity':this.$select('drawEntity'),
+            'particleType':this.$select('particleType'),
+            'painterSketch':this.$select('painterSketch')
         };
     },
     template,
     ready(){
         $("#squareShape").draggable({opacity:0.7,helper:"clone"});
         $("#circleShape").draggable({opacity:0.7,helper:"clone"});
+        this.unwatch = this.$watch('drawEntity',this.drawParticle);
+        this.unwatch = this.$watch('particleType',this.drawParticle);
+
     },
     methods: {
         findText(arr,type){
@@ -43,6 +50,10 @@ export default Vue.component('v-particlecontrol',{
         },
         particleClick(type){
             this.particleText = this.findText(this.particleItems,type) || '手榴弹';
+            let item={
+                type    
+            };
+            store.dispatch(store.action.particletype(item))
             this.tabName = "";
         },
         textureClick(type){
@@ -58,6 +69,12 @@ export default Vue.component('v-particlecontrol',{
             }else{
                 this.tabName = type;
             }
+        },
+        drawParticle(){        
+            //todo 根据位置变化画出粒子变化
+            if(this.painterSketch){
+                particleMethod(this.particleType)(this.drawEntity,this.painterSketch);    
+            }        
         }
     }
 })

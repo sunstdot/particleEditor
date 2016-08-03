@@ -3,6 +3,11 @@
  */
 import Vue from 'vue'
 import template from './timelineArea.html';
+import particleMethod from './particleMethod'
+import {isArray} from '../util'
+import {changePos} from './particleMethod'
+let samplingTime = 1000;
+let samplingTimer
 import {
     startRecord,
     stopRecord
@@ -10,7 +15,10 @@ import {
 export default Vue.component('v-timelinearea',{
     data(){
         return {
-            record:'clear'
+            'record':'clear',
+            'drawEntity':this.$select('drawEntity'),
+            'recordData':{},
+            'flag':false    
         };
     },
     template,
@@ -22,9 +30,25 @@ export default Vue.component('v-timelinearea',{
         recordOption(type){
             this.record = type;
             if(type === "record"){
-                //todo ��ʼ��¼
+                startRecord();
             }else{
-                //todo ֹͣ��¼
+                stopRecord();
+            }
+        },
+        startRecord(){
+            let pos = this.drawEntity.pos;
+            if(!samplingTimer){
+                samplingTimer = setInterval(function(){
+                    recordData[name] = [this.drawEntity.pos.top,this.drawEntity.pos.left];
+                    name +=samplingTime;                                        
+                },samplingTime);
+            }
+        },
+        stopRecord(){
+            if(samplingTimer){
+                //记录结束时改变状态
+                store.dispatch(store.actions.record.recordPos(this.recordData))
+                clearInterval(samplingTimer);
             }
         }
     }
