@@ -1,7 +1,6 @@
 /**
  * Created by sunshitao on 2016/5/13.
  */
-let drawMethod = {}
 import particleMethod from "./particleMethod"
 import {defineReactive} from "../observer"
 
@@ -18,17 +17,7 @@ let context;
 var globalTxt;
 const r = 40;
 
-function init(myCanvas){
-    context = myCanvas.getContext('2d');
-    canvasZr = zrender.init(myCanvas);
-    return canvasZr;
-}
 
-export function zrClear(){
-    if(canvasZr){
-        canvasZr.clear();
-    }
-}
 
 function extend(target,source){
     for(var key in source){
@@ -74,8 +63,8 @@ function circle(pos,callback){
     let circle = new CircleShape(extend({
         scale: [1, 1],
         shape: {
-            cx: pos.x,
-            cy: pos.y,
+            cx: pos.left,
+            cy: pos.top,
             r: r
         },
         style: {
@@ -103,8 +92,8 @@ function circle(pos,callback){
 function square(pos,callback){
     let square = new RectangleShape(extend({
         shape:{
-            x:pos.x-r,
-            y:pos.y-r,
+            x:pos.left-r,
+            y:pos.top-r,
             width:r*2,
             height:r*2
         },
@@ -140,8 +129,8 @@ function text(option,text,callback){
     }
     globalTxt = new ZText(extend({
         style:{
-            x:option.x,
-            y:option.y,
+            x:option.left,
+            y:option.top,
             text:text,
             width:width,
             height:height,
@@ -183,8 +172,12 @@ function text(option,text,callback){
         callback(globalTxt);
     }
 }
-
-export function zrenderAnimation(recordData,callback){
+export const zrClear=()=>{
+    if(canvasZr){
+        canvasZr.clear();
+    }
+};
+export const zrenderAnimation = (recordData) => (callback) => {
     var timeArr = Object.keys(recordData);
     var length,len;
     length = len = timeArr.length;
@@ -198,12 +191,14 @@ export function zrenderAnimation(recordData,callback){
         len--;
     }
     zrAnimate.done(callback).start();
-}
-
-
-export default drawMethod = {
-    init:init,
+};
+export const init = (myCanvas)=>{
+    context = myCanvas.getContext('2d');
+    canvasZr = zrender.init(myCanvas);
+    return canvasZr;
+};
+export const drawMethod = {
     circle:circle,
     square:square,
     text:text
-}
+};

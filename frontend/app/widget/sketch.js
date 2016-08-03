@@ -259,7 +259,7 @@
                         context.clear();
                     }
                     if(context.zrenderClear){
-                        context.canvasZr.refreshImmediately();
+                        context.painterZr.refreshImmediately();
                     }
                 }
 

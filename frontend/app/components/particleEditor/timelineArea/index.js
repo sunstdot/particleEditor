@@ -3,7 +3,10 @@
  */
 import Vue from 'vue'
 import template from './timelineArea.html';
-
+import {
+    startRecord,
+    stopRecord
+} from '../../../widget/snapshoot'
 export default Vue.component('v-timelinearea',{
     data(){
         return {

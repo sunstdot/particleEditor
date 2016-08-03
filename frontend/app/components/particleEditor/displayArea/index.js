@@ -5,14 +5,17 @@ import Vue from 'vue';
 import template from './displayArea.html';
 import $ from 'jquery';
 import 'jquery-ui/droppable'
+import {init,drawMethod} from "../../../widget/drawMethods"
+import Sketch from "../../../widget/sketch";
+import {drawBall,fireTheHall,shakeBall,addShape} from "../../../plugin/fireTheHall"
 export default Vue.component('v-displayarea',{
     data(){
         return {
             globalPos:{
-                left:380,
-                top:250
+                left:383,
+                top:150
             },
-            curPos:this.$select('particle')
+            drawEntity:this.$select('drawEntity')
         };
     },
     template,
@@ -29,16 +32,32 @@ export default Vue.component('v-displayarea',{
                 let item = {
                     pos:targetPos,
                     type:type
-                }
+                };
                 store.dispatch(store.actions.particle.drawentity(item));
             }
         });
-        this.unwatch = this.$watch("curPos",this.drawEntity)
+        this.unwatch = this.$watch("drawEntity",this.drawEntities)
+        let container = document.getElementById('painterContainer');
+        let mainPainter = document.createElement("canvas");
+        mainPainter.width = container.offsetWidth;
+        mainPainter.height = container.offsetHeight;
+        let painterZr = init(mainPainter);
+        let painterSketch = Sketch.create({
+            container,
+            element:mainPainter,
+            autoclear:false,
+            zrenderClear:true,
+            painterZr
+        })
+
     },
     methods: {
-        drawEntity(){
-            let type = store.actions.particle.type;
-            console.log(type+"------");
+        drawEntities(){
+            let type = this.drawEntity.type;
+            let pos = this.drawEntity.pos;
+            drawMethod[type](pos,function(shape){
+                addShape(shape);
+            })
         }
     }
 })
