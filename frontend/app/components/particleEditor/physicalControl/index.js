@@ -49,8 +49,6 @@ export default Vue.component('v-physicalcontrol',{
                     return;
                 case 'create':
                     return;
-                case 'replay':
-                    return;
                 default:
                     return;
             }

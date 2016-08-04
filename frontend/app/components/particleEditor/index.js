@@ -10,7 +10,10 @@ import TimelineArea from './timelineArea'
 
 export default {
     el:'body',
-    data:{
+    data(){
+        return{
+            'parentText':''
+        }
     },
     components:{
         'v-header':Header,
@@ -19,6 +22,11 @@ export default {
         'v-particlecontrol':ParticleControl,
         'v-displayarea':DisplayArea,
         'v-timelinearea':TimelineArea
+    },
+    ready(){
+        this.unwatch = this.$watch('parentText',function(){
+            console.log("----------1111"+this.parentText);
+        });
     },
     events:{
         'show-loginPanel'(info){

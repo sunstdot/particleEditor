@@ -3,20 +3,16 @@
  */
 import Vue from 'vue'
 import template from './timelineArea.html';
-import particleMethod from './particleMethod'
-import {isArray} from '../util'
-import {changePos} from './particleMethod'
+import particleMethod from '../../../widget/particleMethod';
+import {zrenderAnimation} from '../../../widget/drawMethods';
 let samplingTime = 1000;
-let samplingTimer
-import {
-    startRecord,
-    stopRecord
-} from '../../../widget/snapshoot'
+let samplingTimer;
 export default Vue.component('v-timelinearea',{
     data(){
         return {
             'record':'clear',
             'drawEntity':this.$select('drawEntity'),
+            'particleType':this.$select('particleType'),
             'recordData':{},
             'flag':false    
         };
@@ -30,16 +26,18 @@ export default Vue.component('v-timelinearea',{
         recordOption(type){
             this.record = type;
             if(type === "record"){
-                startRecord();
+                this.startRecord();
+            }else if(type === "clear"){
+                this.stopRecord();
             }else{
-                stopRecord();
+                this.replayRecord();
             }
         },
         startRecord(){
-            let pos = this.drawEntity.pos;
+            let name = 0;
             if(!samplingTimer){
                 samplingTimer = setInterval(function(){
-                    recordData[name] = [this.drawEntity.pos.top,this.drawEntity.pos.left];
+                    this.recordData[name] = [this.drawEntity.pos.top,this.drawEntity.pos.left];
                     name +=samplingTime;                                        
                 },samplingTime);
             }
@@ -47,9 +45,19 @@ export default Vue.component('v-timelinearea',{
         stopRecord(){
             if(samplingTimer){
                 //记录结束时改变状态
-                store.dispatch(store.actions.record.recordPos(this.recordData))
+                store.dispatch(store.actions.record.recordPos(this.recordData));
                 clearInterval(samplingTimer);
             }
+        },
+        replayRecord(){
+            zrenderAnimation(this.recordData,function(){
+                let target = this._target;
+                if(this.particleType){
+                    particleMethod[this.particleType](target,null,function(){
+                        console.log('this is callback');
+                    });
+                }
+            });
         }
     }
 })

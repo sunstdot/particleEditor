@@ -19,6 +19,12 @@ export default Vue.component('v-displayarea',{
         };
     },
     template,
+    props:{
+        'inputtext1':{
+            type:String,
+            default:''
+        }
+    },
     ready(){
         let self = this;
         $('#painterContainer').droppable({
@@ -38,10 +44,10 @@ export default Vue.component('v-displayarea',{
                     type:type,
                     size:targetSize
                 };
-                store.dispatch(store.actions.particle.drawentity(item));
+                store.dispatch(store.actions.particle.drawEntity(item));
             }
         });
-        this.unwatch = this.$watch("drawEntity",this.drawEntities)
+        this.unwatch = this.$watch("drawEntity",this.drawEntities);
         let container = document.getElementById('painterContainer');
         let mainPainter = document.createElement("canvas");
         mainPainter.width = container.offsetWidth;
@@ -54,7 +60,16 @@ export default Vue.component('v-displayarea',{
             zrenderClear:true,
             painterZr
         })
-        store.dispatch(store.action.particle.painterSketch({'sketch':painterSketch}));
+        store.dispatch(store.actions.particle.painterSketch({'sketch':painterSketch}));
+    },
+    watch:{
+        inputtext1(){
+            let type = "text";
+            let pos = {left:400,top:600};
+            drawMethod[type](pos,this.inputtext1,function(shape){
+                addShape(shape);
+            })
+        }
     },
     methods: {
         drawEntities(){

@@ -28,10 +28,11 @@
         </div>
     </div>
     <div class="titleName">burning word</div>
-    <input id="burningInput" class="burningInput" type="text" placeholder="Type something burning…" v-model="newWord" @input="inputText()" @blur="inputText()">
+    <input id="burningInput" class="burningInput" type="text" placeholder="Type something burning…" v-model="inputtext" @input="inputWord()" @blur="inputWord()">
     <div class="titleName">选择图形</div>
     <div class="shapeWrap" style="display:block;">
         <div id="squareShape" class="square shape" shapeType="square"></div>
         <div id="circleShape" class="circle shape" shapeType="circle"></div>
+        <div id="sourceDot" class="dot" shapeType="dot"></div>
     </div>
 </aside>

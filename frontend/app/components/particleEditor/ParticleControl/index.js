@@ -18,7 +18,7 @@ export default Vue.component('v-particlecontrol',{
                 {'type':'star','name':'星星'},
                 {'type':'smoke','name':'烟雾'},
                 {'type':'hexagon','name':'正六边形'},
-                {'type':'hexagon','name':'正六边形'},
+                {'type':'hexagon','name':'正六边形'}
             ],
             'particleItems':[
                 {'type':'fireTheHall','name':'手榴弹'},
@@ -33,12 +33,18 @@ export default Vue.component('v-particlecontrol',{
         };
     },
     template,
+    props:{
+        'inputtext':{
+            type:String,
+            default:''
+        }
+    },
     ready(){
         $("#squareShape").draggable({opacity:0.7,helper:"clone"});
         $("#circleShape").draggable({opacity:0.7,helper:"clone"});
+        $("#sourceDot").draggable({opacity:0.7,helper:"clone"});
         this.unwatch = this.$watch('drawEntity',this.drawParticle);
         this.unwatch = this.$watch('particleType',this.drawParticle);
-
     },
     methods: {
         findText(arr,type){
@@ -53,15 +59,15 @@ export default Vue.component('v-particlecontrol',{
             let item={
                 type    
             };
-            store.dispatch(store.action.particletype(item))
+            store.dispatch(store.actions.particle.particleType(item))
             this.tabName = "";
         },
         textureClick(type){
             this.textureText = this.findText(this.textureItems,type) || '圆圈';
             this.tabName = "";
         },
-        inputText(event){
-            console.log('test the event value');
+        inputWord(event){
+           console.log("======"+this.inputtext)
         },
         showDropBox(type){
             if(type===this.tabName){
@@ -70,7 +76,11 @@ export default Vue.component('v-particlecontrol',{
                 this.tabName = type;
             }
         },
-        drawParticle(){        
+        drawParticle(){
+            if(this.drawEntity.type === "sourceDot"){
+                //todo 粒子发射源
+                //tonight's homework
+            }
             //todo 根据位置变化画出粒子变化
             if(this.painterSketch){
                 particleMethod(this.particleType)(this.drawEntity,this.painterSketch);    
