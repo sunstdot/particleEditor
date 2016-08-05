@@ -3,7 +3,7 @@
  */
 /*global $ */
 let $ = require('jquery');
-let THREE = require('../lib/three');
+let THREE = require('./three');
 let vue = require('vue').default;
 let components = {};
 let event = require("../event");

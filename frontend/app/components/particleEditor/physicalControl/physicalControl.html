@@ -27,7 +27,32 @@
         <!-- 外观参数设置-->
         <div class="tabClass tabBg2 flip" id="appearance"  v-bind:style="{display:tabName == 'appearance' ? 'block' : 'none'}">
             <div style="width:100%;height: 740px;border: 1px solid ">
-                我是外观参数设置
+                <ul style="height:auto;">
+                    <li>
+                        <div>
+                            <span class="property-name">maxParticles</span>
+                            <div class="controller">
+                                <div class="physicalSlider"><input type="range" min='0' max="5000" step="50" value="10"/></div>
+                                <div class="textShow">1000</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span class="property-name">size</span>
+                            <div class="controller">
+                                <div class="physicalSlider"><input type="range" min='0' max="5000" step="50" value="10"/></div>
+                                <div class="textShow">10</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+
+                    </li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
             </div>
         </div>
         <!-- 轨迹参数设置 -->

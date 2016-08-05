@@ -6,7 +6,7 @@ var Vue = require("vue").default;
 var registerHtml = require('./register.html');
 import {salt} from "../../util/safty"
 import "../loginComponent/registerLogin.css"
-var md5 = require("../../lib/md5.min.js");
+var md5 = require(".././md5.min.js");
 let dataModel = {
     name:"用户名",
     pwd:"密码",

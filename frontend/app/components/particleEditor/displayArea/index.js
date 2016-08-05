@@ -68,7 +68,13 @@ export default Vue.component('v-displayarea',{
             let pos = {left:400,top:600};
             drawMethod[type](pos,this.inputtext1,function(shape){
                 addShape(shape);
-            })
+            });
+            let item = {
+                type:"text",
+                pos:pos,
+                size:null
+            };
+            store.dispatch(store.actions.particle.drawEntity(item));
         }
     },
     methods: {
@@ -79,5 +85,6 @@ export default Vue.component('v-displayarea',{
                 addShape(shape);
             })
         }
+
     }
 })
