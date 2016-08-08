@@ -9,8 +9,6 @@ export class Particle{
         this.acceleration = new Vector(0,0);
         this.ttl          = -1;
         this.lived        = 0;
-        this.size = 2;
-        this.color = [66,167,222,255];
     }
     submitToFields(fields){
         var totalAccelerationX = 0;
@@ -103,3 +101,6 @@ export class Particle{
         this.drawBasic();
     }
 }
+Particle.size = 2;
+Particle.color = [66,167,222,255];
+Particle.drawFunctions = ['Basic','Soft','Variable'];

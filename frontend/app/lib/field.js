@@ -1,30 +1,36 @@
 import Vector from './vector'
-export class Field{
-    constructor(point,mass){
-        this.position   = point;
-        this.size       = 15;
-        this.mass       = 0;
-        this.drawColor  = '#b00';
+export class Field {
+    constructor(point, mass) {
+        this.position = point;
+        this.size = 15;
+        this.mass = 0;
+        this.drawColor = '#b00';
         this.setMass(mass);
     }
-    setMass(mass){
+
+    setMass(mass) {
         this.mass = mass;
         this.drawColor = mass < 0 ? "#f00" : "#0f0";
         return this;
     }
-    moveTo(point){
+
+    moveTo(point) {
         this.position = point;
     }
-    toString(){
+
+    toString() {
         let coreAttributes = [
             this.position.toString(),
             this.mass
         ];
         return 'F' + coreAttributes.join(':');
     }
-    fromString(string){
-        let parts = string.substr(1).split(':');
-        var field = new Field(Vector.fromString(parts.shift()),parseInt(parts.shift(),10));
-        return field;
-    }
+
 }
+Field.fromString = (string) => {
+    let parts = string.substr(1).split(':');
+    return new Field(Vector.fromString(parts.shift()), parseInt(parts.shift(), 10));
+
+}
+Field.drawColor = "rgb(0,0,255)";
+Field.drawColor2 = "hsl(0,0%,0%)";
