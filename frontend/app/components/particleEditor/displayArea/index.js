@@ -8,6 +8,7 @@ import 'jquery-ui/droppable'
 import {init,drawMethod} from "../../../widget/drawMethods"
 import Sketch from "../../../widget/sketch";
 import {drawBall,fireTheHall,shakeBall,addShape} from "../../../plugin/fireTheHall"
+import Display from "../../../lib/display"
 export default Vue.component('v-displayarea',{
     data(){
         return {
@@ -52,15 +53,17 @@ export default Vue.component('v-displayarea',{
         let mainPainter = document.createElement("canvas");
         mainPainter.width = container.offsetWidth;
         mainPainter.height = container.offsetHeight;
-        let painterZr = init(mainPainter);
-        let painterSketch = Sketch.create({
-            container,
-            element:mainPainter,
-            autoclear:false,
-            zrenderClear:true,
-            painterZr
-        })
-        store.dispatch(store.actions.particle.painterSketch({'sketch':painterSketch}));
+        //let painterZr = init(mainPainter);
+        //let painterSketch = Sketch.create({
+        //    container,
+        //    element:mainPainter,
+        //    autoclear:false,
+        //    zrenderClear:true,
+        //    painterZr
+        //})
+        //store.dispatch(store.actions.particle.painterSketch({'sketch':painterSketch}));
+
+        window.display = new Display(mainPainter);
     },
     watch:{
         inputtext1(){

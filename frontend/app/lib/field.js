@@ -1,5 +1,5 @@
 import Vector from './vector'
-export class Field {
+export default class Field {
     constructor(point, mass) {
         this.position = point;
         this.size = 15;

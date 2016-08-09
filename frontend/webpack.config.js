@@ -65,7 +65,8 @@ module.exports = {
       'echarts': "echarts/lib",
       'zrender$': "zrender/lib/zrender.js",
       'zrender': "zrender/lib",
-      'vue':"vue/src/index.js"
+      'vue':"vue/src/index.js",
+      'stats.min':path.join(__dirname,'app','vendor','stats.min')
     },
     modulesDirectories:['node_modules']
   }

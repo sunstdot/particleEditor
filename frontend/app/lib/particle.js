@@ -1,8 +1,8 @@
 /**
  * Created by sunshitao on 2016/8/5.
  */
-import vector from './vector'
-export class Particle{
+import Vector from './vector'
+export default class Particle{
     constructor(point,velocity){
         this.position     = point;
         this.velocity     = velocity;

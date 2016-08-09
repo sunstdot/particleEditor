@@ -4,6 +4,7 @@
 import Vue from 'vue'
 import template from './physicalControl.html'
 import $ from 'jquery'
+import Vector from '../../../lib/vector'
 export default Vue.component('v-physicalcontrol',{
     data(){
         return {
@@ -42,6 +43,10 @@ export default Vue.component('v-physicalcontrol',{
         controlBtn(type){
             switch(type){
                 case 'start':
+                    display.init();
+                    display.addEmitter(new Vector(360,230),Vector.fromAngle(0,2));
+                    display.addField(new Vector(700,230), -140);
+                    display.start();
                     return;
                 case 'finish':
                     return;
