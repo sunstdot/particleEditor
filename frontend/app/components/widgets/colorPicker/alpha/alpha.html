@@ -1,0 +1,14 @@
+<div class="c-alpha">
+    <div class="checkboard-wrap">
+      <checkboard></checkboard>
+    </div>
+    <div class="gradient" :style="{background: gradientColor}"></div>
+    <div class="container" v-el:container
+        @mousedown="handleMouseDown"
+        @touchmove="handleChange"
+        @touchstart="handleChange">
+      <div class="pointer" :style="{left: colors.a * 100 + '%'}">
+        <slot><div class="picker"></div></slot>
+      </div>
+    </div>
+</div>

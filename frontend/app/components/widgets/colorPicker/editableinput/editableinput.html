@@ -1,0 +1,7 @@
+<div class="editable-input">
+    <input class="input" 
+      v-model="val | maxFilter"
+      @keydown="handleKeyDown"
+      @input="handleChange">
+    <span class="label" @mousedown="handleMouseDown">{{label}}</span>
+</div>

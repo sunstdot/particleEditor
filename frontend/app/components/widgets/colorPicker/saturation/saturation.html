@@ -1,0 +1,10 @@
+<div class="saturation" 
+    :style="{background: bgColor}"
+    v-el:container
+    @mousedown="handleMouseDown">
+    <div class="white"></div>
+    <div class="black"></div>
+    <div class="pointer" :style="{top: pointerTop, left: pointerLeft}">
+      <slot><div class="circle"></div></slot>
+    </div>
+</div>

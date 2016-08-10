@@ -4,6 +4,7 @@ import Vector from './vector'
 import Emitter from './emitter'
 import Field from './field'
 import Particle from './particle'
+import removeArray from 'lodash.remove'
 export default class Display {
     constructor(canvas) {
         //display fields
@@ -27,8 +28,8 @@ export default class Display {
             continuous: false,
             objects: true,
             info: true,
-            accelerations: false,
-            velocities: false,
+            accelerations: true,
+            velocities: true,
             particles: true
         };
     }
@@ -38,13 +39,13 @@ export default class Display {
         this.context.scale(this.scale, this.scale);
         this.width = this.canvas.width / this.scale;
         this.height = this.canvas.height / this.scale;
-        this.canvas.onmousedown = function (evt) {
+        this.canvas.onmousedown = (evt) => {
             this.onMouseDown(evt);
         };
-        this.canvas.onmouseup = function (evt) {
+        this.canvas.onmouseup = (evt) => {
             this.onMouseUp(evt);
         };
-        this.canvas.onmousemove = function (evt) {
+        this.canvas.onmousemove = (evt) => {
             this.onMouseMove(evt);
         }
         this.main();
@@ -66,7 +67,7 @@ export default class Display {
         this.update();
         this.afterUpdate();
         this.beforeDraw();
-        this.trick();
+        this.tick();
         this.onDraw();
         this.afterDraw();
     }
@@ -97,7 +98,7 @@ export default class Display {
         this.context.strokeStyle = fill;
     }
 
-    trick() {
+    tick() {
         this.numFrames++;
     }
 
@@ -257,7 +258,6 @@ export default class Display {
         this.fillStyle(gradient);
         this.drawCircle(object.position, radius);
     }
-
     drawParticles() {
         this.context.fillStyle = 'rgba(' + Particle.color.join(',') + ')';
         let size = Particle.size;
@@ -298,13 +298,20 @@ export default class Display {
 
     plotParticles(boundsX, boundsY) {
         let fields = this.fields;
-        this.particles.filter((particle)=> {
-            if (particle.ttl < 0 && ++particle.lived < particle.ttl) return true;
-            let p = particle.position;
-            if (p.x > 0 || p.x < boundsX || p.y > 0 || p.y < boundsY) return true;
+        removeArray(this.particles,(particle)=>{
+            if (particle.ttl > 0 && ++particle.lived >= particle.ttl) return true;
+            var p = particle.position;
+            if (p.x < 0 || p.x > boundsX || p.y < 0 || p.y > boundsY) return true;
             particle.submitToFields(fields);
             particle.move();
         });
+
+        //this.particles.filter((particle)=> {
+        //    let p = particle.position;
+        //    particle.submitToFields(fields);
+        //    particle.move();
+        //    if (p.x > 0 || p.x < boundsX || p.y > 0 || p.y < boundsY) return true;
+        //});
     }
 
     fromString(string) {

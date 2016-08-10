@@ -13,11 +13,11 @@ export default class Particle{
     submitToFields(fields){
         var totalAccelerationX = 0;
         var totalAccelerationY = 0;
-        fields.map(function(field){
+        fields.map((field)=>{
             // inlining what should be Vector object methods for performance reasons
-            var vectorX = field.position.x - this.position.x;
-            var vectorY = field.position.y - this.position.y;
-            var force = field.mass / Math.pow((vectorX*vectorX+field.mass/2+vectorY*vectorY+field.mass/2),1.5);
+            let vectorX = field.position.x - this.position.x;
+            let vectorY = field.position.y - this.position.y;
+            let force = field.mass / Math.pow((vectorX*vectorX+field.mass/2+vectorY*vectorY+field.mass/2),1.5);
             totalAccelerationX += vectorX * force;
             totalAccelerationY += vectorY * force;
         });
@@ -104,3 +104,6 @@ export default class Particle{
 Particle.size = 2;
 Particle.color = [66,167,222,255];
 Particle.drawFunctions = ['Basic','Soft','Variable'];
+Particle.changeColor = (color)=>{
+    Particle.color = color;
+};

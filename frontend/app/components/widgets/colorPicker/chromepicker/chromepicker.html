@@ -1,0 +1,79 @@
+<div class="c-chrome">
+    <div class="saturation-wrap">
+      <saturation :colors.sync="colors" :on-change="childChange"></saturation>
+    </div>
+    <div class="chrome-body">
+      <div class="controls">
+        <div class="color-wrap">
+          <div class="active-color" :style="{background: activeColor}"></div>
+        </div>
+
+        <div class="sliders">
+          <div class="hue-wrap">
+            <hue :colors.sync="colors" :on-change="childChange"></hue>  
+          </div>
+          <div class="alpha-wrap">
+            <alpha :colors.sync="colors" :on-change="childChange"></alpha>
+          </div>
+        </div>
+      </div>
+      
+      <div class="fields-wrap">
+        <div class="fields" v-show="fieldsIndex === 0">
+          <!-- hex -->
+          <div class="field">
+            <ed-in label="hex"
+            :val.sync="colors.hex"
+            :on-change="inputChange"></ed-in>  
+          </div>
+        </div>
+        <div class="fields" v-show="fieldsIndex === 1">
+          <!-- rgba -->
+          <div class="field">
+            <ed-in label="r" :val.sync="colors.rgba.r" 
+            :on-change="inputChange"></ed-in>
+          </div>
+          <div class="field">
+            <ed-in label="g" :val.sync="colors.rgba.g" 
+            :on-change="inputChange"></ed-in>
+          </div>
+          <div class="field">
+            <ed-in label="b" :val.sync="colors.rgba.b"
+            :on-change="inputChange"></ed-in>
+          </div>
+          <div class="field">
+            <ed-in label="a" :val.sync="colors.a" :arrow-offset="0.01" :max="1"
+            :on-change="inputChange"></ed-in>
+          </div>
+        </div>
+        <div class="fields" v-show="fieldsIndex === 2">
+          <!-- hsla -->
+          <div class="field">
+            <ed-in label="h" :val.sync="colors.hsl.h" 
+            :on-change="inputChange"></ed-in>
+          </div>
+          <div class="field"> 
+            <ed-in label="s" :val.sync="colors.hsl.s"
+            :on-change="inputChange"></ed-in>
+          </div>
+          <div class="field">
+            <ed-in label="l" :val.sync="colors.hsl.l"
+            :on-change="inputChange"></ed-in>
+          </div>
+          <div class="field">
+            <ed-in label="a" :val.sync="colors.a" :arrow-offset="0.01" :max="1"
+            :on-change="inputChange"></ed-in>
+          </div>
+        </div>
+        <!-- btn -->
+        <div class="toggle-btn">
+          <div class="u-ctr-btn" >
+            <div class="u-ctr-btn-up" @click="addfield(1)"><i class="iconfont icon-arrowdropup"></i></div>
+            <div class="u-ctr-btn-down" @click="addfield(-1)"><i class="iconfont icon-arrowdropdown"></i></div>
+          </div>
+          <div class="icon-highlight" v-show="highlight"></div>
+        </div>
+        <!-- btn -->
+      </div>      
+    </div>
+</div>

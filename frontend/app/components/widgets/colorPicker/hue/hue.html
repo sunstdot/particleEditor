@@ -1,0 +1,10 @@
+<div class="c-hue {{direction}}">
+    <div class="containerHue" v-el:container
+      @mousedown="handleMouseDown"
+      @touchmove="handleChange"
+      @touchstart="handleChange">
+      <div class="pointer" :style="{top: pointerTop, left: pointerLeft}">
+        <slot><div class="picker"></div></slot>
+      </div>  
+    </div>
+</div>

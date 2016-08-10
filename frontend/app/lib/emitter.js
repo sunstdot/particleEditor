@@ -22,6 +22,7 @@ export default class Emitter{
             Vector.fromAngle(this.velocity.getAngle() + this.spread-(Math.random()*this.spread*2),this.velocity.getMagnitude())
         );
         particle.ttl = this.particleLife;
+        //particle.draw();
         return particle;
     }
     toString(){

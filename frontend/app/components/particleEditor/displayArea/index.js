@@ -62,7 +62,7 @@ export default Vue.component('v-displayarea',{
         //    painterZr
         //})
         //store.dispatch(store.actions.particle.painterSketch({'sketch':painterSketch}));
-
+        container.appendChild(mainPainter);
         window.display = new Display(mainPainter);
     },
     watch:{

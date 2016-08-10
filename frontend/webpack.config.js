@@ -45,7 +45,8 @@ module.exports = {
       {
         test:/\.vue$/,
         loader:'vue'
-      }
+      },
+      { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' }
     ]
   },
   externals:{
