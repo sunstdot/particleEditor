@@ -20,7 +20,6 @@
             <button type="button" class="btn btn-danger" style="width: 135px" v-on:click="showDropBox('particle')">{{particleText}}</button>
             <button type="button" class="btn btn-danger dropdown-toggle" v-on:click="showDropBox('particle')">
                 <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul id="particleValue" class="dropdown-menu" v-bind:style="{display:tabName=='particle' ?'block':'none'}">
                 <li v-for="item in particleItems" v-on:click="particleClick(item.type)"><a href="javascript:void(0);">{{item.name}}</a></li>
@@ -29,6 +28,18 @@
     </div>
     <div class="titleName">burning word</div>
     <input id="burningInput" class="burningInput" type="text" placeholder="Type something burning…" v-model="inputtext" @input="inputWord()" @blur="inputWord()">
+    <div class="titleName">particle Example</div>
+    <div class="textCont">
+        <div class="btn-group selectBtn">
+            <button type="button" class="btn btn-danger" style="width: 135px" v-on:click="showDropBox('particleType')">{{exampleText}}</button>
+            <button type="button" class="btn btn-danger dropdown-toggle" v-on:click="showDropBox('particleType')">
+                <span class="caret"></span>
+            </button>
+            <ul id="particleExample" class="dropdown-menu" v-bind:style="{display:tabName=='particleType' ?'block':'none'}">
+                <li v-for="item in exampleOptions" v-on:click="particleExampleClick(item.type)"><a href="javascript:void(0);">{{item.type}}</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="titleName">选择图形</div>
     <div class="shapeWrap" style="display:block;">
         <div id="squareShape" class="square shape" shapeType="square"></div>

@@ -305,13 +305,6 @@ export default class Display {
             particle.submitToFields(fields);
             particle.move();
         });
-
-        //this.particles.filter((particle)=> {
-        //    let p = particle.position;
-        //    particle.submitToFields(fields);
-        //    particle.move();
-        //    if (p.x > 0 || p.x < boundsX || p.y > 0 || p.y < boundsY) return true;
-        //});
     }
 
     fromString(string) {
@@ -337,6 +330,14 @@ export default class Display {
         parts.forEach((objectString) => {
             if (objectString.charAt(0) == "E") this.emitters.push(Emitter.fromString(objectString));
             else this.fields.push(Field.fromString(objectString));
+        })
+    }
+    changeMaxParticle(count){
+        this.maxParticles = count;
+    }
+    updateEmitters(velocity){
+        this.emitters.forEach((emitter)=>{
+            emitter.updateVlocity = velocity;
         })
     }
 }

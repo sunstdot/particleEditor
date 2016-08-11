@@ -16,7 +16,6 @@
              v-bind:style="{display:tabName == 'physics' ? 'block' : 'none'}">
             <div class="argSet">
                 <span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>
-
                 <div id="gravityControl" class="gravityControl">
                 </div>
             </div>
@@ -41,11 +40,10 @@
                     <li>
                         <div>
                             <span class="property-name">maxParticles</span>
-
                             <div class="controller">
                                 <div class="physicalSlider"><input type="range" min='0' max="5000" step="50"
-                                                                   value="10"/></div>
-                                <div class="textShow">1000</div>
+                                                                   value="2000" v-model="maxParticles"/></div>
+                                <div class="textShow">{{maxParticles}}</div>
                             </div>
                         </div>
                     </li>
@@ -54,15 +52,15 @@
                             <span class="property-name">size</span>
 
                             <div class="controller">
-                                <div class="physicalSlider"><input type="range" min='0' max="5000" step="50"
-                                                                   value="10"/></div>
-                                <div class="textShow">10</div>
+                                <div class="physicalSlider"><input type="range" min='0' max="10" step="0.1"
+                                                                   value="2" v-model="particleSize"/></div>
+                                <div class="textShow">{{particleSize}}</div>
                             </div>
                         </div>
                     </li>
                     <li>
                         <div>
-                            <span class="property-name">clearBehavior</span>
+                            <span class="property-name">点击效果</span>
 
                             <div class="controller">
                                 <select>
@@ -73,24 +71,12 @@
                         </div>
                     </li>
                     <li>
-                        <div class="addBtn">add emitter</div>
+                        <span class="addBtn">发射器</span>
+                        <div @click="addObjectAtCanvas('emitter')" class="launch"></div>
                     </li>
                     <li>
-                        <div class="addBtn">add field</div>
-                    </li>
-                    <li>
-                        <div>
-                            <span class="property-name">example</span>
-                            <div class="controller">
-                                <select>
-                                    <template v-for="option in exampleOptions">
-                                        <option value="{{option.value}}}">
-                                            {{option.name}}
-                                        </option>
-                                    </template>
-                                </select>
-                            </div>
-                        </div>
+                        <span class="addBtn">障碍</span>
+                        <div @click="addObjectAtCanvas('field')" class="obstacle"></div>
                     </li>
                 </ul>
                 <div class="csm-tab-con">
@@ -105,7 +91,6 @@
                     </div>
                 </div>
             </div>
-
 
         </div>
         <!-- 轨迹参数设置 -->

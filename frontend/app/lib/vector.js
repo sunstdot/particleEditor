@@ -29,7 +29,7 @@ export default class Vector {
             this.y >= point.y - radius &&
             this.y <= point.y + radius;
     }
-
+    //根据象限获取点到圆点的线与x正向轴所成的角度
     getAngle() {
         let offset = 0;
         let ratio = 0;

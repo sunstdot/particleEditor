@@ -36,6 +36,9 @@ export default class Emitter{
         ];
         return 'E' + coreAttributes.join(':');
     }
+    updateVelocity(velocity){
+        this.velocity = velocity;
+    }
 }
 Emitter.drawColor  = "#999";
 Emitter.drawColor2 = "#000";

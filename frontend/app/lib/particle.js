@@ -1,6 +1,3 @@
-/**
- * Created by sunshitao on 2016/8/5.
- */
 import Vector from './vector'
 export default class Particle{
     constructor(point,velocity){

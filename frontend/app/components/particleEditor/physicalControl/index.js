@@ -5,20 +5,17 @@ import Vector from '../../../lib/vector'
 import {defaultColor} from '../../../config'
 import vColorPicker from '../../widgets/colorPicker/chromepicker'
 import Particle from '../../../lib/particle'
+
+let zrender = require('zrender');
+//圆形
+let CircleShape = require('zrender/lib/graphic/shape/Circle');
+//线
+let LineShape = require('zrender/lib/graphic/shape/Line');
+
 export default Vue.component('v-physicalcontrol',{
     data(){
         return {
             'tabName':'physics',
-            'exampleOptions':[
-                {name:'example1',value:'0,Basic,255|149|0|.5,2:Sv1(2000|1|0|0|1|E360,230:2,0:15:-1:0.10:4|F700,230:-140:8)'},
-                {name:'example2a',value:'0,Basic:Sv1(2000|1|0|0|1|E388,158:2,0:15:-1:0.10:4|F497,233:500|F442,240:-37)'},
-                {name:'example2b',value:'0,Variable:Sv1(5000|1|0|0|1|E388,158:2,0:15:-1:0.10:4|F443,211:500)'},
-                {name:'example3a',value:'0,Basic:Sv1(2000|0|0|0|1|E500,275:1.3,-0:15:-1:3.14:4|F650,275:-250|F350,275:-250|F500,125:-250|F500,425:-250|F606,381:-250|F606,169:-250|F397,381:-250|F397,169:-250)'},
-                {name:'example3b',value:'0,Basic:Sv1(2000|1|0|0|1|E500,250:4,0:15:-1:3.14:4|F500,250:80)'},
-                {name:'example4',value:'0,Variable:Sv1(2000|1|0|0|1|E217,453:1.913,-0.585:15:-1:0.10:4|F337,472:-140|F533,327:500|F672,393:-140|F284,347:-140)'},
-                {name:'example5',value:'1,Basic:Sv1(2000|0|1|0|0|E500,275:2,0:15:-1:3.14:4|F650,275:-140:8|F350,275:-140:8|F500,125:-140:8|F500,425:-140:8|F606,381:-140:8|F606,169:-140:8|F397,381:-140:8|F397,169:-140:8)'},
-                {name:'bonus',value:'0,Soft,255|149|0|.5,4:Sv1(5000|0|0|0|1|E502,277:0.005,-0.3:15:130:3.14:4|F650,275:-250:8|F350,275:-250:8|F500,425:-250:8|F606,381:-250:8|F606,169:-250:8|F397,381:-250:8|F397,169:-250:8)'}
-            ],
             defaultColor
         }
     },
@@ -29,6 +26,14 @@ export default Vue.component('v-physicalcontrol',{
     props:{
 
     },
+    watch:{
+        maxParticles(val){
+            display.changeMaxParticle(val);
+        },
+        particleSize(val){
+            Particle.size = val;
+        }
+    },
     computed:{
         color(){
             return defaultColor;
@@ -36,6 +41,7 @@ export default Vue.component('v-physicalcontrol',{
     },
     ready(){
         this.tabBackOrFront();
+        this.gravityControl();
     },
     methods:{
         updateBackground(val){
@@ -84,6 +90,109 @@ export default Vue.component('v-physicalcontrol',{
                     return;
             }
         },
+        addObjectAtCanvas(type){
+            if(type==="emitter"){
+                display.addEmitter(new Vector(360,230),Vector.fromAngle(0,2));
+            }else if(type="field"){
+                display.addField(new Vector(700,230), -140);
+            }
+        },
+        gravityControl(){
+            let eventTool = require('zrender/lib/core/event');
+            let gravityCanvas = document.getElementById('gravityControl');
+            let gravityZr = zrender.init(gravityCanvas);
+            let startPos = {x: 150, y: 100}, endPos = {}, angle;
+            let downValue, rightValue;
+            //定义shape
+            let circle, sector, line;
+            function calculateAngle(startPos, endPos) {
+                if ((endPos.y - startPos.y) < 0.2) {
+                    angle = endPos.x > startPos ? 0 : 180;
+                } else if ((endPos.x - startPos.x) < 0.2) {
+                    angle = endPos.y > startPos.y ? -90 : 90;
+                } else {
+                    let tan = (endPos.y - startPos.y) / (endPos.x - startPos.x);
+                    let radina = Math.atan(tan); //弧度
+                    let angle = 180 * radina / Math.PI;
+                }
+                return Math.ceil(angle);
+            }
+            circle = new CircleShape({
+                scale:[1,1],
+                shape:{
+                  cx:150,
+                  cy:100,
+                  r:100
+                },
+                style: {
+                    fill:'red'
+                },
+                ondragover: function (e) {
+                    endPos.x = eventTool.getX(e.event);
+                    endPos.y = eventTool.getY(e.event);
+                    angle = calculateAngle(startPos, endPos);
 
+                    //算出重力值，向下和向右的重力默认为正
+                    rightValue = endPos.x - startPos.x;
+                    downValue = endPos.y - startPos.y;
+
+                    //通过事件抛给 kinematics来修改主屏幕中的粒子特效
+
+                    event.notify("modifyGravity", {downGravity: downValue, rightGravity: rightValue}); //效率会很低
+
+                    gravityValueDom.innerHTML = "(向下重力" + downValue + " , 向右重力" + rightValue + ")";
+                    gravityZr.modShape("lineScale", {style: {xEnd: endPos.x, yEnd: endPos.y}});
+                    gravityZr.refresh();
+                }
+            });
+            //画线，
+            //end position需要根据扇形圆心的位置实时计算
+            line = new LineShape({
+                id: 'lineScale',
+                shape:{
+                    xStart: 150,
+                    yStart: 100,
+                    xEnd: 100,
+                    yEnd: 50
+                },
+                style: {
+                    color: 'rgba(255 255 240, 0.8)'
+                },
+                draggable: false
+            });
+            //drawLine
+            sector = new CircleShape({
+                id: 'sectorCursor',
+                shape:{
+                    cx:100,
+                    cy:50,
+                    r:10
+                },
+                style: {
+                    color: 'rgba(25 25 112, 0.8)'          // rgba supported
+                },
+                ondrift:function(dx,dy){
+                    let x = this.shape.cx + dx;
+                    let y = this.shape.cy+dy;
+                    if(x>250||x<50 || y>150 || y<50){
+                        return true;
+                    }
+                },
+                draggable: true,
+                hoverable: false,
+                clickable: true,
+                ondragstart: function (e) {
+                    console.log('-----------------start');
+                },
+                ondragend: function (e) {
+                    console.log('-----------------end');
+                }
+            });
+
+            gravityZr.add(line);
+            // 圆形
+            gravityZr.add(circle);
+            gravityZr.add(sector);
+        }
     }
 })
