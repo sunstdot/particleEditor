@@ -202,17 +202,37 @@ export default class Display {
     }
 
     onMouseUp(evt) {
-        let object = this.getObjectAtPoint(this.mouseCoords);
+        var currentObject = this.getObjectAtPoint(this.mouseCoords);
         if (this.mouseField) {
             this.removeField(this.mouseField);
             this.mouseField = undefined;
+        } else if (this.clicked) {
+            evt.particleTarget = this.clicked;
+            if (currentObject === this.clicked) {
+                delete this.clicked.moved;
+                this.clicked = undefined;
+            }
         }
     }
 
     onMouseMove(evt) {
-        this.mouseCoords = new Vector(evt.offsetX || (evt.layerX - this.canvas.offsetLeft), evt.offsetY || (evt.layerY - this.canvas.offsetTop));
+        this.mouseCoords = new Vector(evt.offsetX || (evt.layerX - this.display.canvas.offsetLeft), evt.offsetY || (evt.layerY - this.display.canvas.offsetTop));
         if (this.mouseField) {
             this.mouseField.moveTo(this.mouseCoords);
+        } else if (this.clicked) {
+            this.clicked.moved = true;
+            this.clicked.moveTo(this.mouseCoords);
+        } else { // not over anything
+            var object = this.getObjectAtPoint(this.mouseCoords);
+            if (this.objectMouseOver !== object) { // if we're over something different
+                if (this.objectMouseOver) {         // if we were over something before
+                    evt.particleTarget = this.objectMouseOver;
+                    this.objectMouseOver = undefined;
+                } else {                            // we're in *something* new, even if it's nothing
+                    evt.particleTarget = object;
+                    this.objectMouseOver = object;
+                }
+            }
         }
     }
 
@@ -249,20 +269,22 @@ export default class Display {
 
     drawCircularObject(object) {
         let radius = object.size >> 1;
-        let gradient = this.context.createRadialGradient(
-            object.position.x, object.position.y, object.size,
+        this.drawCircle(object.position, radius);
+        let grd = this.context.createRadialGradient(
+            object.position.x, object.position.y, radius,
             object.position.x, object.position.y, 0
         );
-        gradient.addColorStop(0, object.drawColor || object.constructor.drawColor);
-        gradient.addColorStop(1, object.drawColor2 || object.constructor.drawColor2);
-        this.fillStyle(gradient);
-        this.drawCircle(object.position, radius);
+        grd.addColorStop(0, object.drawColor || object.constructor.drawColor);
+        grd.addColorStop(1, object.drawColor2 || object.constructor.drawColor2);
+        this.context.fillStyle = grd;
+        this.context.fill();
     }
     drawParticles() {
         this.context.fillStyle = 'rgba(' + Particle.color.join(',') + ')';
         let size = Particle.size;
         this.particles.forEach((particle)=> {
             let p = particle.position;
+            //todo 在这里改变形状
             this.context.fillRect(p.x, p.y, size, size);
         });
     }
@@ -337,7 +359,7 @@ export default class Display {
     }
     updateEmitters(velocity){
         this.emitters.forEach((emitter)=>{
-            emitter.updateVlocity = velocity;
+            emitter.updateVelocity(velocity);
         })
     }
 }

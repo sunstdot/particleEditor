@@ -14,6 +14,7 @@ export default Vue.component('v-particlecontrol',{
             'exampleText':'unselect',
             'textureItems':[
                 {'type':'circle','name':'圆圈'},
+                {'type':'square','name':'正方形'},
                 {'type':'snow','name':'雪花'},
                 {'type':'rain','name':'雨滴'},
                 {'type':'star','name':'星星'},
@@ -70,7 +71,8 @@ export default Vue.component('v-particlecontrol',{
             let item={
                 type    
             };
-            store.dispatch(store.actions.particle.particleType(item))
+            store.dispatch(store.actions.particle.particleType(item));
+
             this.tabName = "";
         },
         textureClick(type){

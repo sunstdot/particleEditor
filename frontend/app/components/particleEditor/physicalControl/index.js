@@ -16,6 +16,8 @@ export default Vue.component('v-physicalcontrol',{
     data(){
         return {
             'tabName':'physics',
+            'velocityX':2,
+            'velocityY':0,
             defaultColor
         }
     },
@@ -98,14 +100,14 @@ export default Vue.component('v-physicalcontrol',{
             }
         },
         gravityControl(){
-            let eventTool = require('zrender/lib/core/event');
-            let gravityCanvas = document.getElementById('gravityControl');
-            let gravityZr = zrender.init(gravityCanvas);
-            let startPos = {x: 150, y: 100}, endPos = {}, angle;
+            let self = this;
+            let gravityZr = zrender.init(document.getElementById('gravityControl'),{'renderer':'canvas'});
+            let startPos = {x: 150, y: 100};
             let downValue, rightValue;
             //定义shape
             let circle, sector, line;
             function calculateAngle(startPos, endPos) {
+                let angle;
                 if ((endPos.y - startPos.y) < 0.2) {
                     angle = endPos.x > startPos ? 0 : 180;
                 } else if ((endPos.x - startPos.x) < 0.2) {
@@ -125,73 +127,61 @@ export default Vue.component('v-physicalcontrol',{
                   r:100
                 },
                 style: {
-                    fill:'red'
-                },
-                ondragover: function (e) {
-                    endPos.x = eventTool.getX(e.event);
-                    endPos.y = eventTool.getY(e.event);
-                    angle = calculateAngle(startPos, endPos);
-
-                    //算出重力值，向下和向右的重力默认为正
-                    rightValue = endPos.x - startPos.x;
-                    downValue = endPos.y - startPos.y;
-
-                    //通过事件抛给 kinematics来修改主屏幕中的粒子特效
-
-                    event.notify("modifyGravity", {downGravity: downValue, rightGravity: rightValue}); //效率会很低
-
-                    gravityValueDom.innerHTML = "(向下重力" + downValue + " , 向右重力" + rightValue + ")";
-                    gravityZr.modShape("lineScale", {style: {xEnd: endPos.x, yEnd: endPos.y}});
-                    gravityZr.refresh();
+                    fill:'#F29F3F'
                 }
             });
             //画线，
             //end position需要根据扇形圆心的位置实时计算
             line = new LineShape({
                 id: 'lineScale',
-                shape:{
-                    xStart: 150,
-                    yStart: 100,
-                    xEnd: 100,
-                    yEnd: 50
-                },
                 style: {
-                    color: 'rgba(255 255 240, 0.8)'
+                    stroke: "rgba(10, 80, 60, 0.8)"
                 },
-                draggable: false
+                shape:{
+                    x1: 150,
+                    y1: 100,
+                    x2: 170,
+                    y2: 100
+                }
             });
             //drawLine
             sector = new CircleShape({
                 id: 'sectorCursor',
                 shape:{
-                    cx:100,
-                    cy:50,
-                    r:10
+                    cx:170,
+                    cy:100,
+                    r:5
                 },
                 style: {
-                    color: 'rgba(25 25 112, 0.8)'          // rgba supported
-                },
-                ondrift:function(dx,dy){
-                    let x = this.shape.cx + dx;
-                    let y = this.shape.cy+dy;
-                    if(x>250||x<50 || y>150 || y<50){
-                        return true;
-                    }
+                    fill:'#376956'
                 },
                 draggable: true,
                 hoverable: false,
                 clickable: true,
-                ondragstart: function (e) {
-                    console.log('-----------------start');
-                },
-                ondragend: function (e) {
-                    console.log('-----------------end');
+                ondrag:function(e){
+                    let target = e.target;
+                    let endPos = {};
+
+                    endPos.x = target.shape.cx+target.position[0];
+                    endPos.y = target.shape.cy+target.position[1];
+
+                    self.velocityX = (endPos.x - 150)/10;
+                    self.velocityY = (endPos.y - 100)/10;
+                    display.updateEmitters(new Vector(self.velocityX,self.velocityY));
+                    let angle = calculateAngle(startPos, endPos);
+                    //算出重力值，向下和向右的重力默认为正
+                    rightValue = endPos.x - startPos.x;
+                    downValue = endPos.y - startPos.y;
+                    let lineTarget = gravityZr.storage.get('lineScale');
+                    lineTarget.attr({shape: {x2: endPos.x, y2: endPos.y}});
+                    lineTarget.dirty();
+                    gravityZr.refreshImmediately();
                 }
             });
 
-            gravityZr.add(line);
             // 圆形
             gravityZr.add(circle);
+            gravityZr.add(line);
             gravityZr.add(sector);
         }
     }

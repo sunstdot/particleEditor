@@ -40,6 +40,6 @@ export default class Emitter{
         this.velocity = velocity;
     }
 }
-Emitter.drawColor  = "#999";
-Emitter.drawColor2 = "#000";
+Emitter.drawColor  = "#999999";
+Emitter.drawColor2 = "#000000";
 Emitter.jitter     = 0.05;

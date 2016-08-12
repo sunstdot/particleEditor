@@ -15,7 +15,7 @@
         <div id="physics" class="tabClass tabBg1 flip in"
              v-bind:style="{display:tabName == 'physics' ? 'block' : 'none'}">
             <div class="argSet">
-                <span class="text">重力控制：</span> <span id="gravityValue" class="valueShow">50</span>
+                <span class="text">重力控制：</span> <span class="nameShow">x方向速度</span><span class="valueShow">{{velocityX}}</span><span class="nameShow">Y方向速度</span><span class="valueShow">{{velocityY}}</span>
                 <div id="gravityControl" class="gravityControl">
                 </div>
             </div>

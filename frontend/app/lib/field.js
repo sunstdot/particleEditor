@@ -32,5 +32,5 @@ Field.fromString = (string) => {
     return new Field(Vector.fromString(parts.shift()), parseInt(parts.shift(), 10));
 
 }
-Field.drawColor = "rgb(0,0,255)";
-Field.drawColor2 = "hsl(0,0%,0%)";
+Field.drawColor = "#0000FF";
+Field.drawColor2 = "#000000";
