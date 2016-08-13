@@ -29,8 +29,8 @@ export default class Field {
 }
 Field.fromString = (string) => {
     let parts = string.substr(1).split(':');
-    return new Field(Vector.fromString(parts.shift()), parseInt(parts.shift(), 10));
-
+    let field = new Field(Vector.fromString(parts.shift()),parseInt(parts.shift(),10));
+    return field;
 }
 Field.drawColor = "#0000FF";
 Field.drawColor2 = "#000000";

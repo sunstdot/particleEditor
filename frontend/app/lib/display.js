@@ -216,7 +216,7 @@ export default class Display {
     }
 
     onMouseMove(evt) {
-        this.mouseCoords = new Vector(evt.offsetX || (evt.layerX - this.display.canvas.offsetLeft), evt.offsetY || (evt.layerY - this.display.canvas.offsetTop));
+        this.mouseCoords = new Vector(evt.offsetX || (evt.layerX - this.canvas.offsetLeft), evt.offsetY || (evt.layerY - this.canvas.offsetTop));
         if (this.mouseField) {
             this.mouseField.moveTo(this.mouseCoords);
         } else if (this.clicked) {
@@ -285,7 +285,11 @@ export default class Display {
         this.particles.forEach((particle)=> {
             let p = particle.position;
             //todo 在这里改变形状
-            this.context.fillRect(p.x, p.y, size, size);
+            //this.context.fillRect(p.x, p.y, size, size);
+            if(!particle[Particle.type]){
+                Particle.type = 'square';
+            }
+            particle[Particle.type](this.context,p,size);
         });
     }
 
@@ -305,7 +309,7 @@ export default class Display {
         this.particles.forEach((particle)=> {
             this.context.moveTo(particle.position.x, particle.position.y)
             this.context.lineTo(particle.position.x + particle.velocity.x, particle.position.y + particle.velocity.y);
-        })
+        });
         this.context.stroke();
     }
 
@@ -335,7 +339,7 @@ export default class Display {
         };
         let matches = string.match(/^([^(]+)\((.*)\)$/);
         this.particles = [];
-        if (matches && matches.length > 3 && versions[matches[1]]) {
+        if (matches && matches.length === 3 && versions[matches[1]]) {
             versions[matches[1]].apply(this, [matches[2]]);
         }
     }
@@ -362,4 +366,5 @@ export default class Display {
             emitter.updateVelocity(velocity);
         })
     }
+
 }

@@ -97,10 +97,57 @@ export default class Particle{
     draw(){
         this.drawBasic();
     }
+    circle(context,pos,size){
+        context.beginPath();
+        context.arc(pos.x,pos.y,size,0,2*Math.PI,true);
+        context.fill();
+    }
+    square(context,pos,size){
+        context.fillRect(pos.x, pos.y, size, size);
+    }
+    fixPointStar(context,pos,size){
+        function degreeToRaidus(degree)
+        {
+            return degree*Math.PI/180;
+        }
+        context.beginPath();//´´½¨Â·¾¶
+        let pos1 = {
+            x:pos.x+size*Math.cos(degreeToRaidus(18)),
+            y:pos.y-size*Math.sin(degreeToRaidus(18))
+        };
+        let pos2 = {
+            x:pos.x,
+            y:pos.y-size
+        };
+        let pos3 = {
+            x:pos.x-size*Math.cos(degreeToRaidus(18)),
+            y:pos.y-size*Math.sin(degreeToRaidus(18))
+        };
+        let pos4 = {
+            x:pos.x-size*Math.cos(degreeToRaidus(54)),
+            y:pos.y+size*Math.sin(degreeToRaidus(54))
+        };
+        let pos5 = {
+            x:pos.x+size*Math.cos(degreeToRaidus(54)),
+            y:pos.y+size*Math.sin(degreeToRaidus(54))
+        };
+        context.moveTo(pos1.x,pos1.y);
+        context.lineTo(pos4.x,pos4.y);
+        context.lineTo(pos2.x,pos2.y);
+        context.lineTo(pos5.x,pos5.y);
+        context.lineTo(pos3.x,pos3.y);
+        context.lineTo(pos1.x,pos1.y);
+        context.fill();
+        context.closePath();
+    }
 }
 Particle.size = 2;
 Particle.color = [66,167,222,255];
+Particle.type = 'fixPointStar';
 Particle.drawFunctions = ['Basic','Soft','Variable'];
 Particle.changeColor = (color)=>{
     Particle.color = color;
+};
+Particle.changeType = (type) =>{
+    Particle.type = type;
 };

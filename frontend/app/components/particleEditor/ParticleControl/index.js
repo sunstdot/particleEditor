@@ -6,6 +6,7 @@ import template from './particleControl.html';
 import $ from 'jquery'
 import 'jquery-ui/draggable'
 import particleMethod from '../../../widget/particleMethod'
+import Particle from '../../../lib/particle'
 export default Vue.component('v-particlecontrol',{
     data(){
         return {
@@ -19,7 +20,7 @@ export default Vue.component('v-particlecontrol',{
                 {'type':'rain','name':'雨滴'},
                 {'type':'star','name':'星星'},
                 {'type':'smoke','name':'烟雾'},
-                {'type':'hexagon','name':'正六边形'},
+                {'type':'fixPointStar','name':'五角星'},
                 {'type':'hexagon','name':'正六边形'}
             ],
             'particleItems':[
@@ -77,11 +78,21 @@ export default Vue.component('v-particlecontrol',{
         },
         textureClick(type){
             this.textureText = this.findText(this.textureItems,type) || '圆圈';
+            Particle.changeType(type);
             this.tabName = "";
         },
         particleExampleClick(type){
             this.exampleText = type;
             let exampleVal = this.findText(this.exampleOptions,type);
+            var separatorPos = exampleVal.indexOf(':');
+            var parts = exampleVal.substr(0,separatorPos).split(',');
+            display.draw.continuous = parts[0] === '1' ? true : false;
+            if (parts[2]) Particle.changeColor(parts[2].split('|'));
+            Particle.size = parts[3] || 2;
+            exampleVal = exampleVal.substr(separatorPos+1);
+            display.fromString(exampleVal);
+            display.clear();
+            display.start();
             this.tabName = "";
         },
         inputWord(event){
