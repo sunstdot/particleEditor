@@ -18,6 +18,9 @@ export default Vue.component('v-physicalcontrol',{
             'tabName':'physics',
             'velocityX':2,
             'velocityY':0,
+            'editorName':'',
+            'mass':0,
+            'chooseEntity':this.$select('chooseEntity'),
             defaultColor
         }
     },
@@ -34,6 +37,21 @@ export default Vue.component('v-physicalcontrol',{
         },
         particleSize(val){
             Particle.size = val;
+        },
+        chooseEntity(val){
+            //初始化编辑位置的值
+            this.editorName = "";
+            this.mass = val.object.mass || 0;
+            this.particleLife = val.object.particleLife || 0;
+            this.spread = val.object.spread || 0;
+            this.emissionRate = val.object.emissionRate || 0;
+            if(val.type){
+                this.editorName = val.type+"Editor";
+            }
+        },
+        mass(val){
+            this.mass = val;
+            display.updateSelectedObject({'mass':this.mass});
         }
     },
     computed:{

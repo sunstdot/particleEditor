@@ -184,21 +184,29 @@ export default class Display {
 
     onMouseDown(evt) {
         let object = this.getObjectAtPoint(this.mouseCoords); //object不是 emitter就是field
-        if (this.selected) {
-            //todo 设置particleTarget = this.selected
-            //将target广播出去 objectBlur
-            this.selected = undefined;
-        }
+        let item;
+        //if (this.selected) {
+        //    //todo 设置particleTarget = this.selected
+        //    //将target广播出去 objectBlur
+        //    this.selected = undefined;
+        //}
+
         if (object) {
             this.clicked = object;
             //todo 设置particleTarget = object 将target广播出去 onmousedown
-
-        } else {
-            this.mouseField = new Field(this.mouseCoords, this.mouseFieldStrength);
-            this.mouseField.size = 0;
-            this.fields.push(this.mouseField);
+            item = {
+                type:object.type,
+                object
+            };
+            this.selected = object;
+        }else{
+            item = {
+                type:"",
+                object
+            };
+            this.selected = "";
         }
-
+        store.dispatch(store.actions.entity.chooseEntity(item));
     }
 
     onMouseUp(evt) {
@@ -213,6 +221,7 @@ export default class Display {
                 this.clicked = undefined;
             }
         }
+
     }
 
     onMouseMove(evt) {
@@ -366,5 +375,13 @@ export default class Display {
             emitter.updateVelocity(velocity);
         })
     }
-
+    updateSelectedObject(obj){
+        if(this.selected){
+            for(let key in obj){
+                if(this.selected.hasOwnProperty(key)){
+                    this.selected[key] = obj;
+                }
+            }
+        }
+    }
 }

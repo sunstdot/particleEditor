@@ -1,10 +1,11 @@
 import Vector from './vector'
 export default class Field {
-    constructor(point, mass) {
+    constructor(point, mass,id) {
         this.position = point;
         this.size = 15;
         this.mass = 0;
         this.drawColor = '#b00';
+        this.type = "field";
         this.setMass(mass);
     }
 

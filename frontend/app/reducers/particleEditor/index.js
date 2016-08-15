@@ -6,6 +6,7 @@ import {combineReducers} from 'redux';
 const defaultState = {};
 import session from '../common/session'
 import {drawEntity} from "../common/particle"
+import {chooseEntity} from "../common/entity"
 import {
     ADD_PARTICLE
 } from '../../actions'
@@ -26,5 +27,6 @@ let state = (state = defaultState, action)=> {
 export default combineReducers({
     state,
     session,
-    drawEntity
+    drawEntity,
+    chooseEntity
 })

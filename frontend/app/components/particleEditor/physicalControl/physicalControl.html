@@ -90,6 +90,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="edit-tab-con">
+                    <div style="margin-left:6px;color: #F2753F;font-weight: 700;font-size: 18px;">{{editorName}}</div>
+                    <div style="margin-top: 15px;" v-bind:style="{display:editorName == 'fieldEditor' ? 'block' : 'none'}">
+                        <!--<span>positionX</span><div></div>-->
+                        <!--<span>positionY</span><div></div>-->
+                        <span class="spanName">mass</span><input type="range" min='-200' max="200" step="1" value="2" v-model="mass"/>
+                    </div>
+                    <div style="margin-top: 15px;" v-bind:style="{display:editorName == 'emitterEditor' ? 'block' : 'none'}">
+                        <!--<span>positionX</span><div></div>-->
+                        <!--<span>positionY</span><div></div>-->
+                        <!--<span>velocity</span><div></div>-->
+                        <!--<span>size</span><div></div>-->
+
+                        <div class="itemWrap"><span class="spanName">particleLife</span><input style="margin-left: 26px;" class="inputName" type="text" v-model="particleLife"/></div>
+                        <div class="itemWrap"><span class="spanName">spread</span><input style="margin-left: 54px;" class="inputName" type="text" v-model="spread"/></div>
+                        <div class="itemWrap"></div><span class="spanName">emissionRate</span><input class="inputName" type="text" v-model="emissionRate"/></div>
+                    </div>
+                </div>
             </div>
 
         </div>

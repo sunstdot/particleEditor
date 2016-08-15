@@ -11,6 +11,7 @@ export default class Emitter{
         this.particleLife = -1;
         this.spread       = Math.PI / 32;
         this.emissionRate = 4;
+        this.type = "emitter";
     }
     moveTo(point){
         this.position = point;
@@ -42,6 +43,9 @@ export default class Emitter{
     }
     updateVelocity(velocity){
         this.velocity = velocity;
+    }
+    updateSpread(spread){
+        this.spread = spread;
     }
 }
 Emitter.fromString = function(string) {
