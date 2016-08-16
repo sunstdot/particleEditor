@@ -1,0 +1,22 @@
+<div v-bind:style="{display:showModalFlag?'block':'none'}">
+    <div class="mask">
+    </div>
+    <div class="wrapper" style="-webkit-user-select: text;user-select: text;">
+        <div class="closeBtn" @click="close()"></div>
+        <div class="containerUrl">
+            {{showmodaljsonurl}}
+        </div>
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</div>

@@ -1,7 +1,11 @@
 <div id="editorHeader" class="editor-header">
     <img class="leftIcon imgIcon" src="../../../../build/assets/img/flower.png">
     <div class="titleText">粒子编辑器</div>
-    <a id="exportOp" class="btn export-btn" @click="exportEffect()">导出效果</a>
+    <div style="width: 100px;height: 25px;left: 600px;top: 100px;position: relative;">
+        <span style="color: #EFF0DC;font-size:16px;">emitterPos</span><span style="color: #EFF0DC;margin-left: 15px;">{{emitterPos}}</span>
+        <span style="color: #EFF0DC;font-size:16px;">fieldPos</span><span style="color: #EFF0DC;margin-left: 15px;">{{fieldPos}}</span>
+    </div>
+    <a id="exportOp" class="btn export-btn" @click="exportEffect">导出效果</a>
     <ul class="topnav-noauth clearfix">
         <li>
             <a href="javascript:;" class="js-signin-noauth" @click="login()">{{login}}</a>

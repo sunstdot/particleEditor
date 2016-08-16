@@ -1,0 +1,121 @@
+
+.tabBg2 li {
+    border-left: 3px solid #2fa1d6;
+    display: inline-block;
+    width: 100%;
+    margin-top: 10px;
+}
+.property-name{
+    cursor: default;
+    float: left;
+    clear: left;
+    width: 27%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    margin-left: 10px;
+}
+.controller {
+    position: relative;
+    float: left;
+    width: 70%;
+    color:#373E40
+}
+.physicalSlider{
+    float: left;
+    position: relative;
+    width: 70%;
+    margin-left: 0;
+    margin-right: 0;
+    height: 19px;
+    margin-top: 4px;
+}
+.textShow{
+    float: left;
+    position: relative;
+    width: 30%;
+    height: 19px;
+    color: #f0f0f0;
+    text-align: center;
+    line-height: 19px;
+}
+.physicalSlider input[type="range"]{
+    -webkit-appearance: none;
+    /*-webkit-box-shadow: 0 0px 0 0px #424242,0 0 0 #424242 inset,0px 2px 10px 0px yellow inset,1px 0px 2px rgba(0, 0, 0, 0.4) inset,0 0px 1px rgba(0, 0, 0, 0.6) inset;*/
+    margin-top: 1px;
+    background-color: #272728;
+    border-radius: 15px;
+    width: 170px;
+}
+.physicalSlider input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    cursor: default;
+    top: 1px;
+    height: 9px;
+    width: 20px;
+    background: none repeat scroll 0 0 green;
+    border-radius: 15px;
+    -webkit-box-shadow: 0 -1px 1px yellow inset;
+}
+.physicalSlider input[type="range"]::-webkit-slider-runnable-track{
+    -webkit-appearance: none;
+    /*-webkit-box-shadow: 0 1px 0 0px #424242,0 1px 0 red inset,0px 2px 10px 0px yellow inset,1px 0px 2px rgba(0, 0, 0, 0.4) inset,0 0px 1px rgba(0, 0, 0, 0.6) inset;*/
+    margin-top: 0;
+    background-color: #272728;
+    border-radius: 15px;
+    width: 100px;
+}
+.addBtn{
+   margin-left: 10px;
+}
+.csm-tab-con{
+    background-color: #3d3d3d;
+    padding: 8px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.edit-tab-con{
+    padding: 8px;
+    margin-top: 15px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.launch{
+    width: 32px;
+    height: 19px;
+    margin-left: 50px;
+    background: url("../assets/img/rocket-launch.png") no-repeat;
+    display: inline-block;
+}
+.launch:active{
+    border: 1px solid black;
+}
+.obstacle{
+    width: 32px;
+    height: 19px;
+    margin-left: 65px;
+    display: inline-block;
+    background: url("../assets/img/obstacle.png") no-repeat;
+}
+.obstacle:active{
+    border: 1px solid black;
+}
+.spanName{
+    margin-left: 6px;
+}
+.inputName{
+    margin-left: 10px;
+    color: #000;
+}
+.itemWrap{
+    margin-top: 10px;
+}
+.massShow{
+    float: left;
+    position: relative;
+    height: 19px;
+    color: #f0f0f0;
+    text-align: center;
+    line-height: 19px;
+    display: inline-block;
+}

@@ -228,9 +228,16 @@ export default class Display {
         this.mouseCoords = new Vector(evt.offsetX || (evt.layerX - this.canvas.offsetLeft), evt.offsetY || (evt.layerY - this.canvas.offsetTop));
         if (this.mouseField) {
             this.mouseField.moveTo(this.mouseCoords);
+
+
         } else if (this.clicked) {
             this.clicked.moved = true;
             this.clicked.moveTo(this.mouseCoords);
+            let item={
+                type:this.clicked.type,
+                pos:this.mouseCoords
+            }
+            store.dispatch(store.actions.entity.updateEntityPos(item));
         } else { // not over anything
             var object = this.getObjectAtPoint(this.mouseCoords);
             if (this.objectMouseOver !== object) { // if we're over something different
@@ -379,7 +386,7 @@ export default class Display {
         if(this.selected){
             for(let key in obj){
                 if(this.selected.hasOwnProperty(key)){
-                    this.selected[key] = obj;
+                    this.selected[key] = obj[key];
                 }
             }
         }

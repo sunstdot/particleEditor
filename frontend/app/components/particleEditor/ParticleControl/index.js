@@ -78,7 +78,8 @@ export default Vue.component('v-particlecontrol',{
         },
         textureClick(type){
             this.textureText = this.findText(this.textureItems,type) || '圆圈';
-            Particle.changeType(type);
+            display.updateSelectedObject({'drawType':type});
+            //Particle.changeType(type);
             this.tabName = "";
         },
         particleExampleClick(type){

@@ -11,9 +11,9 @@ module.exports = {
       var num = Math.ceil(Math.random()*100);
       var workName = body.particleName+num;
 
-      var entityJson = data.entity,particleJson = data.particles;
-      
-      var entityName = 'entity_'+workName,particleName = 'particle_'+workName;
+      //var entityJson = data.entity,particleJson = data.particles;
+
+      //var entityName = 'entity_'+workName,particleName = 'particle_'+workName;
       var referer = req.headers.host;
       console.log("============="+referer);
 
@@ -29,13 +29,14 @@ module.exports = {
       };
 
       co(function* (){
-        var workCreated = yield create(work,{name:workName,entityName:entityName,particleName:particleName});
-        if(particleJson){
-          yield create(particle,{name:particleName,value:particleJson});
-        }
-        if(entityJson){
-          yield create(entity,{name:entityName,value:entityJson});
-        }
+        //var workCreated = yield create(work,{name:workName,entityName:entityName,particleName:particleName});
+        var workCreated = yield create(work,{name:workName,particle:data});
+        //if(particleJson){
+        //  yield create(particle,{name:particleName,value:particleJson});
+        //}
+        //if(entityJson){
+        //  yield create(entity,{name:entityName,value:entityJson});
+        //}
         return workCreated;
       }).then(function(value){
           res.send({code:'A00000',url:referer+'/getParticle/'+value.name});

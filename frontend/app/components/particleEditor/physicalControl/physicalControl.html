@@ -95,7 +95,9 @@
                     <div style="margin-top: 15px;" v-bind:style="{display:editorName == 'fieldEditor' ? 'block' : 'none'}">
                         <!--<span>positionX</span><div></div>-->
                         <!--<span>positionY</span><div></div>-->
-                        <span class="spanName">mass</span><input type="range" min='-200' max="200" step="1" value="2" v-model="mass"/>
+                        <div style="display: inline-block;float: left"><span class="spanName">mass</span></div>
+                        <div class="physicalSlider" style="margin-left: 25px;"><input type="range" min='-300' max="300" step="1" value="2" v-model="mass"/></div>
+                        <div class="massShow">{{mass}}</div>
                     </div>
                     <div style="margin-top: 15px;" v-bind:style="{display:editorName == 'emitterEditor' ? 'block' : 'none'}">
                         <!--<span>positionX</span><div></div>-->

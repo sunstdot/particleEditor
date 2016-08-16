@@ -12,6 +12,7 @@ export default class Emitter{
         this.spread       = Math.PI / 32;
         this.emissionRate = 4;
         this.type = "emitter";
+        this.drawType = "fixPointStar";
     }
     moveTo(point){
         this.position = point;
@@ -26,6 +27,7 @@ export default class Emitter{
             position,
             Vector.fromAngle(this.velocity.getAngle() + this.spread-(Math.random()*this.spread*2),this.velocity.getMagnitude())
         );
+        particle.type = this.drawType;
         particle.ttl = this.particleLife;
         //particle.draw();
         return particle;
@@ -46,6 +48,9 @@ export default class Emitter{
     }
     updateSpread(spread){
         this.spread = spread;
+    }
+    updateDrawType(type){
+        this.drawType = type;
     }
 }
 Emitter.fromString = function(string) {

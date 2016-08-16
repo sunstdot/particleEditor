@@ -18,15 +18,15 @@ module.exports = {
     co(function* () {
       var particleObj = {};
       var works = yield findOne(work,{name:name});
-      var entityJson = yield findOne(entity,{name:works.entityName});
-      var particleJson = yield findOne(particle,{name:works.particleName});
-      if(entityJson){
-        particleObj.entity = entityJson.value;
-      }
-      if(particle){
-        particleObj.particles = particleJson.value;
-      }
-      return particleObj;
+      //var entityJson = yield findOne(entity,{name:works.entityName});
+      //var particleJson = yield findOne(particle,{name:works.particleName});
+      //if(entityJson){
+      //  particleObj.entity = entityJson.value;
+      //}
+      //if(particle){
+      //  particleObj.particles = particleJson.value;
+      //}
+      return works.particle;
     }).then(function (value) {
       if(typeof(value) === 'object'){
         res.send({code:'A00000',value:value});

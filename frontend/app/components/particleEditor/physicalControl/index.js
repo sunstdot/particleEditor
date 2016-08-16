@@ -20,6 +20,9 @@ export default Vue.component('v-physicalcontrol',{
             'velocityY':0,
             'editorName':'',
             'mass':0,
+            'spread':0,
+            'particleLife':-1,
+            'emissionRate':4,
             'chooseEntity':this.$select('chooseEntity'),
             defaultColor
         }
@@ -29,7 +32,6 @@ export default Vue.component('v-physicalcontrol',{
         'v-color-picker':vColorPicker
     },
     props:{
-
     },
     watch:{
         maxParticles(val){
@@ -41,17 +43,31 @@ export default Vue.component('v-physicalcontrol',{
         chooseEntity(val){
             //初始化编辑位置的值
             this.editorName = "";
-            this.mass = val.object.mass || 0;
-            this.particleLife = val.object.particleLife || 0;
-            this.spread = val.object.spread || 0;
-            this.emissionRate = val.object.emissionRate || 0;
+            if(val.object){
+                this.mass = val.object.mass || 0;
+                this.particleLife = val.object.particleLife || 0;
+                this.spread = val.object.spread || 0;
+                this.emissionRate = val.object.emissionRate || 0;
+            }
             if(val.type){
                 this.editorName = val.type+"Editor";
             }
         },
         mass(val){
             this.mass = val;
-            display.updateSelectedObject({'mass':this.mass});
+            display.updateSelectedObject({'mass':parseInt(this.mass,10)});
+        },
+        spread(val){
+            this.spread = val;
+            display.updateSelectedObject({'spread':parseFloat(this.spread)});
+        },
+        particleLife(val){
+            this.particleLife = val;
+            display.updateSelectedObject({'particleLife':parseInt(this.particleLife,10)});
+        },
+        emissionRate(val){
+            this.emissionRate = val;
+            display.updateSelectedObject({'emissionRate':parseInt(this.emissionRate,10)});
         }
     },
     computed:{
