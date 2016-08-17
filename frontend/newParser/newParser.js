@@ -675,23 +675,23 @@ Display.prototype.loadStateV1= function(params) {
     this.draw.particles = params.particles === "1" ? true : false;
     this.emitters = [];
     this.fields = [];
-
+    var self = this;
     if(params.emitters.length>0){
         params.emitters.forEach(function(item){
             var emitter = new Emitter();
-            emitter.position     = new Vector(item.position[0], item.position[1]);
-            emitter.velocity     = new Vector(item.velocity[0], item.velocity[1]);
+            emitter.position     = new Vector(parseInt(item.position.x,10), parseInt(item.position.y,10));
+            emitter.velocity     = new Vector(parseFloat(item.velocity.x), parseFloat(item.velocity.y));
             emitter.size         = parseInt(item.size,10);
             emitter.particleLife = parseInt(item.particleLife,10);
             emitter.spread       = parseFloat(item.spread);
-            emitter.emissionRate = parseInt(params.emissionRate,10);
-            this.emitters.push(emitter);
+            emitter.emissionRate = parseInt(item.emissionRate,10);
+            self.emitters.push(emitter);
         })
     }
     if(params.fields.length>0){
         params.fields.forEach(function(item){
-            var field = new Field(new Vector(item.position[0],item.position[1]),parseInt(params.mass,10));
-            this.fields.push(field);
+            var field = new Field(new Vector(parseInt(item.position.x,10),parseInt(item.position.y,10)),parseInt(item.mass,10));
+            self.fields.push(field);
         })
     }
 }
@@ -712,12 +712,30 @@ Display.prototype.updateSelectedObject = function(obj){
         }
     }
 }
+var requestAnimationFrame = window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame    ||
+    window.oRequestAnimationFrame      ||
+    window.msRequestAnimationFrame     ||
+    function( callback ){
+        window.setTimeout(callback, 1000 / 60);
+    };
+
+var stats = new Stats();
+
+stats.setMode(0); // 0: fps, 1: ms
+// Align top-left
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.left = '0px';
+stats.domElement.style.top = '0px';
+
+
 
 window.particlesJS = function(tag_id, params){
     var pJS_tag = document.getElementById(tag_id);
     //create canvas element
     var canvas_el = document.createElement('canvas');
-
+    document.body.appendChild( stats.domElement );
     /*set size canvas*/
     canvas_el.width = pJS_tag.offsetWidth -15;
     canvas_el.height = pJS_tag.offsetHeight-15;
@@ -727,6 +745,7 @@ window.particlesJS = function(tag_id, params){
     if (params.color) Particle.changeColor(params.color);
     Particle.size = params.size || 2;
     display.loadStateV1(params);
+    display.init();
     display.clear();
     display.start();
 };

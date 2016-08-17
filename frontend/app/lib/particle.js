@@ -143,7 +143,11 @@ export default class Particle{
 }
 Particle.size = 2;
 Particle.color = [66,167,222,255];
+Particle.type = 'fixPointStar';
 Particle.drawFunctions = ['Basic','Soft','Variable'];
 Particle.changeColor = (color)=>{
     Particle.color = color;
+};
+Particle.changeType = (type) =>{
+    Particle.type = type;
 };

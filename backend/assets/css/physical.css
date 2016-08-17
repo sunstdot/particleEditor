@@ -84,7 +84,7 @@
     width: 32px;
     height: 19px;
     margin-left: 50px;
-    background: url("../assets/img/rocket-launch.png") no-repeat;
+    background: url("../images/img/rocket-launch.png") no-repeat;
     display: inline-block;
 }
 .launch:active{
@@ -95,7 +95,7 @@
     height: 19px;
     margin-left: 65px;
     display: inline-block;
-    background: url("../assets/img/obstacle.png") no-repeat;
+    background: url("../images/img/obstacle.png") no-repeat;
 }
 .obstacle:active{
     border: 1px solid black;

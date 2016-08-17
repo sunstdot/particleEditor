@@ -273,7 +273,7 @@ form button:hover {
     }
 }
 .closeBtn{
-    background: url("../../assets/img/close1.png");
+    background: url("../images/img/close1.png");
     background-size: cover;
     height: 32px;
     width: 32px;
@@ -283,8 +283,8 @@ form button:hover {
     z-index: 2;
 }
 .closeBtn:hover{
-    background: url("../../assets/img/closeHover.png");
+    background: url("../images/img/closeHover.png");
 }
 .closeBtn:active{
-    background: url("../../assets/img/closeHover.png");
+    background: url("../images/img/closeHover.png");
 }

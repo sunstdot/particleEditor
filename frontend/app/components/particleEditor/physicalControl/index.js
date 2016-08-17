@@ -83,6 +83,7 @@ export default Vue.component('v-physicalcontrol',{
         updateBackground(val){
             var rgba = val.rgba;
             Particle.changeColor(Object.values(rgba));
+            //display.updateSelectedObject({'emissionRate':parseInt(this.emissionRate,10)});
         },
         renderController(){
             //todo zrender渲染仪表盘

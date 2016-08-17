@@ -3,6 +3,7 @@
  */
 import Vue from 'vue'
 import template from './header.html'
+import Particle from '../../../lib/particle'
 export default Vue.component('v-header',{
     data(){
         return {
@@ -42,8 +43,8 @@ export default Vue.component('v-header',{
             let obj = {}; //要导出的json数据
             let uniqueEmitter = display.emitters[0];
             obj.continuous = 0;
-            obj.color = uniqueEmitter.color;
-            obj.size = uniqueEmitter.size;
+            obj.color = Particle.color;
+            obj.size = Particle.size;
             obj.drawVersion = "Sv1";
             obj.drawMethod = "soft";
             obj.objects = "0";

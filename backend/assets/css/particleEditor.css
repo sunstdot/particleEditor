@@ -12,7 +12,7 @@ body{
     /*background:url('../assets/img/bookBg.png');*/
     /*background-size: cover;*/
     background-color: #d7e0df;
-    cursor:url('../assets/img/pointer.png'), default;
+    cursor:url('../images/img/pointer.png'), default;
 }
 header,
 footer {
@@ -703,4 +703,12 @@ a:link {
     color: #F3F3F3;
     border-radius: 10px;
     cursor: pointer;
+}
+.containerUrl{
+  text-align: center;
+  top: 200px;
+  position: relative;
+  font-weight: 700;
+  font-size: 18px;
+  color: #373E40;
 }

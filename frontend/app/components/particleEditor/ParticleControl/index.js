@@ -13,6 +13,7 @@ export default Vue.component('v-particlecontrol',{
             'particleText': '手榴弹',
             'textureText': '圆圈',
             'exampleText':'unselect',
+            'isShowControl': true,
             'textureItems':[
                 {'type':'circle','name':'圆圈'},
                 {'type':'square','name':'正方形'},
@@ -58,6 +59,14 @@ export default Vue.component('v-particlecontrol',{
         $("#sourceDot").draggable({opacity:0.7,helper:"clone"});
         this.unwatch = this.$watch('drawEntity',this.drawParticle);
         this.unwatch = this.$watch('particleType',this.drawParticle);
+
+        document.onkeydown= (e) =>{
+            if(e.ctrlKey && e.keyCode === 81){
+                this.isShowControl = !this.isShowControl;
+            }
+            console.log("==============="+e.keyCode);
+        };
+
     },
     methods: {
         findText(arr,type){
@@ -79,7 +88,7 @@ export default Vue.component('v-particlecontrol',{
         textureClick(type){
             this.textureText = this.findText(this.textureItems,type) || '圆圈';
             display.updateSelectedObject({'drawType':type});
-            //Particle.changeType(type);
+            Particle.changeType(type);
             this.tabName = "";
         },
         particleExampleClick(type){
